@@ -1,0 +1,114 @@
+.active-option {
+  background-color: var(--color-primary) !important;
+  color: #FFF !important;
+}
+
+
+.button-squart {
+  height: 150px;
+  width: 150px;
+  border-radius: 10px;
+  background: var(--color-bg-second);
+  border: 1px solid var(--color-border-input);
+  color: var(--color-border-input);
+  box-shadow: 0 0 2px 3px rgba(0, 0, 0, 0.10);
+  display: grid;
+  grid-template-rows: 1fr 20px;
+  align-content: center;
+  align-items: center;
+  padding: 10px;
+  transition: .3s ease-out;
+}
+
+.button-squart span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  line-height: 3rem;
+}
+
+.button-squart p {
+  font-weight: normal;
+  text-align: center;
+}
+
+.button-squart:hover {
+  cursor: pointer;
+  background: var(--color-primary);
+  color: #FFF;
+  transition: .3s ease-out;
+}
+
+.group-square {
+  display: flex;
+  flex-direction: column;
+  width: 80px;
+  max-width: 80px;
+  row-gap: 5px;
+  max-height: 125px;
+
+  > p {
+    text-align: center;
+    width: 100%;
+    font-size: 0.7rem;
+    line-height: 0.7rem;
+    color: var(--color-text-btw);
+    max-height: 1.4rem;
+    height: 1.4rem;
+    overflow: hidden;
+    word-break: break-word;
+    word-wrap: break-word;
+  }
+}
+
+.btn-square {
+  margin: auto auto;
+  box-shadow: var(--shadow-box-general);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  border: none;
+  background-image: url("src/assets/img/buttons/button-bg.svg");
+  background-position: center;
+  background-size: cover;
+  background-color: var(--color-bg-second);
+  transition: .3s box-shadow ease-in-out, .3s transform ease-in-out;
+  padding: 20px;
+  font-size: 2.5rem;
+  color: var(--color-text-btw);
+}
+
+.btn-square:hover {
+  cursor: pointer;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-box-general-hover);
+  transition: .3s ease-out;
+}
+
+.btn-sm {
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+}
+
+.btn-md {
+  width: 60px;
+  height: 60px;
+  font-size: 1.5rem;
+}
+
+.btn-bg {
+  width: 80px;
+  height: 80px;
+  font-size: 2.5rem;
+}
+
+.route-active {
+  background-color: var(--color-primary) !important;
+
+  > p, span {
+    color: #FFF !important;
+  }
+}

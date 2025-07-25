@@ -1,0 +1,97 @@
+<ng-container *ngIf="!configurationAside">
+  <div class="aside-container" *ngIf="visible">
+    <div [class]="closing ? ('aside-background-closing'):('aside-background')" (click)="closeAside()">
+    </div>
+    <div [class]="closing ? ('aside-closing'):('aside')">
+      <button class="button-close-aside" (click)="closeAside()">
+      <span>
+        <i class="fa fa-solid fa-arrow-right"></i>
+      </span>
+      </button>
+      <p class="title-aside">{{ title }}</p>
+      <div class="body-aside">
+        <ng-container #asideContainer></ng-container>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="configurationAside">
+  <div class="multi-aside-container z-50 flex justify-center px-3" *ngIf="visible">
+    <div class="absolute h-full w-full top-0 left-0 bg-black bg-opacity-30"
+         [ngClass]="{
+         'bg-aside-closing': closing,
+         'bg-aside-opening': !closing,
+         }"
+         (click)="closeAside()"></div>
+    <ng-container *ngIf="configurationAside">
+      <ng-container [ngSwitch]="configurationAside.position">
+        <ng-container *ngSwitchCase="'top'">
+          <div
+            class="bg-white h-fit min-w-80 w-fit max-h-screen max-w-screen-md absolute top-0 overflow-x-hidden mx-auto border-btw rounded-b-xl shadow-lg"
+            [ngClass]="{
+               'aside-top-closing': closing,
+               'aside-top-opening': !closing,
+                }">
+            <div class="w-full py-3 px-6 flex justify-between">
+              <div class="text-btw font-semibold">{{ title }}</div>
+              <button class="flex justify-center items-center" (click)="closeAside()">
+                <span class="text-sm text-btw"><i class="fa fa-solid fa-x"></i></span>
+              </button>
+            </div>
+            <div>
+              <ng-container #asideContainer></ng-container>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'bottom'">
+          <div
+            class="bg-white h-fit min-w-80 w-fit max-h-screen max-w-screen-md absolute bottom-0 overflow-x-hidden mx-auto border-btw rounded-t-xl shadow-lg aside-bottom-opening"
+            [ngClass]="{
+               'aside-bottom-closing': closing,
+               'aside-bottom-opening': !closing,
+                }">
+            <div class="w-full p-3 flex justify-between items-center">
+              <div class="text-btw font-semibold">{{ title }}</div>
+              <button class="flex justify-center items-center" (click)="closeAside()">
+                <span class="text-sm text-btw"><i class="fa fa-solid fa-x"></i></span>
+              </button>
+            </div>
+            <ng-container #asideContainer></ng-container>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'left'">
+          <div
+            class="bg-white h-full min-w-80 absolute top-0 left-0 overflow-x-hidden mx-auto border-btw rounded-b-lg shadow-lg"
+            [ngClass]="{
+               'aside-left-closing': closing,
+               'aside-left-opening': !closing,
+                }">
+            <div class="w-full py-3 px-6 flex justify-between">
+              <div class="text-btw font-semibold">{{ title }}</div>
+              <button class="flex justify-center items-center" (click)="closeAside()">
+                <span class="text-sm text-btw"><i class="fa fa-solid fa-x"></i></span>
+              </button>
+            </div>
+            <ng-container #asideContainer></ng-container>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'right'">
+          <div
+            class="bg-white h-full min-w-80 absolute top-0 right-0 overflow-x-hidden mx-auto border-btw rounded-b-lg shadow-lg w-fit"
+            [ngClass]="{
+               'aside-right-closing': closing,
+               'aside-right-opening': !closing,
+                }">
+            <div class="w-full py-3 px-6 flex justify-between">
+              <div class="text-btw font-semibold">{{ title }}</div>
+              <button class="flex justify-center items-center" (click)="closeAside()">
+                <span class="text-sm text-btw"><i class="fa fa-solid fa-x"></i></span>
+              </button>
+            </div>
+            <ng-container #asideContainer></ng-container>
+          </div>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-container>

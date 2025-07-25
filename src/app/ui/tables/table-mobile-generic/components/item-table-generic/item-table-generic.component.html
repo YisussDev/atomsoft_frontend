@@ -1,0 +1,128 @@
+<div class="height-normal" [ngClass]="{'overflow-hidden': !isExpanded}" appClickOutSide (clickOutside)="clickOutside()"
+     [ngStyle]="{
+'height': !isExpanded ? ('60px'): ((heightCalculated+50+60 )+ 'px')
+}">
+  <ng-template [ngTemplateOutlet]="headerPrinciple"></ng-template>
+  <ng-template [ngTemplateOutlet]="infoExpanded"></ng-template>
+</div>
+
+<ng-template #headerPrinciple>
+  <div class="header-principle bg-btw-secondary border border-btw w-full grid gap-1 select-none cursor-pointer"
+       style="height: 60px; grid-template-columns: 30px 1fr 50px"
+       (click)="expandItem()">
+    <div class="flex justify-center items-center text-btw h-full">
+      <span [ngClass]="{'rotate-180': isExpanded}" class="transition-transform duration-300 ease-out"><i
+        class="fa fa-solid fa-chevron-down"></i></span>
+    </div>
+    <div class="grid" [ngClass]="{
+        'grid-cols-1': configPrinciplesRow.configs.slice(0,2).length == 1,
+        'grid-cols-2': configPrinciplesRow.configs.slice(0,2).length == 2,
+        'grid-cols-3': configPrinciplesRow.configs.slice(0,3).length == 3,
+
+ }">
+      <ng-container *ngFor="let config of configPrinciplesRow.configs.slice(0,3)">
+        <div class="col-span-1 flex flex-col justify-center">
+          <ng-container *ngIf="config.pipe != 'status'">
+            <p class="text-btw text-xs font-light text-over-1-line">{{ config.label }}</p>
+          </ng-container>
+          <ng-container [ngSwitch]="config.pipe">
+            <ng-container *ngSwitchCase="'normal'">
+              <p class="text-btw text-xs font-bold text-over-1-line">{{ getDataColumn(config.key) }}</p>
+            </ng-container>
+            <ng-container *ngSwitchCase="'cash'">
+              <p class="text-btw text-xs font-bold text-over-1-line">{{ getDataColumn(config.key) | currency }}</p>
+            </ng-container>
+            <ng-container *ngSwitchCase="'icon'">
+              <ng-container *ngFor="let configStatus of config.configStatus">
+                <button *ngIf="dataRow[config['key']]==configStatus['id']" class="status-badge"
+                        [style]="'background-color:' + configStatus['color']"
+                        (click)="configStatus['eventDrive'] && eventRow(configStatus['nameEvent'] || '', $event)"
+                ><span> <i
+                  [class]="'fa fa-solid fa-'+configStatus['icon']"></i></span>
+                </button>
+              </ng-container>
+            </ng-container>
+            <ng-container *ngSwitchCase="'status'">
+              <ng-container *ngFor="let configStatus of config.configStatus">
+                <div *ngIf="dataRow[config['key']]==configStatus['id']"
+                     class="rounded-full flex justify-center items-center text-white mx-auto"
+                     [ngStyle]="{'background-color': configStatus['color']}"
+                     style="width: 30px; height: 30px">
+                  <span><i [class]="'fa fa-solid fa-'+configStatus['icon']"></i></span>
+                </div>
+              </ng-container>
+            </ng-container>
+            <ng-container *ngSwitchCase="'custom'">
+              <p
+                class="text-btw text-xs font-bold text-over-1-line">{{ config.configCustom(getDataColumn(config.key)) }}</p>
+            </ng-container>
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+    <div class="flex justify-center items-center gap-1">
+      <ng-container *ngIf="configPrinciplesRow.activeEvent">
+        <button
+          class="rounded-full h-8 w-8 p-2 bg-btw-secondary shadow-md border-btw text-btw flex justify-center items-center"
+          (click)="eventRow(configPrinciplesRow.nameEvent || '', $event)">
+          <span><i class="fa fa-solid" [ngClass]="'fa-'+configPrinciplesRow.iconEvent || ''"></i></span>
+        </button>
+      </ng-container>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #infoExpanded>
+  <ng-container *ngIf="isExpanded">
+    <div class="bg-btw-primary animation-opacity">
+      <div class="grid" [ngStyle]="{'height': heightCalculated+'px' }" [ngClass]="{
+          'grid-cols-1': (columnPerRow == 1),
+          'grid-cols-2': (columnPerRow == 2),
+          'grid-cols-3': (columnPerRow == 3),
+          }"
+      >
+        <ng-container *ngFor="let column of tableColumnConfig">
+          <ng-container *ngIf="column.visible">
+            <div class="flex flex-col justify-center p-1" style="height: 50px">
+              <p class="text-btw text-xs font-light text-over-1-line text-center">{{ column.column_translate }}:</p>
+              <ng-container [ngSwitch]="column.column_pipe">
+                <ng-container *ngSwitchCase="'normal'">
+                  <p
+                    class="text-btw text-sm font-bold text-over-1-line text-center">{{ getDataColumn(column.column_name) }}</p>
+                </ng-container>
+                <ng-container *ngSwitchCase="'cash'">
+                  <p
+                    class="text-btw text-sm font-bold text-over-1-line text-center">{{ getDataColumn(column.column_name) | currency }}</p>
+                </ng-container>
+                <ng-container *ngSwitchCase="'badge'">
+                  <div class="flex justify-center items-center">
+                    <ng-container *ngFor="let optionBadge of column.column_config || []">
+                      <div class="flex justify-center items-center p-1 rounded-full h-6 w-6 text-white"
+                           *ngIf="optionBadge.custom_key == getDataColumn(column.column_name)"
+                           [ngStyle]="{background: optionBadge.custom_color || 'var(--color-primary)'}">
+                        <span [title]="optionBadge.custom_label">
+                  <i class="fa fa-solid" [ngClass]="optionBadge.custom_icon"></i>
+                </span>
+                      </div>
+                    </ng-container>
+                  </div>
+                </ng-container>
+                <ng-container *ngSwitchCase="'custom'">
+                  <p class="text-btw text-sm font-bold text-over-1-line text-center"
+                     *ngIf="column.column_fn">{{ column.column_fn(getDataColumn(column.column_name)) }}
+                  </p>
+                </ng-container>
+              </ng-container>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+      <ng-container *ngIf="validActions">
+        <div class="flex justify-center items-center" style="height: 50px">
+          <app-button-dropdown label="Opciones" [actions]="tableConfigFieldActions" [data]="dataRow"
+                               (eventClick)="eventOptions($event)"></app-button-dropdown>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+</ng-template>

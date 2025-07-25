@@ -1,0 +1,11 @@
+<div class="w-full bg-btw-secondary relative h-6 flex rounded-full overflow-hidden">
+  <ng-container *ngFor="let itemValue of valuesBar; let i = index">
+    <div class="h-full"
+         [ngStyle]="{
+       'background-color': itemValue.colorBar,
+       'width': (calculateWidth(itemValue.value) + '%')
+       }"
+    >
+    </div>
+  </ng-container>
+</div>

@@ -1,0 +1,13 @@
+.height-normal {
+  transition: height .3s ease-out;
+  /*animation: renderFit .3s linear;*/
+}
+
+@keyframes renderFit {
+  from {
+    height: 0;
+  }
+  to {
+    height: auto;
+  }
+}

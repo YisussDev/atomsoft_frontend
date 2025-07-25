@@ -1,0 +1,67 @@
+import {Injectable} from "@angular/core";
+import {{{nameModule}}Repository} from "@domain-repositories/{{nameSecondModule}}/{{nameSecondModule}}.repository";
+import {{{nameModule}}Entity} from "@domain-entities/{{nameSecondModule}}/{{nameSecondModule}}.entity";
+import {map, Observable, of, throwError} from "rxjs";
+import {FilterInterface} from "@core-interfaces/filter/filter.interface";
+import {{{nameModule}}Mapper} from "../../http/{{nameSecondModule}}/{{nameSecondModule}}-mapper";
+import {{{nameModule}}HttpModel} from "../../http/{{nameSecondModule}}/{{nameSecondModule}}-http-model";
+
+@Injectable()
+export class {{nameModule}}LocalRepository implements {{nameModule}}Repository {
+
+  private dataTest: {{nameModule}}Entity[] = [];
+
+  private mapper: {{nameModule}}Mapper = new {{nameModule}}Mapper();
+
+  constructor(
+  ) {
+  }
+
+  public getAll(filter: FilterInterface, page?: number): Observable<{ data: {{nameModule}}Entity[] }> {
+    return of({ data: this.dataTest}).pipe(
+      map(response => {
+        response.data.map((entityApi: {{nameModule}}HttpModel) => this.mapper.from(entityApi))
+        return response;
+      })
+    );
+  }
+
+  public getOne(identifier: string): Observable<{ data: {{nameModule}}Entity }> {
+  const dataFound = this.dataTest.find(({{nameSecondModule}}) => {{nameSecondModule}}.id === id);
+      if (!dataFound) {
+        console.warn(`{{nameModule}} with ID ${identifier} not found.`);
+        return throwError(() => new Error("{{nameModule}} not found"));
+      }
+      return of({ data: dataFound}).pipe(
+      map(response => {
+        response.data = this.mapper.from(response.data);
+        return response;
+      })
+    );
+  }
+
+  public create(data: {{nameModule}}Entity): Observable<{ data: {{nameModule}}Entity }> {
+    return of({ data: data}).pipe(
+          map(response => {
+            response.data = this.mapper.from(response.data);
+            return response;
+          }));
+  }
+
+  public updateOne(id: string, data: {{nameModule}}Entity): Observable<{ data: {{nameModule}}Entity }> {
+    return of({ data: data}).pipe(
+              map(response => {
+                response.data = this.mapper.from(response.data);
+                return response;
+              }));
+  }
+
+  public deleteOne(id: string): Observable<{ data: {{nameModule}}Entity }> {
+    return of({ data: id as {{nameModule}}Entity}).pipe(
+              map(response => {
+                response.data = this.mapper.from(response.data);
+                return response;
+              }));
+  }
+
+}

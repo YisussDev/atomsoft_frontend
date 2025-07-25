@@ -1,0 +1,72 @@
+@keyframes renderOpacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes renderHeight {
+  0% {
+    max-height: 0;
+  }
+  100% {
+    max-height: max-content;
+  }
+}
+
+@keyframes renderUp {
+  0% {
+    transform: translateY(-10%);
+  }
+  50% {
+    transform: translateY(1%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes renderScale {
+  0% {
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes rotateGeometric {
+  0% {
+    opacity: 0;
+    transform: rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: rotate(180deg);
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(360deg);
+  }
+}
+
+.animation-opacity {
+  animation: renderOpacity .3s ease-in-out;
+}
+
+.animation-scale {
+  animation: renderScale .3s linear;
+}
+
+.animation-up {
+  animation: renderUp .3s linear;
+}
+
+.ibox {
+  animation: renderOpacity .5s ease-in-out;
+}

@@ -1,0 +1,9 @@
+.tippy-box[data-theme~='light'] {
+  background-color: var(--color-bg);
+  color: var(--color-text-btw);
+  transition: .3s all ease-out;
+  border-radius: 5px;
+  padding: 5px;
+  border: 1px solid var(--color-border-input);
+  box-shadow: 0 0 3px 5px rgba(0, 0, 0, 0.1);
+}

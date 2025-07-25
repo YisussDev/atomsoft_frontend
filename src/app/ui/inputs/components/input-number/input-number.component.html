@@ -1,0 +1,45 @@
+<div class="flex flex-col mt-2">
+  <div class="relative flex items-center border rounded-md p-2 shadow-sm bg-input-primary"
+       [ngClass]="[
+         (hasError() ? 'border-red-500': ''),
+         (isValid() ? 'border-green-500': ''),
+       ]">
+    <div class="absolute left-3 text-btw">
+      <i class="fa fa-solid"
+         [ngClass]="[
+         (hasError() ? 'text-red-500': ''),
+         (isValid() ? 'text-green-500': ''),
+         ((inputIconActive && inputIcon) ? ('fa-'+inputIcon):(''))
+       ]"></i>
+    </div>
+    <input class="w-full pl-2 pr-3 py-1 text-xs border-none outline-none bg-transparent"
+           [ngClass]="[
+            ((inputIconActive && inputIcon) ? ('pl-8'):(''))
+            ]"
+           type="number"
+           [readOnly]="disabled"
+           [name]="inputName"
+           [id]="inputName"
+           [autocomplete]="inputName"
+           [placeholder]="inputPlaceholder"
+           [ngModel]="inputValue"
+           (ngModelChange)="changeValue($event)"
+           (blur)="touchedControl()">
+    <ng-container *ngIf="isAmount">
+      <p class="absolute right-2 text-xs text-btw font-bold">{{ valueAmount }}</p>
+    </ng-container>
+    <label class="absolute top-[-12px] left-2 bg-white px-1 text-xs text-btw"
+           [for]="inputName"
+           [ngClass]="[
+         (hasError() ? 'text-red-500': ''),
+         (isValid() ? 'text-green-500': ''),
+       ]">
+      {{ inputLabel }}
+    </label>
+  </div>
+  <p class="text-red-500 text-xs h-4 text-wrap text-over-1-line" [title]="hasError() ? getErrorMessage():''">
+    <ng-container *ngIf="hasError()">
+      {{ getErrorMessage() }}
+    </ng-container>
+  </p>
+</div>

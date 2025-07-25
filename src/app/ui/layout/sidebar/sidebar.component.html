@@ -1,0 +1,77 @@
+<div class="sidebar-container" *ngIf="visible">
+  <div [class]="closing ? ('aside-background-closing'):('aside-background')" (click)="closeAside()">
+  </div>
+  <div [ngClass]="{
+  'sidebar-closing': closing,
+  'sidebar': !closing
+  }">
+    <button
+      class="bg-btw-primary absolute rounded-full h-10 w-10 flex justify-center items-center shadow-md -right-5 top-5"
+      (click)="closeAside()">
+      <span>
+        <i class="fa fa-solid fa-arrow-left text-btw"></i>
+      </span>
+    </button>
+    <div class="body-sidebar">
+      <div class="h-16 w-full flex justify-center overflow-hidden mb-4">
+        <img [src]="companyData.logo_white_url" alt="logo_sidebar" class="w-full h-16 object-scale-down">
+      </div>
+      <div class="grid w-full gap-2">
+        <div (click)="goToModule('home')" class="button-link-sidebar grid rounded-md border-btw h-14 p-2 text-btw"
+             style="grid-template-columns: 40px 1fr">
+          <div class="flex justify-center items-center">
+            <span><i class="fa fa-solid fa-home"></i></span>
+          </div>
+          <div class="flex items-center">
+            <p class="text-1-over">Inicio</p>
+          </div>
+        </div>
+        <div (click)="goToModule('user')" class="button-link-sidebar grid rounded-md border-btw h-14 p-2 text-btw"
+             style="grid-template-columns: 40px 1fr">
+          <div class="flex justify-center items-center">
+            <span><i class="fa fa-solid fa-users"></i></span>
+          </div>
+          <div class="flex items-center">
+            <p class="text-1-over">Usuarios</p>
+          </div>
+        </div>
+        <div (click)="goToModule('customer')" class="button-link-sidebar grid rounded-md border-btw h-14 p-2 text-btw"
+             style="grid-template-columns: 40px 1fr">
+          <div class="flex justify-center items-center">
+            <span><i class="fa fa-solid fa-user-tag"></i></span>
+          </div>
+          <div class="flex items-center">
+            <p class="text-1-over">Clientes</p>
+          </div>
+        </div>
+<!--        <div (click)="goToModule('validation')" class="button-link-sidebar grid rounded-md border-btw h-14 p-2 text-btw"-->
+<!--             style="grid-template-columns: 40px 1fr">-->
+<!--          <div class="flex justify-center items-center">-->
+<!--            <span><i class="fa fa-solid fa-fingerprint"></i></span>-->
+<!--          </div>-->
+<!--          <div class="flex items-center">-->
+<!--            <p class="text-1-over">Validaciones</p>-->
+<!--          </div>-->
+<!--        </div>-->
+        <div (click)="goToModule('product')" class="button-link-sidebar grid rounded-md border-btw h-14 p-2 text-btw"
+             style="grid-template-columns: 40px 1fr">
+          <div class="flex justify-center items-center">
+            <span><i class="fa fa-solid fa-bag-shopping"></i></span>
+          </div>
+          <div class="flex items-center">
+            <p class="text-1-over">Productos</p>
+          </div>
+        </div>
+        <div (click)="goToModule('credit')" class="button-link-sidebar grid rounded-md border-btw h-14 p-2 text-btw"
+             style="grid-template-columns: 40px 1fr">
+          <div class="flex justify-center items-center">
+            <span><i class="fa fa-solid fa-sack-dollar"></i></span>
+          </div>
+          <div class="flex items-center">
+            <p class="text-1-over">Créditos</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<div *ngIf="!square" class="grid min-w-full min-h-full my-4">
+  <div class="input-area-square grid min-w-full min-h-full place-items-center" [ngClass]="{
+       'has-error': hasError(),
+       'is-valid': isValid(),
+       'input-area-active': inputValue
+       }">
+    <div>
+      <div>
+        <p class="text-xs text-center">{{ inputLabel }}</p>
+        <p class="text-xs text-center font-bold">{{ accept }}</p>
+      </div>
+      <div class="flex justify-center"><span><i class="fa fa-solid fa-upload"></i></span></div>
+    </div>
+    <input (click)="resetDocument($event)"
+           (change)="loadFiles($event)"
+           type="file"
+           [accept]="accept"
+           class="input-file">
+  </div>
+  <div class="error-control">
+    <ng-container *ngIf="hasError()">
+      {{ getErrorMessage() }}
+    </ng-container>
+  </div>
+</div>
+<div *ngIf="square" class="grid min-w-full min-h-full my-4">
+  <div class="input-area-square grid min-w-full min-h-full place-items-center" [ngClass]="{
+       'has-error': hasError(),
+       'is-valid': isValid(),
+       'input-area-active': inputValue
+       }">
+    <div>
+      <div>
+        <p class="text-xs text-center">{{ inputLabel }}</p>
+        <p class="text-xs text-center font-bold">{{ accept }}</p>
+      </div>
+      <div class="flex justify-center"><span><i class="fa fa-solid fa-upload"></i></span></div>
+    </div>
+    <input (click)="resetDocument($event)"
+           (change)="loadFiles($event)"
+           type="file"
+           [accept]="accept"
+           class="input-file w-full h-full bg-red-400">
+  </div>
+</div>
+

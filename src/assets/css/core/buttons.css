@@ -1,0 +1,37 @@
+:root {
+  --bg-button-primary: var(--color-primary);
+  --bg-button-primary-hover: color-mix(in srgb, var(--bg-button-primary) 80%, black);
+  --bg-button-primary-disabled: #d4c8ff;
+  --bg-button-primary-disabled-hover: #d4c8ff;
+
+  --bg-button-secondary: #008496;
+  --bg-button-secondary-hover: color-mix(in srgb, var(--bg-button-secondary) 80%, black);
+  --bg-button-secondary-disabled: #d4c8ff;
+  --bg-button-secondary-disabled-hover: #d4c8ff;
+}
+
+.bg-button-primary {
+  @apply bg-[var(--bg-button-primary)];
+  @apply text-[var(--text-white)];
+}
+
+.hover\:bg-button-primary:hover {
+  @apply bg-[var(--bg-button-primary-hover)];
+}
+
+.bg-button-outline {
+  @apply bg-transparent border-2 border-[var(--bg-button-primary)] text-[var(--bg-button-primary)];
+}
+
+.hover\:bg-button-outline:hover {
+  @apply bg-[var(--bg-button-primary-hover)] text-white;
+}
+
+.bg-button-secondary {
+  @apply bg-[var(--bg-button-secondary)];
+  @apply text-[var(--text-white)];
+}
+
+.hover\:bg-button-secondary:hover {
+  @apply bg-[var(--bg-button-secondary-hover)];
+}

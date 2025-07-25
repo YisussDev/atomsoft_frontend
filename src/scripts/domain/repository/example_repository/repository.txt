@@ -1,0 +1,17 @@
+import {{{nameModule}}Entity} from "../../entities/{{namePrincipalModule}}/{{nameSecondModule}}.entity";
+import {FilterInterface} from "@core-interfaces/filter/filter.interface";
+import {Observable} from "rxjs";
+
+export abstract class {{nameModule}}Repository {
+
+  abstract getAll?(filter: FilterInterface, page?: number): Observable<{ data: {{nameModule}}Entity[]; links: any; meta: any }>;
+
+  abstract getOne?(identifier: string): Observable<{ data:{{nameModule}}Entity }>;
+
+  abstract create?(data: {{nameModule}}Entity): Observable<{ data: {{nameModule}}Entity}>;
+
+  abstract updateOne?(id: string, data: {{nameModule}}Entity): Observable<{ data: {{nameModule}}Entity}>;
+
+  abstract deleteOne?(id: string): Observable<{ data: {{nameModule}}Entity}>;
+
+}

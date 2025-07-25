@@ -1,0 +1,13 @@
+import {{{nameModule}}Entity} from "@domain-entities/{{namePrincipalModule}}/{{nameSecondModule}}.entity";
+import {{{nameModule}}HttpModel} from "./{{nameSecondModule}}-http-model";
+
+export class {{nameModule}}Mapper {
+  public from(entityHttp: {{nameModule}}HttpModel): {{nameModule}}Entity {
+    return {...entityHttp};
+  }
+
+  public to(entityLocal: {{nameModule}}Entity): {{nameModule}}HttpModel {
+    return {...entityLocal};
+  }
+
+}

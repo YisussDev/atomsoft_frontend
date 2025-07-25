@@ -1,0 +1,38 @@
+<div class="w-full p-3" [formGroup]="formDate">
+  <ng-container *ngFor="let columnConfig of data">
+    <ng-container *ngIf="(columnConfig.column_type == 'select') && columnConfig.column_search">
+      <combo-input-select
+        inputIcon="filter"
+        keyToShowControl="custom_label"
+        keyToChangeControl="custom_key"
+        [inputLabel]="'Filtrar por '+ columnConfig.column_translate"
+        [inputPlaceholder]="'Seleccione '+ columnConfig.column_translate"
+        [inputName]="columnConfig.column_name"
+        [inputIconActive]="true"
+        [optionsSelect]="columnConfig.column_config || []"
+        [control]="formDate.controls[columnConfig.column_name]"
+      ></combo-input-select>
+    </ng-container>
+  </ng-container>
+  <combo-input-date
+    inputIcon="calendar"
+    inputLabel="Fecha Inicial"
+    inputName="initial_date"
+    [inputIconActive]="true"
+    [control]="formDate.controls['initial_date']"
+  ></combo-input-date>
+  <combo-input-date
+    inputIcon="calendar"
+    inputLabel="Fecha Final"
+    inputName="final_date"
+    [inputIconActive]="true"
+    [control]="formDate.controls['final_date']"
+  ></combo-input-date>
+  <app-button-container variant="primary" size="sm" type="submit" class="text-white"
+                        [disabled]="formDate.invalid"
+                        (clickEvent)="sendData()"
+                        className="w-full disabled:bg-transparent disabled:text-gray-500 disabled:shadow-md">
+    Exportar Datos<span class="ml-2"><i
+    class="fa fa-solid fa-file-export"></i></span>
+  </app-button-container>
+</div>

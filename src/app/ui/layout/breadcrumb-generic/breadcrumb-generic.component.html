@@ -1,0 +1,39 @@
+<div class="min-w-full fixed flex px-2 nav-container gap-2 shadow bg-btw-secondary items-center border-b-btw z-40"
+     style="height: 35px; top: 50px">
+  <div class="flex justify-center items-center text-xs text-btw gap-1 cursor-pointer" routerLink="/back-office/home">
+    <span class="material-symbols-outlined">home</span>
+    <p class="font-light max-w-14 text-over-1-line">Inicio</p>
+  </div>
+  <ng-container>
+    <span class="text-btw font-light" *ngIf="overBreadcrumb"> ... / </span>
+    <span class="text-btw font-light" *ngIf="!overBreadcrumb"> / </span>
+    <ng-container *ngFor="let itemBreadcrumb of breadcrumbConstruct; let i = index">
+      <span class="text-btw font-light" *ngIf="i > 0"> / </span>
+      <ng-container *ngIf="i < (breadcrumbConstruct.length - 1)">
+        <div class="flex justify-center items-center text-xs text-btw gap-1 cursor-pointer"
+             [ngClass]="{'font-bold':( i == lenghtBreadcrumbs)}"
+             [routerLink]="itemBreadcrumb.path">
+          <ng-container *ngIf="!itemBreadcrumb.typeIcon || (itemBreadcrumb.typeIcon == 'material')">
+            <span class="material-symbols-outlined">{{ itemBreadcrumb.icon }}</span>
+          </ng-container>
+          <ng-container *ngIf="itemBreadcrumb.typeIcon == 'fa'">
+            <span><i class="fa fa-solid" [ngClass]="'fa-'+itemBreadcrumb.icon"></i></span>
+          </ng-container>
+          <p class="text-over-1-line">{{ itemBreadcrumb.name }}</p>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="i == (breadcrumbConstruct.length - 1)">
+        <div class="flex justify-center items-center text-xs text-btw gap-1 cursor-pointer"
+             [ngClass]="{'font-bold':( i == lenghtBreadcrumbs)}">
+          <ng-container *ngIf="!itemBreadcrumb.typeIcon || (itemBreadcrumb.typeIcon == 'material')">
+            <span class="material-symbols-outlined">{{ itemBreadcrumb.icon }}</span>
+          </ng-container>
+          <ng-container *ngIf="itemBreadcrumb.typeIcon == 'fa'">
+            <span><i class="fa fa-solid" [ngClass]="'fa-'+itemBreadcrumb.icon"></i></span>
+          </ng-container>
+          <p class="text-over-1-line">{{ itemBreadcrumb.name }}</p>
+        </div>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</div>

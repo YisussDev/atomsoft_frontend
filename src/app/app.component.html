@@ -1,0 +1,16 @@
+<div class="transition-colors duration-300 min-h-screen bg bg-btw-secondary" [ngClass]="{'dark-theme': themeActive}">
+  <router-outlet></router-outlet>
+</div>
+<div class="fixed right-5 bottom-5 flex flex-col-reverse gap-1 z-30">
+  <button
+    class="h-12 w-12 border border-btw rounded-full flex justify-center items-center bg-btw-primary shadow-md text-btw text-2xl"
+    (click)="changeTheme()">
+    <span><i class="fa fa-solid"
+             [ngClass]="{
+    'fa-sun': themeActive,
+    'fa-moon': !themeActive,
+    }"></i></span>
+  </button>
+</div>
+<app-spinner></app-spinner>
+<app-aside></app-aside>

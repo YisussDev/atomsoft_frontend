@@ -1,0 +1,24 @@
+<div class="bg-btw-secondary">
+  <div class="min-w-full max-w-full border rounded-md p-3"
+       [ngClass]="[
+         (hasError() ? 'border-red-500': ''),
+         (isValid() ? 'border-green-500': ''),
+       ]">
+    <textarea class="min-w-full max-w-full focus:border-0 focus:outline-0 text-xs text-btw bg-btw-secondary min-h-20"
+              type="text"
+              [id]="inputName"
+              [readOnly]="disabled"
+              [name]="inputName"
+              [placeholder]="inputPlaceholder"
+              [ngModel]="inputValue"
+              (ngModelChange)="changeValue($event)"
+              (blur)="touchedControl()"
+    >
+      </textarea>
+  </div>
+  <p class="text-red-500 text-xs h-4 text-wrap text-over-1-line">
+    <ng-container *ngIf="hasError()">
+      {{ getErrorMessage() }}
+    </ng-container>
+  </p>
+</div>

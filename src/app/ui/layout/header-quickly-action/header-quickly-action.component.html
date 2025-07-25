@@ -1,0 +1,14 @@
+<div class="w-full flex flex-wrap gap-2 my-2 justify-center md:justify-end">
+  <ng-container *ngFor="let action of actionsHeaderQuicklyConfig">
+    <div class="rounded-2xl flex gap-2 border-btw px-4 py-2 items-center text-btw bg-btw-secondary shadow select-none cursor-pointer"
+         (click)="clickOption(action.nameEvent)">
+      <ng-container *ngIf="action.typeIcon == 'fa'">
+        <span><i class="fa fa-solid" [ngClass]="'fa-'+action.icon"></i></span>
+      </ng-container>
+      <ng-container *ngIf="action.typeIcon == 'material'">
+        <span class="material-symbols-outlined">{{ action.icon }}</span>
+      </ng-container>
+      <p class="text-xs">{{ action.label }}</p>
+    </div>
+  </ng-container>
+</div>

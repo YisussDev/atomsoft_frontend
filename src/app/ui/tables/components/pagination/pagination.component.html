@@ -1,0 +1,52 @@
+<ng-container *ngIf="pagination">
+  <div class="w-full my-3">
+    <div class="flex w-full gap-2 justify-center items-center flex-wrap">
+      <button *ngIf="pagination.prev" (click)="changePage(pagination.prev)">
+        <a>
+          <span><i class="fa fa-solid fa-chevron-left"></i></span>
+        </a>
+      </button>
+      <ng-container *ngFor="let item of pagination.links">
+        <ng-container *ngIf="(item.label != '...')&&(item.label != pagination.current_page+'')">
+          <button
+            class="h-10 w-10 rounded-md border border-btw flex justify-center bg-btw-secondary items-center overflow-hidden cursor-pointer"
+            *ngIf="item.label.length < 5"
+            [ngClass]="{
+            'active': ((pagination.current_page+'') == item.label)
+            }"
+            (click)="changePage(item.url)">
+            <a>{{ item.label }}</a>
+          </button>
+        </ng-container>
+        <ng-container *ngIf="(item.label == '...')||(item.label == pagination.current_page+'')">
+          <button
+            class="h-10 w-10 rounded-md border border-btw flex justify-center bg-btw-secondary items-center overflow-hidden cursor-pointer"
+            *ngIf="item.label.length < 5"
+            disabled
+            [ngClass]="{
+            'active': ((pagination.current_page+'') == item.label)
+            }">
+            <a>{{ item.label }}</a>
+          </button>
+        </ng-container>
+      </ng-container>
+      <button
+        class="h-10 w-10 rounded-md border border-btw flex justify-center bg-btw-secondary items-center overflow-hidden cursor-pointer"
+        (click)="changePage(pagination.next)"
+        *ngIf="pagination.next">
+        <a>
+          <span><i class="fa fa-solid fa-chevron-right"></i></span>
+        </a>
+      </button>
+      <div class="h-10 w-12 rounded-md border border-btw bg-btw-secondary">
+        <select
+          class="w-full h-full rounded-md"
+          [ngModel]="tableLimit" (ngModelChange)="changeTableLimit($event)">
+          <ng-container *ngFor="let optionLimit of tableLimitList">
+            <option [value]="optionLimit">{{ optionLimit }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+</ng-container>

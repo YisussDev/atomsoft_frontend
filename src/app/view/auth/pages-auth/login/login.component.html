@@ -1,0 +1,80 @@
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br bg-btw-primary p-4 bg-auth">
+  <div class="w-full max-w-md shadow-xl border-0 bg-btw-secondary backdrop-blur-sm rounded-lg">
+    <!-- Header -->
+    <div class="space-y-6 pb-8 pt-8 px-6">
+      <div class="flex justify-center">
+        <app-box-image className="w-24 h-24 flex justify-center items-center">
+          <svg width="253" height="177" viewBox="0 0 253 177" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="126.5" cy="88.5" r="47.5" fill="black"/>
+            <path d="M79 14L22.5699 70.0539C12.3342 80.2214 12.3342 96.7786 22.57 106.946L79 163" stroke="black"
+                  stroke-width="28" stroke-linecap="round"/>
+            <path d="M174 14L230.43 70.0539C240.666 80.2214 240.666 96.7786 230.43 106.946L174 163" stroke="black"
+                  stroke-width="28" stroke-linecap="round"/>
+            <circle cx="50" cy="136" r="21" fill="#910000"/>
+            <circle cx="203" cy="41" r="21" fill="#00915E"/>
+          </svg>
+        </app-box-image>
+      </div>
+      <div class="text-center space-y-2">
+        <h1 class="text-2xl font-semibold text-btw">Bienvenido</h1>
+        <p class="text-btw">Inicia sesión en tu cuenta</p>
+      </div>
+    </div>
+    <!-- Content -->
+    <div class="space-y-6 px-6 pb-8">
+      <form [formGroup]="formLogin" (ngSubmit)="onSubmit()">
+        <combo-input-text
+          inputLabel="Correo electrónico"
+          inputPlaceholder="correo@ejemplo.com"
+          inputIcon="envelope"
+          inputName="email"
+          [inputIconActive]="true"
+          [control]="formLogin.controls['email']"
+        >
+        </combo-input-text>
+        <combo-input-password
+          inputLabel="Contraseña"
+          inputPlaceholder="***********"
+          inputIcon="lock"
+          inputName="password"
+          [inputIconActive]="true"
+          [control]="formLogin.controls['password']"
+        >
+        </combo-input-password>
+        <!-- Forgot Password Link -->
+        <div class="flex mt-2 mb-4 justify-center">
+          <a
+            href="/forgot-password"
+            class="text-sm text-primary hover:text-emerald-700 font-medium transition-colors duration-200"
+          >
+            ¿Olvidaste tu contraseña?
+          </a>
+        </div>
+        <!-- Login Button -->
+        <app-button-container type="submit" variant="primary" [disabled]="formLogin.invalid"
+                              className="text-white w-full">
+          Iniciar sesión
+        </app-button-container>
+      </form>
+      <!-- Divider -->
+      <div class="relative">
+        <div class="absolute inset-0 flex items-center">
+          <span class="w-full border-t text-btw"></span>
+        </div>
+        <div class="relative flex justify-center text-xs uppercase">
+          <span class="bg-btw-secondary px-2 text-btw">o</span>
+        </div>
+      </div>
+      <!-- Google Login Button -->
+      <div id="google-btn"></div>
+      <!-- Register Link -->
+      <div class="text-center text-sm text-slate-600">
+        ¿No tienes una cuenta?
+        <span (click)="goToRegister()"
+              class="text-primary cursor-pointer hover:text-emerald-700 font-medium transition-colors duration-200 ml-1">
+          Regístrate aquí
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

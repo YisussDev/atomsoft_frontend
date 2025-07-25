@@ -1,0 +1,47 @@
+<div class="relative" appClickOutSide (overflowDetected)="overflowDetect($event)" [widthBox]="200"
+     (clickOutside)="clickOutside()"
+     [widthContainer]="widthContainer" #container>
+  <button (click)="open = !open"
+          class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-btw-secondary px-3 py-2 text-sm font-semibold text-btw shadow-sm">
+    {{ label }}
+    <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+      <path fill-rule="evenodd"
+            d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+            clip-rule="evenodd"/>
+    </svg>
+  </button>
+  <ng-container *ngIf="open">
+    <div style="width: 200px"
+         class="absolute bg-btw-secondary border-btw rounded z-30"
+         [ngStyle]="getOverflowStyle()">
+      <div class="py-1" role="none">
+        <ng-container *ngFor="let action of actions">
+          <ng-container *ngIf="!action.condition">
+            <div class="flex cursor-pointer px-4 py-2 text-sm text-btw gap-1"
+                 (click)="clickOptionAction(action.nameEvent, data)">
+              <ng-container *ngIf="action.typeIcon && (action.typeIcon == 'material')">
+                <span class="material-symbols-outlined">{{ action.icon }}</span>
+              </ng-container>
+              <ng-container *ngIf="!action.typeIcon || (action.typeIcon == 'fa')">
+                <span><i class="fa fa-solid" [ngClass]="'fa-'+action.icon"></i></span>
+              </ng-container>
+              <p>{{ action.label }}</p>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="action.condition && action.condition(data)">
+            <div class="flex cursor-pointer px-4 py-2 text-sm text-btw gap-1"
+                 (click)="clickOptionAction(action.nameEvent, data)">
+              <ng-container *ngIf="action.typeIcon && (action.typeIcon == 'material')">
+                <span class="material-symbols-outlined">{{ action.icon }}</span>
+              </ng-container>
+              <ng-container *ngIf="!action.typeIcon || (action.typeIcon == 'fa')">
+                <span><i class="fa fa-solid" [ngClass]="'fa-'+action.icon"></i></span>
+              </ng-container>
+              <p>{{ action.label }}</p>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+</div>

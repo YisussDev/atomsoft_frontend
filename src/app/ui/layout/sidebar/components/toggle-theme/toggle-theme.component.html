@@ -1,0 +1,7 @@
+<div class="toggle-normal">
+  <div class="options-toggle">
+    <span (click)="setTheme(false)"><i class="fa fa-solid fa-sun"></i></span>
+    <span (click)="setTheme(true)"><i class="fa fa-solid fa-moon"></i></span>
+  </div>
+  <div [class]="themeActive ? 'button-toggle-active':'button-toggle'"></div>
+</div>

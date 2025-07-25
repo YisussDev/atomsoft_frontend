@@ -1,0 +1,15 @@
+<div class="w-16 h-8 flex bg-btw-primary rounded-full shadow-md" *ngIf="false">
+  <div class="h-8 w-8 rounded-full bg-btw-secondary border border-btw"
+       [ngClass]="[((inputValue == 1)? 'transform translate-x-8': '')]" (click)="changeValue()">
+
+  </div>
+</div>
+<div class="w-10 h-10 flex bg-btw-primary rounded-md border-2 border-btw overflow-hidden shadow-md" *ngIf="true">
+  <div
+    class="h-full w-full bg-btw-secondary transition-colors duration-300 flex justify-center items-center text-btw text-lg cursor-pointer"
+    [ngClass]="[((inputValue == 1)? 'bg-green-400 text-white': '')]" (click)="changeValue()">
+    <ng-container *ngIf="inputValue == 1">
+      <span><i class="fa fa-solid fa-check"></i></span>
+    </ng-container>
+  </div>
+</div>

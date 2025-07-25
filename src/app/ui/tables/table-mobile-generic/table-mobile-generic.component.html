@@ -1,0 +1,95 @@
+<div class="table-mobile-container"
+     [ngClass]="{
+     'is-responsive': isResponsive
+     }"
+>
+  <ng-container *ngIf="principalActions.length > 0">
+    <div class="mb-2" style="display: flex; column-gap: 5px; flex-wrap: wrap; row-gap: 5px; justify-content: center">
+      <ng-container *ngFor="let action of principalActions; let i=index">
+        <ng-container *ngIf="i == 0">
+          <app-button-primary
+            [label]="action.label"
+            [icon]="action.icon"
+            (clickEvent)="eventRow({data: '', event: action.nameEvent})"
+          ></app-button-primary>
+        </ng-container>
+        <ng-container *ngIf="i != 0">
+          <app-button-secondary
+            [label]="action.label"
+            [icon]="action.icon"
+            (clickEvent)="eventRow({data: '', event: action.nameEvent})"
+          ></app-button-secondary>
+        </ng-container>
+      </ng-container>
+    </div>
+  </ng-container>
+  <ng-template [ngTemplateOutlet]="headerActionsTable"></ng-template>
+  <div class="h-fit">
+    <ng-template [ngTemplateOutlet]="bodyTableMobile"></ng-template>
+  </div>
+  <div class="h-fit" *ngIf="tableData.length == 0">
+    <app-empty-table [tableLimit]="tableLimit"></app-empty-table>
+  </div>
+</div>
+
+<ng-template #headerActionsTable>
+  <div class="mb-2 m-2 table-header-actions" *ngIf="headerActions">
+    <ng-container *ngFor="let actionHeader of tableHeaderActionsConfig.slice(0,1)">
+      <app-button-primary [label]="actionHeader.label" [icon]="actionHeader.icon"
+                          (clickEvent)="eventRow({data:'', event: actionHeader.nameEvent})"></app-button-primary>
+    </ng-container>
+    <ng-container *ngFor="let actionHeader of tableHeaderActionsConfig.slice(1)">
+      <app-button-secondary [label]="actionHeader.label" [icon]="actionHeader.icon"
+                            (clickEvent)="eventRow({data:'', event: actionHeader.nameEvent})"></app-button-secondary>
+    </ng-container>
+  </div>
+  <ng-container [formGroup]="formSearchQueries">
+    <div class="flex flex-col items-center gap-2 max-w-full mb-2">
+      <ng-container *ngIf="searchActions">
+        <div
+          class="rounded-2xl flex gap-2 border-btw border px-4 py-2 items-center text-btw bg-btw-secondary select-none">
+          <span class="material-symbols-outlined">search</span>
+          <input type="text" placeholder="Buscar..." formControlName="search"
+                 class="h-full hover:outline-0 hover:active:outline-0 focus:outline-0 bg-transparent">
+        </div>
+      </ng-container>
+      <div class="flex flex-wrap justify-center gap-2">
+        <ng-container *ngIf="columnConfigAction">
+          <div
+            class="rounded-2xl flex gap-2 border-btw border px-4 py-2 items-center text-btw bg-btw-secondary select-none cursor-pointer"
+            (click)="openModalEditColumns()">
+            <span class="material-symbols-outlined">view_column</span>
+            <p class="text-xs">Columnas</p>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="exportAction">
+          <div
+            class="rounded-2xl flex gap-2 border-btw border px-4 py-2 items-center text-btw bg-btw-secondary select-none cursor-pointer"
+            (click)="openModalExportData()">
+            <span class="material-symbols-outlined">publish</span>
+            <p class="text-xs">Exportar Datos</p>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <!--    <hr class="text-btw">-->
+  </ng-container>
+</ng-template>
+
+<ng-template #bodyTableMobile>
+  <!--  <div class="header-table-mobile" *ngIf="showHeaderTable">-->
+  <!--    <h4>{{ configTable[0].column_translate }}</h4>-->
+  <!--  </div>-->
+  <div class="mt-2 rounded-md">
+    <ng-container *ngFor="let row of tableData">
+      <app-item-table-generic
+        [dataRow]="row"
+        [configPrinciplesRow]="configPrinciplesRow"
+        [tableColumnConfig]="tableColumnConfig"
+        [tableConfigFieldActions]="tableConfigFieldActions"
+        [validActions]="validActions"
+        (tableEvents)="eventRow($event)"
+      ></app-item-table-generic>
+    </ng-container>
+  </div>
+</ng-template>

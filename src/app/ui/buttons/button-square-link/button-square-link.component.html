@@ -1,0 +1,19 @@
+<div class="group-square">
+  <button
+    class="btn-square btn-{{size || 'sm'}}"
+    [ngStyle]="{
+    backgroundColor: backgroundColor || 'var(--color-bg-second)',
+    color: color || 'var(--color-text-btw)',
+    }"
+    [routerLink]="path || '/'"
+    [routerLinkActive]="classActivated || 'active-option'"
+    [routerLinkActiveOptions]="{exact: true}"
+    (click)="goToPath()"
+    [disabled]="disabled"
+  >
+        <span>
+          <i class="fa fa-solid fa-{{icon || ''}}"></i>
+        </span>
+  </button>
+  <p>{{ text }}</p>
+</div>

@@ -1,0 +1,68 @@
+<ng-container *ngIf="configurationField.type== 'ONE'">
+  <div class="field-item-container">
+    <ng-container *ngIf="configurationField.typeEvent== 'ROUTE'">
+      <div [ngClass]="expanded ? 'info-principle info-principle-active':'info-principle'"
+           [routerLink]="configurationField.resource" (click)="eventField(configurationField)">
+        <div [ngClass]="collapsedSidebar ? 'field-icon-collapsed':'field-icon'">
+          <span><i [ngClass]="configurationField.icon ? ('fa fa-solid fa-'+configurationField.icon): 'fa fa-solid fa-home'"></i></span>
+        </div>
+        <p [ngClass]="collapsedSidebar ? 'field-text-collapsed' : 'field-text'"
+             *ngIf="!collapsedSidebar">{{configurationField.text}}</p>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+<ng-container *ngIf="configurationField.type== 'SECOND'">
+  <div class="field-item-container">
+    <div [ngClass]="expanded ? 'info-principle info-principle-active' :'info-principle'" (click)="expandCollapse()">
+      <div [ngClass]="collapsedSidebar ? 'field-icon-collapsed':'field-icon'">
+        <svg viewBox="0 0 21 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M19.9356 5.05162L17.8013 1.20886C17.6113 0.865678 17.2723 0.653839 16.911 0.653839H3.62085C3.25954 0.653839 2.92058 0.865678 2.73062 1.20886L0.592566 5.05162C-0.509982 7.03443 0.465922 9.79257 2.52575 10.1103C2.67474 10.1315 2.82746 10.1442 2.97645 10.1442C3.94863 10.1442 4.81279 9.66123 5.40504 8.91556C5.99729 9.66123 6.86145 10.1442 7.83363 10.1442C8.8058 10.1442 9.66996 9.66123 10.2622 8.91556C10.8545 9.66123 11.7186 10.1442 12.6908 10.1442C13.6667 10.1442 14.5271 9.66123 15.1194 8.91556C15.7154 9.66123 16.5758 10.1442 17.548 10.1442C17.7007 10.1442 17.8497 10.1315 17.9987 10.1103C20.066 9.79681 21.0456 7.03867 19.9393 5.05162H19.9356ZM18.1514 11.4534H18.1477C17.9502 11.483 17.7491 11.5 17.5442 11.5C17.0824 11.5 16.6391 11.4195 16.2257 11.2754V16.9231H4.30622V11.2712C3.88904 11.4195 3.44206 11.5 2.98018 11.5C2.77531 11.5 2.57045 11.483 2.37303 11.4534H2.36931C2.21659 11.428 2.0676 11.3983 1.92233 11.3559V16.9231V19.6346C1.92233 21.1302 2.99135 22.3461 4.30622 22.3461H16.2257C17.5405 22.3461 18.6095 21.1302 18.6095 19.6346V16.9231V11.3559C18.4606 11.3983 18.3116 11.4322 18.1514 11.4534Z"
+            fill="#AEAEAE"/>
+        </svg>
+      </div>
+      <div [ngClass]="collapsedSidebar ? 'field-text-collapsed' : 'field-text'"
+           *ngIf="!collapsedSidebar">{{configurationField.text}}</div>
+    </div>
+    <ng-container *ngIf="expanded">
+      <ul class="info-collapse-sec">
+        <li *ngFor="let field of configurationField.fields" (click)="eventField(field)">
+          {{field.text}}
+        </li>
+      </ul>
+    </ng-container>
+  </div>
+</ng-container>
+<ng-container *ngIf="configurationField.type== 'THIRD'">
+  <div class="field-item-container">
+    <div [ngClass]="expanded ? 'info-principle info-principle-active' :'info-principle'" (click)="expandCollapse()">
+      <div [ngClass]="collapsedSidebar ? 'field-icon-collapsed':'field-icon'">
+        <svg viewBox="0 0 21 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M19.9356 5.05162L17.8013 1.20886C17.6113 0.865678 17.2723 0.653839 16.911 0.653839H3.62085C3.25954 0.653839 2.92058 0.865678 2.73062 1.20886L0.592566 5.05162C-0.509982 7.03443 0.465922 9.79257 2.52575 10.1103C2.67474 10.1315 2.82746 10.1442 2.97645 10.1442C3.94863 10.1442 4.81279 9.66123 5.40504 8.91556C5.99729 9.66123 6.86145 10.1442 7.83363 10.1442C8.8058 10.1442 9.66996 9.66123 10.2622 8.91556C10.8545 9.66123 11.7186 10.1442 12.6908 10.1442C13.6667 10.1442 14.5271 9.66123 15.1194 8.91556C15.7154 9.66123 16.5758 10.1442 17.548 10.1442C17.7007 10.1442 17.8497 10.1315 17.9987 10.1103C20.066 9.79681 21.0456 7.03867 19.9393 5.05162H19.9356ZM18.1514 11.4534H18.1477C17.9502 11.483 17.7491 11.5 17.5442 11.5C17.0824 11.5 16.6391 11.4195 16.2257 11.2754V16.9231H4.30622V11.2712C3.88904 11.4195 3.44206 11.5 2.98018 11.5C2.77531 11.5 2.57045 11.483 2.37303 11.4534H2.36931C2.21659 11.428 2.0676 11.3983 1.92233 11.3559V16.9231V19.6346C1.92233 21.1302 2.99135 22.3461 4.30622 22.3461H16.2257C17.5405 22.3461 18.6095 21.1302 18.6095 19.6346V16.9231V11.3559C18.4606 11.3983 18.3116 11.4322 18.1514 11.4534Z"
+            fill="#AEAEAE"/>
+        </svg>
+      </div>
+      <div [ngClass]="collapsedSidebar ? 'field-text-collapsed' : 'field-text'"
+           *ngIf="!collapsedSidebar">{{configurationField.text}}</div>
+    </div>
+    <ng-container *ngIf="expanded">
+      <ul class="info-collapse-third">
+        <li *ngFor="let field of configurationField.fields"
+            [ngClass]="(expandedNameLevel == field.text )? 'third-level-active':''">
+          <ul>
+            <li (click)="expandCollapseThirdLevel(field.text)">
+              {{field.text}}
+            </li>
+            <ng-container *ngIf="(expandedNameLevel == field.text) && expandedThirdLevel">
+              <li class="third-collapse" *ngFor="let fieldThird of field.fields" (click)="eventField(fieldThird)">
+                {{fieldThird.text}}
+              </li>
+            </ng-container>
+          </ul>
+        </li>
+      </ul>
+    </ng-container>
+  </div>
+</ng-container>

@@ -1,0 +1,8 @@
+<span
+  [ngClass]="{
+    'text-xs h-4 w-4': sizeIcon == 'small',
+    'text-sm h-6 w-6': sizeIcon == 'medium',
+    'text-lg h-8 w-8': sizeIcon == 'large',
+  }">
+  <i [class]="'fa fa-solid fa-'+ nameIcon"></i>
+</span>

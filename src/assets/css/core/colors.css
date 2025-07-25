@@ -1,0 +1,107 @@
+:root {
+  --color-primary: #00915E;
+  --color-secondary: #005335;
+  --color-border-primary: #342d53;
+  --color-primary-hover: #33ffb9;
+  --color-primary-active: #00d98c;
+  --color-gradient: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  --color-primary-disabled: #E9E9E9;
+  --color-bg: #f6f6f6;
+  --color-bg-second: #FFFFFF;
+  --color-bg-login: #FFFFFF;
+  --color-bg-login-second: #f6f6f6;
+  --color-border: #dadada;
+  --color-border-input: #dcdcdc;
+  --color-inputs-bg: #FFFFFF;
+  --color-inputs-icon: #5d5d5d;
+  --color-text-btw: #5e5e5e;
+  --color-text-button-disabled: #d3d3d3;
+  --color-bg-form: #E9E9E9;
+  --color-active-form: #bdbdbd;
+  --shadow-box-uniform: 0 0 3px 2px rgba(0, 0, 0, 0.10);
+  --shadow-box-general: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+  --shadow-box-general-hover: 0 4px 6px rgba(0, 0, 0, .4), 0 10px 18px rgba(0, 0, 0, .2);
+  --shadow-prime: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --border-radius-general: 5px;
+  --color-navbar: linear-gradient(180deg, #45b05a 0%, #68fb84 100%);
+  --color-bg-button-basic: #FFF;
+  --color-text-button-basic: #515151;
+  --color-bg-button-basic-disabled: #d3d3d3;
+  transition: .3s ease-out color, background-color !important;
+
+  --color-error-control: #e85e42;
+
+  --color-status-active: #1ab394;
+  --color-status-inactive: #ED5565;
+  --color-status-created: #3498db;
+  --color-status-sent: #27ae60;
+
+  --bg-darken-5: rgba(0, 0, 0, 0.05);
+  --bg-darken-10: rgba(0, 0, 0, 0.1);
+  --bg-darken-15: rgba(0, 0, 0, 0.15);
+  --bg-darken-30: rgba(0, 0, 0, 0.30);
+
+  --bg-luminosity-5: rgb(255, 255, 255, 0.05);
+  --bg-luminosity-10: rgba(255, 255, 255, 0.1);
+  --bg-luminosity-15: rgba(255, 255, 255, 0.15);
+  --bg-luminosity-30: rgba(255, 255, 255, 0.30);
+
+  --color-text-general: #3f3f3f;
+
+}
+
+.dark-theme {
+  --color-bg: #343434;
+  --color-bg-second: rgb(42, 42, 42);
+  --color-bg-login: #343434;
+  --color-bg-login-second: rgb(42, 42, 42);
+  --color-border: #212121;
+  --color-border-input: #212121;
+  --color-text-btw: #d5d5d5;
+  --color-text-button-disabled: #232323;
+  --color-bg-button-basic: #373737;
+  --color-text-button-basic: #ffffff;
+  --color-bg-button-basic-disabled: #000000;
+  --color-inputs-icon: #ababab;
+  transition: .3s ease-out color, background-color !important;
+}
+
+.bg-btw-primary {
+  background-color: var(--color-bg);
+}
+
+.bg-btw-secondary {
+  background-color: var(--color-bg-second);
+}
+
+.bg-primary {
+  background-color: var(--color-primary);
+}
+
+.bg-darken-5 {
+  background-color: var(--bg-darken-5);
+}
+
+.bg-darken-10 {
+  background-color: var(--bg-darken-10);
+}
+
+.bg-darken-15 {
+  background-color: var(--bg-darken-15);
+}
+
+.bg-darken-30 {
+  background-color: var(--bg-darken-30);
+}
+
+.bg-luminosity-5 {
+  background-color: var(--bg-luminosity-5);
+}
+
+.bg-luminosity-10 {
+  background-color: var(--bg-luminosity-10);
+}
+
+.bg-luminosity-15 {
+  background-color: var(--bg-luminosity-15);
+}

@@ -1,0 +1,17 @@
+<div class="min-w-full flex px-2 items-center border-b-btw z-30 h-10 bg-btw-primary mb-3">
+  <ng-container *ngFor="let config of tabConfig">
+    <button
+      class="w-fit h-10 gap-1 text-btw flex justify-between items-center p-1 border-b-4 hover:bg-button-primary hover:text-white transition-colors duration-300"
+      [routerLink]="config.path" routerLinkActive="border-primary">
+      <div class="h-7 w-7 flex justify-center items-center">
+        <ng-container *ngIf="config.typeResource == 'icon'">
+          <app-icon-material [nameIcon]="config.resource" sizeIcon="extra_large"></app-icon-material>
+        </ng-container>
+        <ng-container *ngIf="config.typeResource == 'img'">
+          <app-icon-material [nameIcon]="config.resource" sizeIcon="extra_large"></app-icon-material>
+        </ng-container>
+      </div>
+      <p class="text-xs text-over-2-line">{{ config.label }}</p>
+    </button>
+  </ng-container>
+</div>

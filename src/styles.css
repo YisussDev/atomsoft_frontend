@@ -1,0 +1,11 @@
+@import "assets/css/core/core.css";
+@import 'ngx-toastr/toastr';
+@import 'material-symbols/outlined.css';
+
+.material-symbols-outlined {
+  font-size: 20px;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

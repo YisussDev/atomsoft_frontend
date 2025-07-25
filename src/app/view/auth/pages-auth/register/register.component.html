@@ -1,0 +1,87 @@
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br bg-btw-primary p-4 bg-auth">
+  <div class="w-full max-w-md shadow-xl border-0 bg-btw-secondary backdrop-blur-sm rounded-lg">
+    <!-- Header -->
+    <div class="space-y-6 pb-8 pt-8 px-6">
+      <div class="flex justify-center">
+        <app-box-image className="w-24 h-24 flex justify-center items-center">
+          <svg width="253" height="177" viewBox="0 0 253 177" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="126.5" cy="88.5" r="47.5" fill="black"/>
+            <path d="M79 14L22.5699 70.0539C12.3342 80.2214 12.3342 96.7786 22.57 106.946L79 163" stroke="black"
+                  stroke-width="28" stroke-linecap="round"/>
+            <path d="M174 14L230.43 70.0539C240.666 80.2214 240.666 96.7786 230.43 106.946L174 163" stroke="black"
+                  stroke-width="28" stroke-linecap="round"/>
+            <circle cx="50" cy="136" r="21" fill="#910000"/>
+            <circle cx="203" cy="41" r="21" fill="#00915E"/>
+          </svg>
+        </app-box-image>
+      </div>
+      <div class="text-center space-y-2">
+        <h1 class="text-2xl font-semibold text-btw">Bienvenido</h1>
+        <p class="text-btw">Inicia sesión en tu cuenta</p>
+      </div>
+    </div>
+    <!-- Content -->
+    <div class="space-y-6 px-6 pb-8">
+      <form [formGroup]="formRegister" (ngSubmit)="onSubmit()">
+        <combo-input-text
+          inputLabel="Nombre completo"
+          inputPlaceholder="Nombres y apellidos"
+          inputIcon="user"
+          inputName="name"
+          [inputIconActive]="true"
+          [control]="formRegister.controls['name']"
+        >
+        </combo-input-text>
+        <combo-input-text
+          inputLabel="Nombre de usuario"
+          inputPlaceholder="Tu nombre de usuario"
+          inputIcon="user"
+          inputName="username"
+          [inputIconActive]="true"
+          [control]="formRegister.controls['username']"
+        >
+        </combo-input-text>
+        <combo-input-text
+          inputLabel="Correo electrónico"
+          inputPlaceholder="correo@ejemplo.com"
+          inputIcon="envelope"
+          inputName="email"
+          [inputIconActive]="true"
+          [control]="formRegister.controls['email']"
+        >
+        </combo-input-text>
+        <combo-input-password
+          inputLabel="Contraseña"
+          inputPlaceholder="***********"
+          inputIcon="lock"
+          inputName="password"
+          [inputIconActive]="true"
+          [control]="formRegister.controls['password']"
+        >
+        </combo-input-password>
+        <combo-input-password
+          inputLabel="Confirmar contraseña"
+          inputPlaceholder="***********"
+          inputIcon="lock"
+          inputName="password"
+          [inputIconActive]="true"
+          [control]="formRegister.controls['password']"
+        >
+        </combo-input-password>
+        <!-- Login Button -->
+        <div class="grid gap-3">
+          <app-button-container type="submit" variant="primary" [disabled]="formRegister.invalid"
+                                (clickEvent)="onSubmit()"
+                                className="text-white w-full">
+            Registrarse
+          </app-button-container>
+          <app-button-container type="button" variant="outline" [disabled]="formRegister.invalid"
+                                (clickEvent)="cancelSubmit()"
+                                className="text-btw w-full">
+            Cancelar
+          </app-button-container>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

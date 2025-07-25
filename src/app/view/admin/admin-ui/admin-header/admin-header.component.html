@@ -1,0 +1,99 @@
+<header class="bg-btw-secondary border-b border-btw shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo -->
+      <div class="flex justify-center h-16">
+        <div class="object-cover h-16 w-16 flex justify-center items-center p-2">
+          <svg viewBox="0 0 253 177" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="126.5" cy="88.5" r="47.5" fill="black"/>
+            <path d="M79 14L22.5699 70.0539C12.3342 80.2214 12.3342 96.7786 22.57 106.946L79 163" stroke="black"
+                  stroke-width="28" stroke-linecap="round"/>
+            <path d="M174 14L230.43 70.0539C240.666 80.2214 240.666 96.7786 230.43 106.946L174 163" stroke="black"
+                  stroke-width="28" stroke-linecap="round"/>
+            <circle cx="50" cy="136" r="21" fill="#910000"/>
+            <circle cx="203" cy="41" r="21" fill="#00915E"/>
+          </svg>
+        </div>
+      </div>
+      <!-- Search -->
+      <div class="flex-1 max-w-lg mx-8">
+        <div class="relative">
+          <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4"
+               fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607z"/>
+          </svg>
+          <input
+            type="search"
+            placeholder="Buscar aplicaciones..."
+            class="pl-10 pr-4 py-2 w-full border bg-btw-primary border-btw rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+        </div>
+      </div>
+      <!-- User Menu -->
+      <div class="flex items-center space-x-4 relative" appClickOutSide
+           (clickOutside)="closeUserMenu()">
+        <button
+          class="flex items-center space-x-2 hover:bg-button-primary hover:text-white text-btw rounded-md px-3 py-2 transition-colors"
+          (click)="toggleUserMenu()">
+          <div class="h-8 w-8 rounded-full bg-btw-primary flex items-center justify-center overflow-hidden p-1">
+            <svg width="253" height="177" viewBox="0 0 253 177" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="126.5" cy="88.5" r="47.5" fill="black"/>
+              <path d="M79 14L22.5699 70.0539C12.3342 80.2214 12.3342 96.7786 22.57 106.946L79 163" stroke="black"
+                    stroke-width="28" stroke-linecap="round"/>
+              <path d="M174 14L230.43 70.0539C240.666 80.2214 240.666 96.7786 230.43 106.946L174 163" stroke="black"
+                    stroke-width="28" stroke-linecap="round"/>
+              <circle cx="50" cy="136" r="21" fill="#910000"/>
+              <circle cx="203" cy="41" r="21" fill="#00915E"/>
+            </svg>
+          </div>
+          <div class="hidden md:block text-left max-w-32">
+            <p class="text-sm font-medium text-over-1-line">{{ account.name }}</p>
+            <p class="text-xs">{{ account.roles[0].toUpperCase() }}</p>
+          </div>
+          <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
+          </svg>
+        </button>
+        <!-- Dropdown Menu -->
+        <div *ngIf="isUserMenuOpen"
+             class="absolute right-0 top-full mt-2 w-56 bg-btw-secondary rounded-md shadow-lg border border-btw z-50 overflow-hidden">
+          <div class="py-1">
+            <div class="px-4 py-2 text-sm font-medium text-btw border-b border-btw">
+              Mi Cuenta
+            </div>
+            <button
+              class="w-full text-left px-4 py-2 text-sm text-btw hover:bg-button-primary hover:text-white flex items-center"
+              (click)="goToSettings(); closeUserMenu()">
+              <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+              Configuración
+            </button>
+            <button
+              class="w-full text-left px-4 py-2 text-sm text-btw hover:bg-button-primary hover:text-white flex items-center"
+              (click)="goToProfile(); closeUserMenu()">
+              <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+              </svg>
+              Perfil
+            </button>
+            <div class="border-t border-btw my-1"></div>
+            <button
+              class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-button-primary flex items-center"
+              (click)="logout(); closeUserMenu()">
+              <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+              </svg>
+              Cerrar Sesión
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

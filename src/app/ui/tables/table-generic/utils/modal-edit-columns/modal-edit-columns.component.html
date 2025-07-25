@@ -1,0 +1,23 @@
+<ul class="p-4 grid gap-2 w-full overflow-auto max-h-full overflow-y-auto">
+  <ng-container *ngFor="let column of data; let i = index">
+    <li class="w-full border border-btw grid gap-2 bg-btw-secondary shadow rounded-md text-btw h-10"
+        style="grid-template-columns: 30px 1fr auto">
+      <div class="flex justify-center items-center" (click)="changeColumnVisible(column)">
+        <input type="checkbox" [checked]="column.visible">
+      </div>
+      <div class="flex items-center" (click)="changeColumnVisible(column)">
+        <p class="text-1-over">{{ column.column_translate }}</p>
+      </div>
+      <div class="flex">
+        <button [disabled]="i == 0" (click)="moveUp(i)"
+                class="hover:bg-gray-400 hover:text-white px-2 disabled:bg-transparent disabled:text-opacity-10 disabled:text-gray-300">
+          <span><i class="fa fa-solid fa-chevron-up"></i></span>
+        </button>
+        <button [disabled]="i == data.length - 1" (click)="moveDown(i)"
+                class="hover:bg-gray-400 hover:text-white px-2 disabled:bg-transparent disabled:text-opacity-10 disabled:text-gray-300">
+          <span><i class="fa fa-solid fa-chevron-down"></i></span>
+        </button>
+      </div>
+    </li>
+  </ng-container>
+</ul>

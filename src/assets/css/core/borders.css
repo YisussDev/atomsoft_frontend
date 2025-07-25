@@ -1,0 +1,23 @@
+.border-btw {
+  border-color: var(--color-border-input);
+}
+
+.border-primary {
+  border-color: var(--color-primary);
+}
+
+.border-l-btw {
+  border-left: 1px solid var(--color-border-input);
+}
+
+.border-r-btw {
+  border-right: 1px solid var(--color-border-input);
+}
+
+.border-t-btw {
+  border-top: 1px solid var(--color-border-input);
+}
+
+.border-b-btw {
+  border-bottom: 1px solid var(--color-border-input);
+}

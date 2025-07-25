@@ -1,0 +1,23 @@
+<div
+  class="spinner-principle-container"
+  [ngClass]="{
+  'visible': isActive,
+  'hidden': (!isActive && !closing),
+  'closing': closing,
+  }"
+>
+  <div class="spinner center">
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+:root {
+  --bg-input-primary: var(--color-bg-second);
+  --bg-input-primary-hover: #f3f3f3;
+  --bg-button-primary-disabled: #d4c8ff;
+  --bg-button-primary-disabled-hover: #d4c8ff;
+}
+
+.dark-theme {
+  --bg-input-primary: var(--color-bg-second);
+}
+
+.bg-input-primary {
+  @apply bg-[var(--bg-input-primary)];
+  /*background-color: var(--bg-input-primary);*/
+
+  > label {
+    /*background-color: var(--bg-input-primary);*/
+    @apply bg-[var(--bg-input-primary)];
+  }
+  > input {
+    @apply text-sm;
+    @apply text-[var(--color-text-btw)];
+  }
+}
+
+.hover\:bg-input-primary:hover {
+  @apply bg-[var(--bg-input-primary-hover)];
+
+  > label {
+    @apply bg-[var(--bg-input-primary-hover)];
+  }
+}

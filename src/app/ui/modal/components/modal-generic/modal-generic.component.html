@@ -1,0 +1,22 @@
+<ng-container *ngIf="isOpen">
+  <div
+    class="flex justify-center items-center min-h-screen min-w-full max-h-screen max-w-full h-screen w-full bg-darken-10 fixed z-50 top-0 left-0">
+    <ng-template [ngTemplateOutlet]="boxModal"></ng-template>
+  </div>
+</ng-container>
+
+<ng-template #boxModal>
+  <div
+    class="grid rounded shadow-md border-btw max-w-full min-w-36 min-h-24 h-auto w-auto bg-btw-primary modal-box">
+    <div class="flex justify-between w-full py-2 px-4">
+      <p class="text-btw text-1-over">{{ title }}</p>
+      <button (click)="closeModal()"
+              class="rounded-full text-btw hover:bg-gray-400 hover:text-white transition-colors duration-300 h-8 w-8">
+        <span class="pointer-events-none text-sm select-none"><i class="fa fa-solid fa-x"></i></span>
+      </button>
+    </div>
+    <div>
+      <ng-container #modalContainer></ng-container>
+    </div>
+  </div>
+</ng-template>

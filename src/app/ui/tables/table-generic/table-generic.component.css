@@ -1,0 +1,26 @@
+tbody tr:nth-of-type(odd) {
+  border: none;
+  background: var(--color-bg-second);
+}
+
+tbody tr:nth-of-type(even) {
+  border: none;
+  background: var(--color-bg);
+}
+
+tbody tr:last-child {
+  border: none;
+  overflow: hidden;
+  /*background: red;*/
+
+  td:first-child {
+    background: transparent;
+    border-radius: 0 0 0 10px !important;
+  }
+
+  td:last-child {
+    background: transparent;
+    border-radius: 0 0 10px 0 !important;
+  }
+
+}

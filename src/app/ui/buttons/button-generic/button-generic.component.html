@@ -1,0 +1,43 @@
+<ng-container *ngIf="type == 'PRIMARY' || type == 'SECONDARY' || type == 'DANGER'">
+  <button
+    (click)="eventClick()"
+    class="px-4 py-2 text-xs font-medium shadow-md rounded-md transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+    [ngClass]="{
+    'bg-blue-600 text-white hover:bg-blue-700': (type === 'PRIMARY') && fill,
+    'bg-gray-600 text-white hover:bg-gray-700': (type === 'SECONDARY') && fill,
+    'bg-red-600 text-white hover:bg-red-700': (type === 'DANGER') && fill,
+    'border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white': (type === 'PRIMARY') && !fill,
+    'border border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white': (type === 'SECONDARY') && !fill,
+    'border border-red-600 text-red-600 hover:bg-red-600 hover:text-white': (type === 'DANGER') && !fill
+  }"
+    [disabled]="disabled"
+  >
+    <ng-container>
+      <ng-container *ngIf="(icon) && !rightIcon">
+        <span><i class="fa fa-{{icon}} fa-solid"></i></span>
+      </ng-container>
+      <ng-container *ngIf="label">
+        <span class="text-over-1-line">{{ label }}</span>
+      </ng-container>
+      <ng-container *ngIf="(icon) && rightIcon">
+        <span><i class="fa fa-{{icon}} fa-solid"></i></span>
+      </ng-container>
+    </ng-container>
+  </button>
+</ng-container>
+<ng-container *ngIf="type == 'LINK'">
+  <button (click)="eventClick()" class="button-generic font-medium shadow-md button-secondary text-xs"
+          [disabled]="disabled" [routerLink]="path" routerLinkActive="route-active">
+    <ng-container>
+      <ng-container *ngIf="(icon) && !rightIcon">
+        <span><i class="fa fa-{{icon}} fa-solid"></i> </span>
+      </ng-container>
+      <ng-container *ngIf="label">
+        <span class="text-1-over">{{ label }}</span>
+      </ng-container>
+      <ng-container *ngIf="(icon) && rightIcon">
+        <span><i class="fa fa-{{icon}} fa-solid"></i> </span>
+      </ng-container>
+    </ng-container>
+  </button>
+</ng-container>

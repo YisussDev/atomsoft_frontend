@@ -1,0 +1,159 @@
+.options-toggle {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: inherit;
+  transition: .3s ease-out;
+  opacity: 1;
+  overflow: hidden;
+}
+
+.options-toggle-collapsed {
+  position: absolute;
+  width: 0;
+  height: 100%;
+  left: 0;
+  top: 0;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  transition: .3s ease-out;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.options-toggle-collapsed span {
+
+}
+
+.options-toggle span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color: #FFF;
+}
+
+.options-toggle span:hover {
+  cursor: pointer;
+}
+
+.toggle-normal {
+  width: 210px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 50px;
+  height: 50px;
+  padding: 5px 0;
+  position: relative;
+  transition: 0.4s ease-in-out;
+  bottom: 5px;
+  left: 5px;
+  opacity: 1;
+}
+
+.toggle-normal .button-toggle {
+  width: 50%;
+  height: 40px;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 50px;
+  position: absolute;
+  left: 5px;
+  pointer-events: none;
+  transition: .4s left ease-out;
+  opacity: inherit;
+}
+
+.toggle-normal .button-toggle-active {
+  top: 5px;
+  width: 50%;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 50px;
+  position: absolute;
+  left: 100px;
+  pointer-events: none;
+  transition: .4s ease-out;
+  opacity: inherit;
+}
+
+@keyframes opacity {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media (min-width: 760px) and (max-width: 5000px) {
+  .toggle-collapsed {
+    display: block;
+    width: 60px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 50px;
+    height: 150px;
+    padding: 0 5px;
+    position: absolute;
+    transition: 0.4s height ease-in-out;
+    bottom: 5px;
+    left: 5px;
+    opacity: inherit;
+  }
+
+  .toggle-normal {
+    width: 210px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 50px;
+    height: 50px;
+    padding: 5px 0;
+    position: relative;
+    transition: 0.4s width ease-in-out;
+    bottom: 5px;
+    left: 5px;
+    opacity: inherit;
+  }
+
+  .toggle-normal .button-toggle {
+    width: 50%;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 50px;
+    position: absolute;
+    left: 5px;
+    pointer-events: none;
+    transition: .4s left ease-out;
+    opacity: inherit;
+  }
+
+  .toggle-normal .button-toggle-active {
+    top: 5px;
+    width: 50%;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 50px;
+    position: absolute;
+    left: 100px;
+    pointer-events: none;
+    transition: .4s ease-out;
+    opacity: inherit;
+  }
+
+  .options-toggle {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: inherit;
+    opacity: inherit;
+  }
+}

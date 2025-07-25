@@ -1,0 +1,13 @@
+<div class="min-h-screen bg-btw-primary">
+  <app-admin-header></app-admin-header>
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <router-outlet></router-outlet>
+  </main>
+</div>
+
+<!-- Backdrop para cerrar el menú -->
+<div *ngIf="isUserMenuOpen"
+     class="fixed inset-0 z-40"
+     (click)="closeUserMenu()">
+</div>

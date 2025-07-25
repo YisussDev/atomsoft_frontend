@@ -1,0 +1,63 @@
+<div class="flex flex-col mt-2">
+  <div class="relative flex items-center border rounded-md p-2 shadow-sm bg-input-primary"
+       appClickOutSide (clickOutside)="_outFocus()"
+       [ngClass]="[
+         (hasError() ? 'border-red-500': ''),
+         (isValid() ? 'border-green-500': ''),
+       ]">
+    <ng-container *ngIf="(dataVisible.length > 0) && isInputFocused">
+      <ul class="absolute w-full top-12 z-10 rounded-lg bg-btw-secondary shadow-lg border-btw border">
+        <ng-container *ngFor="let option of dataVisible.slice(0,10)">
+          <li
+            class="flex px-2 py-1 cursor-pointer option-to-select"
+            (click)="selectOption(option)"
+          >
+            <p
+              class="text-over-1-line text-xs hover:bg-button-primary hover:text-white py-2 px-2 rounded h-full w-full cursor-pointer"
+              [ngClass]="{
+              'bg-primary text-white active-option': control?.value == option[keyToChangeControl]
+              }"
+            >
+              {{ option[keyToShowControl] }} {{ option[keyToShowSecondControl] ? (' - ' + option[keyToShowSecondControl]) : ('') }}
+            </p>
+          </li>
+        </ng-container>
+      </ul>
+    </ng-container>
+    <div class="absolute left-3 text-btw">
+      <i class="fa fa-solid"
+         [ngClass]="[
+         (hasError() ? 'text-red-500': ''),
+         (isValid() ? 'text-green-500': ''),
+         ((inputIconActive && inputIcon) ? ('fa-'+inputIcon):(''))
+       ]"></i>
+    </div>
+    <input class="w-full pl-2 pr-3 py-1 text-xs border-none outline-none bg-transparent text-btw"
+           [ngClass]="[
+            ((inputIconActive && inputIcon) ? ('pl-8'):(''))
+            ]"
+           type="text"
+           [readOnly]="disabled"
+           [name]="inputName"
+           [id]="classIdentifier"
+           [autocomplete]="inputName"
+           [placeholder]="inputPlaceholder"
+           [ngModel]="inputValue"
+           (focus)="_onFocus()"
+           (ngModelChange)="changeValue($event)"
+           (blur)="touchedControl()">
+    <label class="absolute top-[-12px] left-2 bg-white px-1 text-xs text-btw"
+           [for]="classIdentifier"
+           [ngClass]="[
+         (hasError() ? 'text-red-500': ''),
+         (isValid() ? 'text-green-500': ''),
+       ]">
+      {{ inputLabel }}
+    </label>
+  </div>
+  <p class="text-red-500 text-xs h-4 text-wrap text-over-1-line" [title]="hasError() ? getErrorMessage():''">
+    <ng-container *ngIf="hasError()">
+      {{ getErrorMessage() }}
+    </ng-container>
+  </p>
+</div>

@@ -1,0 +1,12 @@
+<!-- modal.component.html -->
+<div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 animation-opacity z-50 overflow-y-auto">
+  <div class="rounded-lg shadow-lg mx-2 my-8 bg-btw-secondary">
+    <div class="flex justify-between items-center border-b pb-2 p-6">
+      <h2 class="text-lg text-btw font-semibold">{{ title }}</h2>
+      <button (click)="closeModal()" class="text-btw hover:text-gray-800">✖</button>
+    </div>
+    <div class="py-4 grid">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>
