@@ -58,10 +58,11 @@ export class AccountHttpRepository implements AccountRepository {
 
   public login(
     dataToLogin: { email: string; password: string }
-  ): Observable<{ token: string }> {
+  ): Observable<{ token: string; is_two_factor: 0 | 1; }> {
     return this.httpService.post<
       {
-        token: string
+        token: string;
+        is_two_factor: 0 | 1;
       },
       {
         email: string;
@@ -96,6 +97,22 @@ export class AccountHttpRepository implements AccountRepository {
       token: string;
       account: AccountEntity & { jti: string }
     }>(`${this.apiUrl}account/verify/login`, {headers});
+  }
+
+  public consultTwoFactor(): Observable<{ twoFactorCompleted: 0 | 1 }> {
+    const headers: HttpHeaders = new HttpHeaders({
+      "hidden-toast": "true"
+    })
+    return this.httpService.get<{ twoFactorCompleted: 0 | 1 }>(`${this.apiUrl}account/two-factor/consult`, {headers});
+  }
+
+  public verifyTwoFactor(otp: string): Observable<{ validTwoFactor: 0 | 1; }> {
+    const headers: HttpHeaders = new HttpHeaders({
+      "hidden-toast": "true"
+    })
+    return this.httpService.get<{
+      validTwoFactor: 0 | 1;
+    }>(`${this.apiUrl}account/two-factor/verify/${otp}`, {headers});
   }
 
   public consultSessions(username: string): Observable<{ sessions: SessionEntity[] }> {

@@ -1,12 +1,17 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {PagesAuthComponent} from "./pages-auth/pages-auth.component";
+import {AuthComponent} from "@view/auth/auth.component";
 
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./pages-auth/pages-auth.module').then(m => m.PagesAuthModule),
-    component: PagesAuthComponent
+    component: AuthComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./pages-auth/pages-auth.module').then(m => m.PagesAuthModule)
+      },
+    ]
   },
   {
     path: '**', redirectTo: ''

@@ -17,7 +17,10 @@ export class LoginAccountUseCase {
   ) {
   }
 
-  public execute(dataToLogin: { email: string, password: string }): Observable<{ token: string }> {
+  public execute(dataToLogin: { email: string, password: string }): Observable<{
+    token: string;
+    is_two_factor: 0 | 1
+  }> {
     return of(dataToLogin).pipe(
       map(dataLogin => {
         const accountLogin: AccountEntity = Object.assign(new AccountEntity(), dataToLogin);
@@ -29,7 +32,11 @@ export class LoginAccountUseCase {
           tap((response) => {
             localStorage.setItem('x-token', response.token);
             this.notificationService.success("Login successfully!");
-            this.navigationService.navigateTo("/admin").then();
+            if (response.is_two_factor == 1) {
+              this.navigationService.navigateTo("/auth/two-factor-auth").then();
+            } else {
+              this.navigationService.navigateTo("/admin").then();
+            }
           })
         )
       }),

@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import {Subject, takeUntil} from "rxjs";
 import {ModalService} from "../../services/modal.service";
+import {ModalActivateInterface} from "@ui/modal/interfaces/modal-activate.interface";
 
 @Component({
   selector: 'app-modal-generic',
@@ -17,9 +18,9 @@ import {ModalService} from "../../services/modal.service";
 })
 export class ModalGenericComponent implements OnInit, OnDestroy {
 
-  @ViewChild('modalContainer', {read: ViewContainerRef}) containerModal!: ViewContainerRef;
-  public componentInstance!: ComponentRef<any> | null;
+  @ViewChild("modalContainer", {read: ViewContainerRef}) containerModal!: ViewContainerRef;
 
+  public componentInstance!: ComponentRef<any> | null;
   public isOpen: boolean = false;
   public title: string = '';
   private _subscriber: Subject<void> = new Subject<void>();
@@ -38,19 +39,13 @@ export class ModalGenericComponent implements OnInit, OnDestroy {
   private listenEvents(): void {
     this.modalService.startModal.pipe(
       takeUntil(this._subscriber)
-    ).subscribe(data => {
+    ).subscribe((event: ModalActivateInterface<any>) => {
       this.ngZone.run(() => {
-        this.title = data.title;
+        this.title = event.title;
         this.isOpen = true;
         this._cdr.detectChanges();
-        this.componentInstance = this.containerModal.createComponent(data.component);
-        this.componentInstance.instance.data = data.dataList;
-        this.componentInstance.instance.dataGeneric = data.dataGeneric;
-        this.componentInstance.instance.formGeneral = data.formGroup;
-        this.componentInstance.instance.configForm = data.configForm;
-        this.componentInstance.instance.eventName = data.event;
-        this.componentInstance.instance.configLabels = data.configLabels;
-        this.componentInstance.instance.dataAux = data.dataAux;
+        this.componentInstance = this.containerModal.createComponent(event.component);
+        this.componentInstance.instance.data = event.data;
       });
     })
     this.modalService.finishModal.pipe(

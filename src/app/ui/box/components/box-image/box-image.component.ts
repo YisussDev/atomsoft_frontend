@@ -11,7 +11,7 @@ export class BoxImageComponent {
 
   get boxClasses(): string {
 
-    let classes = "w-fit object-cover";
+    let classes = "";
 
     if (this.className) {
       classes += ` ${this.className}`

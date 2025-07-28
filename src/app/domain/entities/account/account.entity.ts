@@ -11,6 +11,7 @@ export class AccountEntity {
   last_password!: string;
   tenant_code!: string;
   active!: 0 | 1;
+  two_factor_auth!: 0 | 1;
   roles!: string[];
   permission!: string[];
 
