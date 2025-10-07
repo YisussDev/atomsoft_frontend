@@ -5,6 +5,7 @@ import {ThemeService} from "@core/services/theme/theme.service";
 import {NavigationService} from "@core/services/navigation/navigation.service";
 import {LoginAccountUseCase} from "@application/use-cases/account/login-account.use-case";
 import {LoginWithGoogleAccountUseCase} from "@application/use-cases/account/login-with-google-account.use-case";
+import {RegisterAccountUseCase} from "@application/use-cases/account/register-account.use-case";
 
 @Component({
   selector: 'app-register',
@@ -19,8 +20,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   constructor(
     private themeService: ThemeService,
     private navigationService: NavigationService,
-    private loginAccountUseCase: LoginAccountUseCase,
-    private loginWithGoogleAccountUseCase: LoginWithGoogleAccountUseCase,
+    private registerAccountUseCase: RegisterAccountUseCase,
     private _formBuilder: FormBuilder,
   ) {
 
@@ -29,11 +29,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.initForm();
     this.initListenTheme();
-
-    (window as any).handleCredentialResponse = (response: any) => {
-      const jwt = response.credential;
-      this.loginWithGoogle(jwt)
-    };
   }
 
   private initListenTheme(): void {
@@ -54,18 +49,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
     })
   }
 
-  public loginWithGoogle(tokenGoogle: string): void {
-    this.loginWithGoogleAccountUseCase.execute(tokenGoogle).subscribe({
-      next: (response) => {
-        console.log(response);
-      }
-    })
-  }
-
   public onSubmit(): void {
     if (this.formRegister.valid) {
       const {email, password} = this.formRegister.controls;
-      this.loginAccountUseCase.execute({email: email.value, password: password.value}).subscribe({
+      this.registerAccountUseCase.execute({email: email.value, password: password.value}).subscribe({
         next: () => {
 
         }

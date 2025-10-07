@@ -3,6 +3,6 @@ export const environment = {
   useHttpRepository: true,
   useFormTest: false,
   socket: {
-    uri: "ws://localhost:3500/",
+    uri: "ws://localhost:3800/",
   }
 }

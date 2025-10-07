@@ -1,9 +1,9 @@
 :root {
-  --color-primary: #00915E;
-  --color-secondary: #005335;
+  --color-primary: #068EB2;
+  --color-secondary: #016983;
   --color-border-primary: #342d53;
-  --color-primary-hover: #33ffb9;
-  --color-primary-active: #00d98c;
+  --color-primary-hover: #068EB2;
+  --color-primary-active: #068EB2;
   --color-gradient: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
   --color-primary-disabled: #E9E9E9;
   --color-bg: #f6f6f6;
@@ -47,7 +47,6 @@
   --bg-luminosity-30: rgba(255, 255, 255, 0.30);
 
   --color-text-general: #3f3f3f;
-
 }
 
 .dark-theme {
@@ -63,7 +62,6 @@
   --color-text-button-basic: #ffffff;
   --color-bg-button-basic-disabled: #000000;
   --color-inputs-icon: #ababab;
-  transition: .3s ease-out color, background-color !important;
 }
 
 .bg-btw-primary {

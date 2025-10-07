@@ -8,6 +8,6 @@ import {Component, Input} from '@angular/core';
 export class IconMaterialComponent {
 
   @Input() public nameIcon: string = "gear";
-  @Input() public sizeIcon: "small" | "medium" | "large" | "extra_large" = "small";
+  @Input() public sizeIcon: "small" | "medium" | "large" | "extra_large" | "maximum" = "small";
 
 }

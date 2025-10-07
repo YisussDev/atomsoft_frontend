@@ -12,7 +12,7 @@ export class BoxSimpleComponent {
 
   get boxClasses(): string {
 
-    let classes = "w-fit shadow-xl border-0 bg-btw-secondary backdrop-blur-sm rounded-lg";
+    let classes = "w-fit bg-btw-secondary backdrop-blur-sm rounded-lg";
 
     if (this.className) {
       classes += ` ${this.className}`

@@ -7,7 +7,7 @@ import {AccountEntity} from "@domain/entities/account/account.entity";
 import {NavigationService} from "@core/services/navigation/navigation.service";
 
 @Injectable()
-export class LoginAccountUseCase {
+export class RegisterAccountUseCase {
 
   constructor(
     @Inject("AccountRepository")
@@ -17,10 +17,10 @@ export class LoginAccountUseCase {
   ) {
   }
 
-  public execute(dataToLogin: { email: string, password: string }): Observable<{ token: string }> {
-    return of(dataToLogin).pipe(
+  public execute(dataToRegister: { email: string; password: string }): Observable<{ token: string }> {
+    return of(dataToRegister).pipe(
       map(dataLogin => {
-        const accountLogin: AccountEntity = Object.assign(new AccountEntity(), dataToLogin);
+        const accountLogin: AccountEntity = Object.assign(new AccountEntity(), dataToRegister);
         accountLogin.validateToLogin();
         return dataLogin;
       }),

@@ -70,7 +70,7 @@
   align-items: center;
   border-radius: 5px;
   border: none;
-  background-image: url("src/assets/img/buttons/button-bg.svg");
+  /*background-image: url("src/assets/img/buttons/button-bg.svg");*/
   background-position: center;
   background-size: cover;
   background-color: var(--color-bg-second);

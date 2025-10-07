@@ -9,6 +9,7 @@ import {ConsultSessionsAccountUseCase} from "@application/use-cases/account/cons
 import {CloseSessionAccountUseCase} from "@application/use-cases/account/close-session-account.use-case";
 import {ConsultTwoFactorAccountUseCase} from "@application/use-cases/account/consult-two-factor-account.use-case";
 import {VerifyTwoFactorAccountUseCase} from "@application/use-cases/account/verify-two-factor-account.use-case";
+import {RegisterAccountUseCase} from "@application/use-cases/account/register-account.use-case";
 
 @NgModule({
   imports: [],
@@ -25,7 +26,8 @@ import {VerifyTwoFactorAccountUseCase} from "@application/use-cases/account/veri
     ConsultSessionsAccountUseCase,
     CloseSessionAccountUseCase,
     ConsultTwoFactorAccountUseCase,
-    VerifyTwoFactorAccountUseCase
+    VerifyTwoFactorAccountUseCase,
+    RegisterAccountUseCase
   ],
   exports: []
 })

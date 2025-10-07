@@ -35,3 +35,10 @@
 .hover\:bg-button-secondary:hover {
   @apply bg-[var(--bg-button-secondary-hover)];
 }
+
+.button-gradient {
+  background-image: url("/assets/utils/bg_button.svg");
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  background-size: cover;
+}

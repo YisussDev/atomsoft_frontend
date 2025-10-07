@@ -4,6 +4,7 @@ import {AdminHeaderComponent} from './admin-header/admin-header.component';
 import {AccountUseCaseModule} from "@application/use-cases/account/account.use-case.module";
 import {ClickOutsideModule} from "@core/directives/click-outside/click-outside.module";
 import {RouterLink} from "@angular/router";
+import {IconsModule} from "@ui/icons/icons.module";
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {RouterLink} from "@angular/router";
         CommonModule,
         AccountUseCaseModule,
         ClickOutsideModule,
-        RouterLink
+        RouterLink,
+        IconsModule
     ]
 })
 export class AdminUiModule {
