@@ -1,0 +1,172 @@
+import {
+  Body,
+  Controller,
+  Post,
+  Get,
+  Headers,
+  Param,
+  Patch,
+  Delete,
+  Query,
+} from "@nestjs/common";
+import { ThrowException } from "../../../../../shared/exceptions/throw.exception";
+import { ValidatorException } from "../../../../../shared/exceptions/validator.exception";
+import { MikroOrmException } from "../../../../../shared/exceptions/mikro-orm.exception";
+import { AccountNotAuthorizedException } from "../../../../../shared/exceptions/account-not-authorized.exception";
+import { SessionContextModel } from "@core/models/session/session.model";
+import { ValidateSessionUseCase } from "@application/ports/in/session/validate-session.use-case";
+
+import { {{NamePrincipalModule}}Entity } from "@domain/entities/{{NameNormalModule}}/{{NameNormalModule}}.entity";
+import { FindAll{{NamePrincipalModule}}UseCase } from "@application/ports/in/{{NameNormalModule}}/find-all-{{NameNormalModule}}.use-case";
+import { FindOne{{NamePrincipalModule}}UseCase } from "@application/ports/in/{{NameNormalModule}}/find-one-{{NameNormalModule}}.use-case";
+import { Create{{NamePrincipalModule}}UseCase } from "@application/ports/in/{{NameNormalModule}}/create-{{NameNormalModule}}.use-case";
+import { Update{{NamePrincipalModule}}UseCase } from "@application/ports/in/{{NameNormalModule}}/update-{{NameNormalModule}}.use-case";
+import { Delete{{NamePrincipalModule}}UseCase } from "@application/ports/in/{{NameNormalModule}}/delete-{{NameNormalModule}}.use-case";
+
+@Controller("{{NameNormalModule}}")
+export class {{NamePrincipalModule}}InHttpController {
+  constructor(
+    private findAll{{NamePrincipalModule}}UseCase: FindAll{{NamePrincipalModule}}UseCase,
+    private findOne{{NamePrincipalModule}}UseCase: FindOne{{NamePrincipalModule}}UseCase,
+    private create{{NamePrincipalModule}}UseCase: Create{{NamePrincipalModule}}UseCase,
+    private update{{NamePrincipalModule}}UseCase: Update{{NamePrincipalModule}}UseCase,
+    private delete{{NamePrincipalModule}}UseCase: Delete{{NamePrincipalModule}}UseCase,
+    private validateSessionUseCase: ValidateSessionUseCase,
+  ) {}
+
+  @Get("")
+  public async findAll(
+    @Headers() headers: any,
+    @Query()
+    queryParams: {
+      [key: string]: string | number;
+    },
+  ): Promise<{
+    data: {{NamePrincipalModule}}Entity[];
+  }> {
+    try {
+      const sessionContext: SessionContextModel =
+        await this.validateSessionUseCase.execute(headers);
+      return await this.findAll{{NamePrincipalModule}}UseCase.execute(
+        sessionContext,
+        queryParams,
+      );
+    } catch (error) {
+      if (error instanceof AccountNotAuthorizedException) {
+        ThrowException("http", error.message);
+      }
+      if (error instanceof ValidatorException) {
+        ThrowException("http", error.message, 400);
+      }
+      if (error instanceof MikroOrmException) {
+        ThrowException("http", error.message, 400);
+      }
+      throw error;
+    }
+  }
+
+  @Get(":keyToSearch")
+  public async findOne(
+    @Headers() headers: any,
+    @Param("keyToSearch") keyToSearch: string,
+  ): Promise<{
+    data: {{NamePrincipalModule}}Entity | null;
+  }> {
+    try {
+      const sessionContext: SessionContextModel =
+        await this.validateSessionUseCase.execute(headers);
+      return await this.findOne{{NamePrincipalModule}}UseCase.execute(sessionContext, {
+        id: keyToSearch,
+      });
+    } catch (error) {
+      if (error instanceof AccountNotAuthorizedException) {
+        ThrowException("http", error.message);
+      }
+      if (error instanceof ValidatorException) {
+        ThrowException("http", error.message, 400);
+      }
+      if (error instanceof MikroOrmException) {
+        ThrowException("http", error.message, 400);
+      }
+      throw error;
+    }
+  }
+
+  @Post("")
+  public async create(
+    @Headers() headers: any,
+    @Body() body: any,
+  ): Promise<void> {
+    try {
+      await this.create{{NamePrincipalModule}}UseCase.execute(headers, body);
+      return;
+    } catch (error) {
+      if (error instanceof AccountNotAuthorizedException) {
+        ThrowException("http", error.message);
+      }
+      if (error instanceof ValidatorException) {
+        ThrowException("http", error.message, 400);
+      }
+      if (error instanceof MikroOrmException) {
+        ThrowException("http", error.message, 400);
+      }
+      throw error;
+    }
+  }
+
+  @Patch(":keyToSearch")
+  public async update(
+    @Headers() headers: any,
+    @Param("keyToSearch") keyToSearch: string,
+    @Body() body: any,
+  ): Promise<{
+    data: {{NamePrincipalModule}}Entity;
+  }> {
+    try {
+      const sessionContext: SessionContextModel =
+        await this.validateSessionUseCase.execute(headers);
+      return await this.update{{NamePrincipalModule}}UseCase.execute(
+        sessionContext,
+        keyToSearch,
+        body,
+      );
+    } catch (error) {
+      if (error instanceof AccountNotAuthorizedException) {
+        ThrowException("http", error.message);
+      }
+      if (error instanceof ValidatorException) {
+        ThrowException("http", error.message, 400);
+      }
+      if (error instanceof MikroOrmException) {
+        ThrowException("http", error.message, 400);
+      }
+      throw error;
+    }
+  }
+
+  @Delete(":keyToSearch")
+  public async delete(
+    @Headers() headers: any,
+    @Param("keyToSearch") keyToSearch: string,
+  ): Promise<void> {
+    try {
+      const sessionContext: SessionContextModel =
+        await this.validateSessionUseCase.execute(headers);
+      return await this.delete{{NamePrincipalModule}}UseCase.execute(
+        sessionContext,
+        keyToSearch,
+      );
+    } catch (error) {
+      if (error instanceof AccountNotAuthorizedException) {
+        ThrowException("http", error.message);
+      }
+      if (error instanceof ValidatorException) {
+        ThrowException("http", error.message, 400);
+      }
+      if (error instanceof MikroOrmException) {
+        ThrowException("http", error.message, 400);
+      }
+      throw error;
+    }
+  }
+}

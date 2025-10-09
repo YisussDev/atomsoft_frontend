@@ -7,10 +7,13 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "hexagon:domain": "npx ts-node src/scripts/domain/createDomainComplete.ts",
-    "hexagon:infrastructure:http": "ts-node src/scripts/infrastructure/http/createInfrastructureHttpComplete.ts",
-    "hexagon:infrastructure:local": "ts-node src/scripts/infrastructure/local/createInfrastructureLocalComplete.ts",
-    "hexagon:application": "ts-node src/scripts/application/createApplicationComplete.ts"
+    "hexagonal:frontend:create-domain": "ts-node src/scripts/frontend/domain/create-domain-api-gateway.ts",
+    "hexagonal:frontend:create-application:complete": "ts-node src/scripts/frontend/application/create-application-api-gateway.ts",
+    "hexagonal:frontend:create-application:use-case": "ts-node src/scripts/frontend/application/create-application-use-case-api-gateway.ts",
+    "hexagonal:frontend:create-infrastructure:in:http": "ts-node src/scripts/frontend/infrastructure/adapters/in/http/create-infrastructure-in-http-api-gateway.ts",
+    "hexagonal:frontend:create-infrastructure:out:local": "ts-node src/scripts/frontend/infrastructure/adapters/out/local/create-infrastructure-out-local-api-gateway.ts",
+    "hexagonal:frontend:create-infrastructure:out:http": "ts-node src/scripts/frontend/infrastructure/adapters/out/http/create-infrastructure-out-http-api-gateway.ts",
+    "hexagonal:frontend:create-composition": "ts-node src/scripts/frontend/compositions/create-composition-api-gateway.ts"
   },
   "private": true,
   "dependencies": {
@@ -57,6 +60,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "tailwindcss": "^3.4.10",
+    "ts-node": "^10.9.2",
     "typescript": "~5.1.3"
   }
 }

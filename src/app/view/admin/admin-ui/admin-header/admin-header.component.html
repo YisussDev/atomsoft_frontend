@@ -1,14 +1,29 @@
 <header class="bg-btw-secondary border-b border-btw shadow-sm">
-  <div class="px-2 lg:px-8">
-    <div class="flex justify-between items-center h-16">
+  <div class="px-2 lg:px-2 py-1">
+    <div class="flex justify-between items-center h-10">
       <!-- Logo -->
       <div class="flex gap-1 items-center">
-        <button
-          class="h-12 w-12 rounded-md flex justify-center items-center text-btw px-2 py-2 hover:bg-button-primary hover:text-white transition-colors duration-300 ease-out">
-          <app-icon-material nameIcon="apps" sizeIcon="maximum"></app-icon-material>
-        </button>
-        <div class="flex justify-center h-16 cursor-pointer" routerLink="/admin/home">
-          <div class="object-cover h-16 w-16 flex justify-center items-center p-2">
+        <div class="flex items-center space-x-4 relative" appClickOutSide (clickOutside)="closeAppsMenu()"
+             [widthBox]="300" [widthContainer]="40">
+          <button
+            (click)="toggleAppsMenu()"
+            class="h-10 w-10 rounded-md border border-btw flex justify-center items-center text-btw hover:bg-button-primary hover:text-white transition-colors duration-300 ease-out">
+            <app-icon-material nameIcon="apps" sizeIcon="extra_large"
+                               class="flex justify-center items-center"></app-icon-material>
+          </button>
+          <div *ngIf="isAppsMenuOpen"
+               class="absolute -left-4 top-full mt-2 w-56 bg-btw-secondary rounded-md shadow-lg border border-btw z-50 overflow-hidden w-screen max-w-80">
+            <div class="p-2">
+              <div class="grid grid-cols-3">
+                <div>App 1</div>
+                <div>App 2</div>
+                <div>App 3</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-center h-12 cursor-pointer" routerLink="/admin/home">
+          <div class="object-cover h-12 w-12 flex justify-center items-center p-2">
             <img src="assets/img/logos/logo_praxi.svg" alt="logo_praxi" class="object-cover h-full">
           </div>
         </div>
@@ -31,7 +46,7 @@
       <div class="flex items-center space-x-4 relative" appClickOutSide
            (clickOutside)="closeUserMenu()">
         <button
-          class="flex items-center space-x-2 hover:bg-button-primary hover:text-white text-btw rounded-md px-3 py-2 transition-colors"
+          class="flex items-center space-x-2 hover:bg-button-primary hover:text-white text-btw rounded-md transition-colors p-1"
           (click)="toggleUserMenu()">
           <div class="h-8 w-8 rounded-full bg-btw-primary flex items-center justify-center overflow-hidden p-1">
             <img src="assets/img/logos/logo_praxi.svg" alt="logo_praxi" class="object-cover h-full">

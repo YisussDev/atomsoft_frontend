@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AccountEntity} from "@domain/entities/account/account.entity";
-import {CacheStorage} from "@infrastructure/adapters/storage/cache/cache.storage";
+import {CacheStorage} from "@infrastructure/adapters/out/storage/cache/cache.storage";
 
 @Component({
   selector: 'app-profile-configuration',

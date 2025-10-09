@@ -1,0 +1,27 @@
+import {Inject, Injectable} from "@angular/core";
+import {mergeMap, Observable, of, throwError} from "rxjs";
+import {catchError} from "rxjs/operators";
+
+import {{{NamePrincipalModule}}RepositoryPort} from "@application/ports/out/{{NameNormalModule}}/{{NameNormalModule}}.repository.port";
+
+@Injectable()
+export class Delete{{NamePrincipalModule}}UseCase {
+
+  constructor(
+    @Inject("{{NamePrincipalModule}}RepositoryPort")
+    private readonly repository: {{NamePrincipalModule}}RepositoryPort,
+  ) {
+  }
+
+  public execute(keyToDelete: string): Observable<void> {
+    return of().pipe(
+      mergeMap(() => {
+        return this.repository.delete(keyToDelete);
+      }),
+      catchError((error: any) => {
+        return throwError(() => error);
+      })
+    )
+  }
+
+}

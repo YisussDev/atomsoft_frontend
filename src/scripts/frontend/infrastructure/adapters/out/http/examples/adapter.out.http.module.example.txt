@@ -1,0 +1,18 @@
+import {NgModule} from "@angular/core";
+
+import {{{NamePrincipalModule}}OutHttpRepository} from "@infrastructure/adapters/out/http/{{NameNormalModule}}/{{NameNormalModule}}.out.http.repository";
+import {ClientOutHttpModule} from "@infrastructure/adapters/out/http/client/client.out.http.module";
+
+@NgModule({
+  imports: [
+    ClientOutHttpModule
+  ],
+  providers: [
+    {
+      provide: "{{NamePrincipalModule}}RepositoryPort",
+      useClass: {{NamePrincipalModule}}OutHttpRepository
+    }
+  ],
+})
+export class {{NamePrincipalModule}}OutHttpModule {
+}

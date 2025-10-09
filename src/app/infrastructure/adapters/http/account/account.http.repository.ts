@@ -20,7 +20,6 @@ export class AccountHttpRepository implements AccountRepository {
 
   public findAll(
     query: { [p: string]: any },
-    options: { [p: string]: any }
   ): Observable<{
     data: AccountEntity[];
     pageActual?: number;
@@ -32,7 +31,6 @@ export class AccountHttpRepository implements AccountRepository {
 
   public findOne(
     query: { [p: string]: string },
-    options: { [p: string]: any }
   ): Observable<AccountEntity | null> {
     return of();
   }

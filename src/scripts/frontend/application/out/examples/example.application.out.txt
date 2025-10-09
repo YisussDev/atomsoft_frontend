@@ -1,0 +1,32 @@
+import {Observable} from "rxjs";
+
+import {{{NamePrincipalModule}}Entity} from "@domain/entities/{{NameNormalModule}}/{{NameNormalModule}}.entity";
+
+export interface {{NamePrincipalModule}}RepositoryPort {
+  findAll(
+    query: { [T: string]: any }
+  ): Observable<{
+    data: {{NamePrincipalModule}}Entity[];
+    pageActual?: number;
+    limitActual?: number;
+    totalFounded?: number;
+  }>;
+
+  findOne(
+    query: { [key: string]: string | number },
+  ): Observable<{ data: {{NamePrincipalModule}}Entity | null }>;
+
+  create(
+    dataToCreate: {{NamePrincipalModule}}Entity,
+  ): Observable<{{NamePrincipalModule}}Entity>;
+
+  update(
+    keyToSearch: string,
+    dataToUpdate: {{NamePrincipalModule}}Entity,
+  ): Observable<{ data: {{NamePrincipalModule}}Entity }>;
+
+  delete(
+    keyToDelete: string,
+  ): Observable<void>;
+
+}

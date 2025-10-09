@@ -1,0 +1,28 @@
+import {Inject, Injectable} from "@angular/core";
+import {mergeMap, Observable, of, throwError} from "rxjs";
+import {catchError} from "rxjs/operators";
+
+import {{{NamePrincipalModule}}Entity} from "@domain/entities/{{NameNormalModule}}/{{NameNormalModule}}.entity";
+import {{{NamePrincipalModule}}RepositoryPort} from "@application/ports/out/{{NameNormalModule}}/{{NameNormalModule}}.repository.port";
+
+@Injectable()
+export class FindOne{{NamePrincipalModule}}UseCase {
+
+  constructor(
+    @Inject("{{NamePrincipalModule}}RepositoryPort")
+    private readonly repository: {{NamePrincipalModule}}RepositoryPort,
+  ) {
+  }
+
+  public execute(query: { [key: string]: string | number }): Observable<{ data: {{NamePrincipalModule}}Entity | null }> {
+    return of().pipe(
+      mergeMap(() => {
+        return this.repository.findOne(query);
+      }),
+      catchError((error: any) => {
+        return throwError(() => error);
+      })
+    )
+  }
+
+}

@@ -1,0 +1,15 @@
+import {Module} from '@nestjs/common';
+import {{{NamePrincipalModule}}InHttpController} from "@infrastructure/adapters/in/http/{{NameNormalModule}}/{{NameNormalModule}}.in.http.controller";
+
+
+@Module({
+    imports: [
+
+    ],
+    controllers: [
+        {{NamePrincipalModule}}InHttpController,
+    ],
+    exports: []
+})
+export class {{NamePrincipalModule}}InHttpModule {
+}

@@ -19,8 +19,8 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.initSocket();
-    this.initListenCloseSession();
+    // this.initSocket();
+    // this.initListenCloseSession();
   }
 
   private initSocket(): void {

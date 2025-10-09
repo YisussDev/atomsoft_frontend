@@ -1,0 +1,25 @@
+import {Inject, Injectable} from "@nestjs/common";
+import {SessionContextModel} from "@core/models/session/session.model";
+import {PermissionService} from "@application/services/permission/permission.service";
+import {{{NamePrincipalModule}}Entity} from "@domain/entities/{{NameNormalModule}}/{{NameNormalModule}}.entity";
+import {{{NamePrincipalModule}}RepositoryPort} from "@application/ports/out/{{NameNormalModule}}/{{NameNormalModule}}.repository.port";
+
+@Injectable()
+export class {{NameUseCaseModule}}{{NamePrincipalModule}}UseCase {
+
+    constructor(
+        @Inject("{{NamePrincipalModule}}RepositoryPort") private repository: {{NamePrincipalModule}}RepositoryPort,
+        private permissionService: PermissionService
+    ) {
+    }
+
+    public async execute(sessionContext: SessionContextModel): Promise<void> {
+        try {
+            await this.permissionService.validatePermission(sessionContext.username, "{{NameNormalModule}}.{{NameNormalUseCaseModule}}", "http");
+            return;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+}

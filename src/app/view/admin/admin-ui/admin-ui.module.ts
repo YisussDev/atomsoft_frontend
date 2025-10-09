@@ -14,13 +14,13 @@ import {IconsModule} from "@ui/icons/icons.module";
   exports: [
     AdminHeaderComponent
   ],
-    imports: [
-        CommonModule,
-        AccountUseCaseModule,
-        ClickOutsideModule,
-        RouterLink,
-        IconsModule
-    ]
+  imports: [
+    CommonModule,
+    AccountUseCaseModule,
+    ClickOutsideModule,
+    RouterLink,
+    IconsModule
+  ]
 })
 export class AdminUiModule {
 }

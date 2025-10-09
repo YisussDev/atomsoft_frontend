@@ -1,0 +1,31 @@
+import {Module} from "@nestjs/common";
+import {RedisModule} from "@infrastructure/redis/redis.module";
+import {PermissionService} from "@application/services/permission/permission.service";
+import {FindAll{{NamePrincipalModule}}UseCase} from "@application/ports/in/{{NameNormalModule}}/find-all-{{NameNormalModule}}.use-case";
+import {FindOne{{NamePrincipalModule}}UseCase} from "@application/ports/in/{{NameNormalModule}}/find-one-{{NameNormalModule}}.use-case";
+import {Create{{NamePrincipalModule}}UseCase} from "@application/ports/in/{{NameNormalModule}}/create-{{NameNormalModule}}.use-case";
+import {Update{{NamePrincipalModule}}UseCase} from "@application/ports/in/{{NameNormalModule}}/update-{{NameNormalModule}}.use-case";
+import {Delete{{NamePrincipalModule}}UseCase} from "@application/ports/in/{{NameNormalModule}}/delete-{{NameNormalModule}}.use-case";
+
+@Module({
+    imports: [
+        RedisModule
+    ],
+    providers: [
+        PermissionService,
+        FindAll{{NamePrincipalModule}}UseCase,
+        FindOne{{NamePrincipalModule}}UseCase,
+        Create{{NamePrincipalModule}}UseCase,
+        Update{{NamePrincipalModule}}UseCase,
+        Delete{{NamePrincipalModule}}UseCase,
+    ],
+    exports: [
+        FindAll{{NamePrincipalModule}}UseCase,
+        FindOne{{NamePrincipalModule}}UseCase,
+        Create{{NamePrincipalModule}}UseCase,
+        Update{{NamePrincipalModule}}UseCase,
+        Delete{{NamePrincipalModule}}UseCase,
+    ]
+})
+export class {{NamePrincipalModule}}UseCaseModule {
+}

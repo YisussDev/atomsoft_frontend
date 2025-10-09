@@ -1,0 +1,39 @@
+<div class="carousel-container h-fit">
+  <div class="carousel-wrapper h-fit">
+    <div class="carousel-slides"
+         [style.transform]="'translateX(-' + currentIndex * 100 + '%)'">
+      <div *ngFor="let item of items" class="carousel-slide h-fit">
+        <div class="slide-content h-fit">
+          <ng-template [ngTemplateOutlet]="item.template"></ng-template>
+        </div>
+      </div>
+    </div>
+    <button *ngIf="showNavButtons && items.length > 1"
+            class="nav-button prev"
+            (click)="prevSlide()"
+            [disabled]="!enableNavButtons"
+            aria-label="Anterior">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M15 18l-6-6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <button *ngIf="showNavButtons && items.length > 1"
+            class="nav-button next"
+            (click)="nextSlide()"
+            [disabled]="!enableNavButtons"
+            aria-label="Siguiente">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M9 18l6-6-6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+  <div *ngIf="showIndicators && items.length > 1" class="carousel-indicators">
+    <button *ngFor="let item of items; let i = index"
+            class="indicator"
+            [class.active]="i === currentIndex"
+            (click)="goToSlide(i)"
+            [disabled]="!enableIndicators"
+            [attr.aria-label]="'Ir al slide ' + (i + 1)">
+    </button>
+  </div>
+</div>

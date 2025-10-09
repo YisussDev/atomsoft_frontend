@@ -14,6 +14,7 @@ import {ErrorInterceptor} from "@core/interceptors/error.interceptor";
 import {AuthInterceptor} from "@core/interceptors/auth.interceptor";
 import {AsideModule} from "@ui/aside/aside.module";
 import {SocketModule} from "@infrastructure/ports/socket/socket.module";
+import {AccountCompositionModule} from "./composition/account/account.composition.module";
 
 const tippyConfig: NgxTippyProps = {
   delay: [100, 0], // [delayShow, delayHide] en milisegundos
@@ -45,7 +46,8 @@ const tippyConfig: NgxTippyProps = {
       positionClass: 'toast-bottom-right',
     }),
     AsideModule,
-    SocketModule
+    SocketModule,
+    AccountCompositionModule
   ],
   providers: [
     {

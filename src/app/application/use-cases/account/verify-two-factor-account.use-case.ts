@@ -2,11 +2,9 @@ import {Inject, Injectable} from "@angular/core";
 import {AccountRepository} from "@domain/repositories/account/account.repository";
 import {map, mergeMap, Observable, of, throwError} from "rxjs";
 import {catchError, tap} from "rxjs/operators";
-import {CacheStorage} from "@infrastructure/adapters/storage/cache/cache.storage";
 import {NotificationService} from "@core/services/notification/notification.service";
-import {AccountEntity} from "@domain/entities/account/account.entity";
-import {SocketService} from "@infrastructure/ports/socket/services/socket.service";
 import {NavigationService} from "@core/services/navigation/navigation.service";
+import {CacheStorage} from "@infrastructure/adapters/out/storage/cache/cache.storage";
 
 @Injectable()
 export class VerifyTwoFactorAccountUseCase {

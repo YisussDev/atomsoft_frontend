@@ -1,0 +1,39 @@
+import {Inject, Injectable} from "@angular/core";
+import {mergeMap, Observable, of, throwError} from "rxjs";
+import {catchError, tap} from "rxjs/operators";
+import {ValidatorException} from "@shared/exceptions/validator.exception";
+import {NotificationUi} from "@infrastructure/ui/services/notification/notification.ui";
+
+import {{{NamePrincipalModule}}Entity} from "@domain/entities/{{NameNormalModule}}/{{NameNormalModule}}.entity";
+import {{{NamePrincipalModule}}RepositoryPort} from "@application/ports/out/{{NameNormalModule}}/{{NameNormalModule}}.repository.port";
+
+@Injectable()
+export class Create{{NamePrincipalModule}}UseCase {
+
+    constructor(
+        @Inject("{{NamePrincipalModule}}RepositoryPort")
+        private readonly repository: {{NamePrincipalModule}}RepositoryPort,
+        private notificationUi: NotificationUi
+    ) {
+    }
+
+    public execute(dataToCreate: {{NamePrincipalModule}}Entity): Observable<{{NamePrincipalModule}}Entity> {
+        return of(dataToCreate).pipe(
+            tap(dataTap => {
+                const instanceDomain: {{NamePrincipalModule}}Entity = Object.assign(new {{NamePrincipalModule}}Entity(), dataTap);
+                instanceDomain.validateToCreate();
+                return dataTap;
+            }),
+            mergeMap((dataTapped) => {
+                return this.repository.create(dataTapped);
+            }),
+            catchError((error: any) => {
+                if (error instanceof ValidatorException) {
+                    this.notificationUi.showError("Domain error...");
+                }
+                return throwError(() => error);
+            })
+        )
+    }
+
+}

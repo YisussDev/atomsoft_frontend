@@ -29,3 +29,7 @@
   text-overflow: ellipsis;
   white-space: normal;
 }
+
+.text-xxs {
+  font-size: 0.65rem;
+}

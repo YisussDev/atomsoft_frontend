@@ -1,0 +1,89 @@
+import {Injectable} from "@angular/core";
+import {map, Observable} from "rxjs";
+import {HttpService} from "@core/services/http/http.service";
+import {HttpHeaders} from "@angular/common/http";
+
+import {environment} from "../../../../../../environments/environment";
+
+import {{{NamePrincipalModule}}RepositoryPort} from "@application/ports/out/{{NameNormalModule}}/{{NameNormalModule}}.repository.port";
+import {{{NamePrincipalModule}}Entity} from "@domain/entities/{{NameNormalModule}}/{{NameNormalModule}}.entity";
+import {{{NamePrincipalModule}}OutHttpEntity} from "@infrastructure/adapters/out/http/{{NameNormalModule}}/{{NameNormalModule}}.out.http.entity";
+import {{{NamePrincipalModule}}OutHttpMapper} from "@infrastructure/adapters/out/http/{{NameNormalModule}}/{{NameNormalModule}}.out.http.mapper";
+
+@Injectable()
+export class {{NamePrincipalModule}}OutHttpRepository implements {{NamePrincipalModule}}RepositoryPort {
+
+  public readonly apiUrl = environment.uri;
+
+  public mapper: {{NamePrincipalModule}}OutHttpMapper = new {{NamePrincipalModule}}OutHttpMapper();
+
+
+  constructor(
+    private httpService: HttpService
+  ) {
+  }
+
+  public findAll(
+    query: { [p: string]: any },
+  ): Observable<{
+    data: {{NamePrincipalModule}}Entity[];
+    pageActual?: number;
+    limitActual?: number;
+    totalFounded?: number;
+  }> {
+    return this.httpService.get<{
+      data: {{NamePrincipalModule}}OutHttpEntity[];
+      pageActual?: number;
+      limitActual?: number;
+      totalFounded?: number;
+    }>(`${this.apiUrl}{{NameNormalModule}}`).pipe(
+      map((response) => {
+        const dataMapped: {{NamePrincipalModule}}Entity[] = response.data.map(itemInfra => {
+          return this.mapper.toDomain(itemInfra);
+        });
+        return {
+          data: dataMapped,
+          pageActual: response.pageActual,
+          limitActual: response.limitActual,
+          totalFounded: response.totalFounded,
+        }
+      })
+    );
+  }
+
+  public findOne(
+    query: { [p: string]: string },
+  ): Observable<{ data: {{NamePrincipalModule}}Entity | null }> {
+    return this.httpService.get<{
+      data: {{NamePrincipalModule}}Entity | null;
+    }>(`${this.apiUrl}{{NameNormalModule}}`).pipe(
+      map((response) => {
+        return {
+          data: response.data ? (this.mapper.toDomain(response.data)) : null,
+        }
+      })
+    );
+  }
+
+  public create(
+    dataToCreate: {{NamePrincipalModule}}Entity
+  ): Observable<{{NamePrincipalModule}}Entity> {
+    return this.httpService.post<{{NamePrincipalModule}}Entity, {{NamePrincipalModule}}Entity>(`${this.apiUrl}{{NameNormalModule}}`, dataToCreate);
+  }
+
+  public update(
+    keyToSearch: string,
+    dataToUpdate: {{NamePrincipalModule}}Entity
+  ): Observable<{ data: {{NamePrincipalModule}}Entity }> {
+    return this.httpService.patch<{
+      data: {{NamePrincipalModule}}Entity
+    }, {{NamePrincipalModule}}Entity>(`${this.apiUrl}{{NameNormalModule}}/${keyToSearch}`, dataToUpdate);
+  }
+
+  public delete(
+    keyToDelete: string
+  ): Observable<void> {
+    return this.httpService.delete<void>(`${this.apiUrl}{{NameNormalModule}}/${keyToDelete}`);
+  }
+
+}

@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {LogoutAccountUseCase} from "@application/use-cases/account/logout-account.use-case";
-import {CacheStorage} from "@infrastructure/adapters/storage/cache/cache.storage";
 import {AccountEntity} from "@domain/entities/account/account.entity";
 import Swal from "sweetalert2";
 import {NavigationService} from "@core/services/navigation/navigation.service";
+import {CacheStorage} from "@infrastructure/adapters/out/storage/cache/cache.storage";
 
 @Component({
   selector: 'app-admin-header',
@@ -13,6 +13,7 @@ import {NavigationService} from "@core/services/navigation/navigation.service";
 export class AdminHeaderComponent implements OnInit {
 
   public isUserMenuOpen: boolean = false;
+  public isAppsMenuOpen: boolean = false;
 
   public account!: AccountEntity;
 
@@ -35,8 +36,16 @@ export class AdminHeaderComponent implements OnInit {
     this.isUserMenuOpen = !this.isUserMenuOpen;
   }
 
+  public toggleAppsMenu(): void {
+    this.isAppsMenuOpen = !this.isAppsMenuOpen;
+  }
+
   public closeUserMenu(): void {
     this.isUserMenuOpen = false;
+  }
+
+  public closeAppsMenu(): void {
+    this.isAppsMenuOpen = false;
   }
 
   public logout(): void {

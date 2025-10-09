@@ -1,0 +1,93 @@
+import {Injectable} from "@nestjs/common";
+import {RmqRecord, RmqRecordBuilder} from "@nestjs/microservices";
+import {SessionContextModel} from "@core/models/session/session.model";
+
+import {{{NamePrincipalModule}}RepositoryPort} from "@application/ports/out/{{NameNormalModule}}/{{NameNormalModule}}.repository.port";
+import {{{NamePrincipalModule}}Entity} from "@domain/entities/{{NameNormalModule}}/{{NameNormalModule}}.entity";
+
+@Injectable()
+export class {{NamePrincipalModule}}OutLocalRepository implements {{NamePrincipalModule}}RepositoryPort {
+
+    constructor() {
+    }
+
+    public async findAll(
+        sessionContext: SessionContextModel,
+        query: { [key: string]: any }
+    ): Promise<{ data: {{NamePrincipalModule}}Entity[] }> {
+        try {
+            return {
+                data: []
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    public async findOne(
+        sessionContext: SessionContextModel,
+        query: { [key: string]: any }
+    ): Promise<{ data: {{NamePrincipalModule}}Entity | null }> {
+        try {
+            const payloadMessage: RmqRecord = new RmqRecordBuilder({
+                sessionContext: sessionContext,
+                query: query,
+            })
+                .setOptions({}).build();
+            return {
+                data: null
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    public async create(
+        dataToCreate: any
+    ): Promise<any> {
+        try {
+            const payloadMessage: RmqRecord = new RmqRecordBuilder({
+                dataToCreate: dataToCreate
+            })
+                .setOptions({}).build();
+            return {};
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    public async updateOne(
+        sessionContext: SessionContextModel,
+        keyToSearch: string,
+        dataToUpdate: any
+    ): Promise<{ data: {{NamePrincipalModule}}Entity }> {
+        try {
+            const payloadMessage: RmqRecord = new RmqRecordBuilder({
+                sessionContext: sessionContext,
+                dataToUpdate: dataToUpdate,
+                keyToSearch: keyToSearch,
+            }).setOptions({}).build();
+            return {} as any;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    public async deleteOne(
+        sessionContext: SessionContextModel,
+        keyToSearch: string
+    ): Promise<void> {
+        try {
+            const payloadMessage: RmqRecord = new RmqRecordBuilder(
+                {
+                    sessionContext: sessionContext,
+                    id: keyToSearch
+                }
+            ).setOptions({}).build();
+            return;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+}

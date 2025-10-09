@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {CacheStorage} from "@infrastructure/adapters/storage/cache/cache.storage";
 import {AccountEntity} from "@domain/entities/account/account.entity";
+import {CacheStorage} from "@infrastructure/adapters/out/storage/cache/cache.storage";
 
 @Component({
   selector: 'app-page-home',

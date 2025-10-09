@@ -4,8 +4,7 @@ import {SessionEntity} from "@domain/entities/account/session.entity";
 
 export interface AccountRepository {
   findAll(
-    query: { [T: string]: any },
-    options: { [key: string]: any }
+    query: { [T: string]: any }
   ): Observable<{
     data: AccountEntity[];
     pageActual?: number;
@@ -15,7 +14,6 @@ export interface AccountRepository {
 
   findOne(
     query: { [key: string]: string },
-    options: { [key: string]: any }
   ): Observable<AccountEntity | null>;
 
   create(

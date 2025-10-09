@@ -1,0 +1,198 @@
+import { Controller } from "@nestjs/common";
+import { MessagePattern, Payload } from "@nestjs/microservices";
+import { ThrowException } from "../../../../../shared/exceptions/throw.exception";
+import { ValidatorException } from "../../../../../shared/exceptions/validator.exception";
+import { MikroOrmException } from "../../../../../shared/exceptions/mikro-orm.exception";
+import { AccountNotAuthorizedException } from "../../../../../shared/exceptions/account-not-authorized.exception";
+import { SessionContextModel } from "@core/models/session/session.model";
+
+import { {{NamePrincipalModule}}Entity } from "@domain/entities/{{NameNormalModule}}/{{NameNormalModule}}.entity";
+import { FindAll{{NamePrincipalModule}}UseCase } from "@application/ports/in/{{NameNormalModule}}/find-all-{{NameNormalModule}}.use-case";
+import { FindOne{{NamePrincipalModule}}UseCase } from "@application/ports/in/{{NameNormalModule}}/find-one-{{NameNormalModule}}.use-case";
+import { Create{{NamePrincipalModule}}UseCase } from "@application/ports/in/{{NameNormalModule}}/create-{{NameNormalModule}}.use-case";
+import { Update{{NamePrincipalModule}}UseCase } from "@application/ports/in/{{NameNormalModule}}/update-{{NameNormalModule}}.use-case";
+import { Delete{{NamePrincipalModule}}UseCase } from "@application/ports/in/{{NameNormalModule}}/delete-{{NameNormalModule}}.use-case";
+import { ValidatePermissionUseCase } from "@application/ports/in/permission/validate-permission.use-case";
+
+@Controller()
+export class {{NamePrincipalModule}}InMessageController {
+  constructor(
+    private findAll{{NamePrincipalModule}}UseCase: FindAll{{NamePrincipalModule}}UseCase,
+    private findOne{{NamePrincipalModule}}UseCase: FindOne{{NamePrincipalModule}}UseCase,
+    private create{{NamePrincipalModule}}UseCase: Create{{NamePrincipalModule}}UseCase,
+    private update{{NamePrincipalModule}}UseCase: Update{{NamePrincipalModule}}UseCase,
+    private delete{{NamePrincipalModule}}UseCase: Delete{{NamePrincipalModule}}UseCase,
+    private validatePermissionUseCase: ValidatePermissionUseCase,
+  ) {}
+
+  @MessagePattern("FIND_ALL_{{NameNormalUpperModule}}")
+  public async findAll(
+    @Payload()
+    payload: {
+      sessionContext: SessionContextModel;
+      query: { [T: string]: any };
+    },
+  ): Promise<{
+    data: {{NamePrincipalModule}}Entity[];
+    pageActual?: number;
+    limitActual?: number;
+    totalFounded?: number;
+  }> {
+    try {
+      await this.validatePermissionUseCase.execute(
+        payload.sessionContext,
+        "{{NameNormalModule}}.find-all",
+      );
+      return await this.findAll{{NamePrincipalModule}}UseCase.execute(
+        payload.sessionContext,
+        payload.query,
+      );
+    } catch (error) {
+      if (error instanceof AccountNotAuthorizedException) {
+        ThrowException("microservice", error.message);
+      }
+      if (error instanceof ValidatorException) {
+        ThrowException("microservice", error.message, 400);
+      }
+      if (error instanceof MikroOrmException) {
+        ThrowException("microservice", error.message, 400);
+      }
+      throw error;
+    }
+  }
+
+  @MessagePattern("FIND_ONE_{{NameNormalUpperModule}}")
+  public async findOne(
+    @Payload()
+    payload: {
+      sessionContext: SessionContextModel;
+      query: { [T: string]: any };
+    },
+  ): Promise<{ data: {{NamePrincipalModule}}Entity | null }> {
+    try {
+      await this.validatePermissionUseCase.execute(
+        payload.sessionContext,
+        "{{NameNormalModule}}.find-one",
+      );
+      return await this.findOne{{NamePrincipalModule}}UseCase.execute(
+        payload.sessionContext,
+        payload.query,
+      );
+    } catch (error) {
+      if (error instanceof AccountNotAuthorizedException) {
+        ThrowException("microservice", error.message);
+      }
+      if (error instanceof ValidatorException) {
+        ThrowException("microservice", error.message, 400);
+      }
+      if (error instanceof MikroOrmException) {
+        ThrowException("microservice", error.message, 400);
+      }
+      throw error;
+    }
+  }
+
+  @MessagePattern("CREATE_{{NameNormalUpperModule}}")
+  public async create(
+    @Payload()
+    payload: {
+      sessionContext: SessionContextModel;
+      dataToCreate: {{NamePrincipalModule}}Entity;
+    },
+  ): Promise<void> {
+    try {
+      await this.validatePermissionUseCase.execute(
+        payload.sessionContext,
+        "{{NameNormalModule}}.create",
+      );
+      const entity = Object.assign(
+        new {{NamePrincipalModule}}Entity(),
+        payload.dataToCreate,
+      );
+      return await this.create{{NamePrincipalModule}}UseCase.execute(
+        payload.sessionContext,
+        entity,
+      );
+    } catch (error) {
+      if (error instanceof AccountNotAuthorizedException) {
+        ThrowException("microservice", error.message);
+      }
+      if (error instanceof ValidatorException) {
+        ThrowException("microservice", error.message, 400);
+      }
+      if (error instanceof MikroOrmException) {
+        ThrowException("microservice", error.message, 400);
+      }
+      throw error;
+    }
+  }
+
+  @MessagePattern("UPDATE_{{NameNormalUpperModule}}")
+  public async update(
+    @Payload()
+    payload: {
+      sessionContext: SessionContextModel;
+      keyToSearch: string;
+      dataToUpdate: {{NamePrincipalModule}}Entity;
+    },
+  ): Promise<{ data: {{NamePrincipalModule}}Entity }> {
+    try {
+      await this.validatePermissionUseCase.execute(
+        payload.sessionContext,
+        "{{NameNormalModule}}.update",
+      );
+      const entity = Object.assign(
+        new {{NamePrincipalModule}}Entity(),
+        payload.dataToUpdate,
+      );
+      return await this.update{{NamePrincipalModule}}UseCase.execute(
+        payload.sessionContext,
+        payload.keyToSearch,
+        entity,
+      );
+    } catch (error) {
+      if (error instanceof AccountNotAuthorizedException) {
+        ThrowException("microservice", error.message);
+      }
+      if (error instanceof ValidatorException) {
+        ThrowException("microservice", error.message, 400);
+      }
+      if (error instanceof MikroOrmException) {
+        ThrowException("microservice", error.message, 400);
+      }
+      throw error;
+    }
+  }
+
+  @MessagePattern("DELETE_{{NameNormalUpperModule}}")
+  public async delete(
+    @Payload()
+    payload: {
+      sessionContext: SessionContextModel;
+      keyToDelete: string;
+    },
+  ): Promise<void> {
+    try {
+      await this.validatePermissionUseCase.execute(
+        payload.sessionContext,
+        "{{NameNormalModule}}.delete",
+      );
+      await this.delete{{NamePrincipalModule}}UseCase.execute(
+        payload.sessionContext,
+        payload.keyToDelete,
+      );
+      return;
+    } catch (error) {
+      if (error instanceof AccountNotAuthorizedException) {
+        ThrowException("microservice", error.message);
+      }
+      if (error instanceof ValidatorException) {
+        ThrowException("microservice", error.message, 400);
+      }
+      if (error instanceof MikroOrmException) {
+        ThrowException("microservice", error.message, 400);
+      }
+      throw error;
+    }
+  }
+}

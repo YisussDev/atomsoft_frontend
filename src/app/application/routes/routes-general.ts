@@ -1,4 +1,4 @@
-import {RouteItemGeneral} from "@core-interfaces/routes/route-item-general.interface";
+
 
 export const routesGeneral: { [key: string]: RouteItemGeneral } = {
   'app': {

@@ -1,0 +1,39 @@
+import {Inject, Injectable} from "@angular/core";
+import {map, mergeMap, Observable, of, throwError} from "rxjs";
+import {catchError} from "rxjs/operators";
+import {ValidatorException} from "@shared/exceptions/validator.exception";
+import {NotificationUi} from "@infrastructure/ui/services/notification/notification.ui";
+
+import {{{NamePrincipalModule}}Entity} from "@domain/entities/{{NameNormalModule}}/{{NameNormalModule}}.entity";
+import {{{NamePrincipalModule}}RepositoryPort} from "@application/ports/out/{{NameNormalModule}}/{{NameNormalModule}}.repository.port";
+
+@Injectable()
+export class Update{{NamePrincipalModule}}UseCase {
+
+    constructor(
+        @Inject("{{NamePrincipalModule}}RepositoryPort")
+        private readonly repository: {{NamePrincipalModule}}RepositoryPort,
+        private notificationUi: NotificationUi
+    ) {
+    }
+
+    public execute(keyToSearch: string, dataToUpdate: {{NamePrincipalModule}}Entity): Observable<{ data: {{NamePrincipalModule}}Entity }> {
+        return of(dataToUpdate).pipe(
+            map(dataToUpdate => {
+                const instanceDomain: {{NamePrincipalModule}}Entity = Object.assign(new {{NamePrincipalModule}}Entity(), dataToUpdate);
+                instanceDomain.validateToUpdate();
+                return dataToUpdate;
+            }),
+            mergeMap((dataMapped) => {
+                return this.repository.update(keyToSearch, dataMapped);
+            }),
+            catchError((error: any) => {
+                if ((error instanceof ValidatorException)) {
+                    this.notificationUi.showError("Domain error...");
+                }
+                return throwError(() => error);
+            })
+        )
+    }
+
+}
