@@ -1,12 +1,13 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { RegisterRoutingModule } from './register-routing.module';
-import { RegisterComponent } from './register.component';
+import {RegisterRoutingModule} from './register-routing.module';
+import {RegisterComponent} from './register.component';
 import {BoxModule} from "@ui/box/box.module";
 import {ButtonsModule} from "@ui/buttons/buttons.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {InputsModule} from "@ui/inputs/inputs.module";
+import {AccountCompositionModule} from "../../../../composition/account/account.composition.module";
 
 
 @NgModule({
@@ -20,7 +21,9 @@ import {InputsModule} from "@ui/inputs/inputs.module";
     ButtonsModule,
     FormsModule,
     InputsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AccountCompositionModule
   ]
 })
-export class RegisterModule { }
+export class RegisterModule {
+}

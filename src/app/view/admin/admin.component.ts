@@ -14,7 +14,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   constructor(
     private socketService: SocketService,
-    private accountEventsRepository: AccountEventsRepository
+    private accountEventsRepository: AccountEventsRepository,
   ) {
   }
 

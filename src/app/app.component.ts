@@ -5,7 +5,23 @@ import {ThemeService} from "@core/services/theme/theme.service";
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
+  template: `
+    <div class="transition-colors ease-out duration-500 min-h-screen bg-btw-secondary"
+         [ngClass]="{'dark-theme': themeActive}">
+      <router-outlet></router-outlet>
+    </div>
+    <div class="fixed right-5 bottom-5 flex flex-col-reverse gap-1 z-30">
+      <button
+        class="h-12 w-12 border border-btw rounded-full flex justify-center items-center bg-btw-primary shadow-md text-btw text-2xl"
+        (click)="changeTheme()">
+          <span>
+            <i class="fa fa-solid" [ngClass]="{'fa-sun': themeActive, 'fa-moon': !themeActive,}">
+            </i>
+          </span>
+      </button>
+    </div>
+    <app-spinner></app-spinner>
+  `
 })
 export class AppComponent implements OnInit {
 

@@ -2,7 +2,7 @@ import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges} from 
 import {AccountEntity} from "@domain/entities/account/account.entity";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {validatorEmail} from "@ui/inputs/validators/validator-email";
-import {UpdateAccountUseCase} from "@application/use-cases/account/update-account.use-case";
+import {UpdateAccountUseCase} from "@application/ports/in/account/update-account.use-case";
 
 @Component({
   selector: 'app-configuration-data',

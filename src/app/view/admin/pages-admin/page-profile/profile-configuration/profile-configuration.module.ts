@@ -8,7 +8,6 @@ import {BoxModule} from "@ui/box/box.module";
 import {ConfigurationDataComponent} from './configuration-data/configuration-data.component';
 import {ConfigurationNotificationComponent} from './configuration-notification/configuration-notification.component';
 import {InputsModule} from "@ui/inputs/inputs.module";
-import {AccountUseCaseModule} from "@application/use-cases/account/account.use-case.module";
 import { ConfigurationSessionsComponent } from './configuration-sessions/configuration-sessions.component';
 
 
@@ -25,7 +24,6 @@ import { ConfigurationSessionsComponent } from './configuration-sessions/configu
     ReactiveFormsModule,
     BoxModule,
     InputsModule,
-    AccountUseCaseModule
   ]
 })
 export class ProfileConfigurationModule {

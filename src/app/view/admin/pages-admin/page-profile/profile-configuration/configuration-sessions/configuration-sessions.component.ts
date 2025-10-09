@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AccountEntity} from "@domain/entities/account/account.entity";
 import {SessionEntity} from "@domain/entities/account/session.entity";
-import {ConsultSessionsAccountUseCase} from "@application/use-cases/account/consult-sessions-account.use-case";
-import {CloseSessionAccountUseCase} from "@application/use-cases/account/close-session-account.use-case";
 import Swal from "sweetalert2";
+import {CloseSessionAccountUseCase} from "@application/ports/in/account/close-session-account.use-case";
+import {ConsultSessionsAccountUseCase} from "@application/ports/in/account/consult-sessions-account.use-case";
 
 @Component({
   selector: 'app-configuration-sessions',

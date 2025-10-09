@@ -6,7 +6,8 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {ViewComponent} from "@view/view.component";
 import {ButtonsModule} from "@ui/buttons/buttons.module";
 import {ModalModule} from "@ui/modal/modal.module";
-import {AuthGuardModule} from "@application/guards/auth/auth.guard.module";
+import {AccountCompositionModule} from "../composition/account/account.composition.module";
+import {ApplicationCompositionModule} from "../composition/application/application.composition.module";
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import {AuthGuardModule} from "@application/guards/auth/auth.guard.module";
     ReactiveFormsModule,
     ButtonsModule,
     ModalModule,
-    AuthGuardModule
+    AccountCompositionModule,
+    ApplicationCompositionModule
   ]
 })
 export class ViewModule {

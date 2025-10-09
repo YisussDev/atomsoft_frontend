@@ -18,10 +18,8 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     if (this.validatePath(req.url, this.pathExcludes)) {
-      console.log("Es excluido...");
       return next.handle(req);
     } else {
-      console.log("No es excluido...");
       const token = localStorage.getItem("x-token");
       const authReq = req.clone({
         headers: req.headers

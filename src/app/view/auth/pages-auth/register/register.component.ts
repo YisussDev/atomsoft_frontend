@@ -3,9 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Subject, takeUntil} from "rxjs";
 import {ThemeService} from "@core/services/theme/theme.service";
 import {NavigationService} from "@core/services/navigation/navigation.service";
-import {LoginAccountUseCase} from "@application/use-cases/account/login-account.use-case";
-import {LoginWithGoogleAccountUseCase} from "@application/use-cases/account/login-with-google-account.use-case";
-import {RegisterAccountUseCase} from "@application/use-cases/account/register-account.use-case";
+import {RegisterAccountUseCase} from "@application/ports/in/account/register-account.use-case";
 
 @Component({
   selector: 'app-register',

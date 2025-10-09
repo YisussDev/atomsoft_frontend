@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {LogoutAccountUseCase} from "@application/use-cases/account/logout-account.use-case";
 import {AccountEntity} from "@domain/entities/account/account.entity";
 import Swal from "sweetalert2";
 import {NavigationService} from "@core/services/navigation/navigation.service";
 import {CacheStorage} from "@infrastructure/adapters/out/storage/cache/cache.storage";
+import {LogoutAccountUseCase} from "@application/ports/in/account/logout-account.use-case";
 
 @Component({
   selector: 'app-admin-header',

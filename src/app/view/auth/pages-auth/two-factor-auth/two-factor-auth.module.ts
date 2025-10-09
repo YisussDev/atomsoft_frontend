@@ -4,7 +4,7 @@ import {CommonModule} from '@angular/common';
 import {TwoFactorAuthRoutingModule} from './two-factor-auth-routing.module';
 import {TwoFactorAuthComponent} from './two-factor-auth.component';
 import {ReactiveFormsModule} from "@angular/forms";
-import {AccountUseCaseModule} from "@application/use-cases/account/account.use-case.module";
+import {AccountCompositionModule} from "../../../../composition/account/account.composition.module";
 
 
 @NgModule({
@@ -15,7 +15,7 @@ import {AccountUseCaseModule} from "@application/use-cases/account/account.use-c
     CommonModule,
     TwoFactorAuthRoutingModule,
     ReactiveFormsModule,
-    AccountUseCaseModule
+    AccountCompositionModule
   ]
 })
 export class TwoFactorAuthModule {

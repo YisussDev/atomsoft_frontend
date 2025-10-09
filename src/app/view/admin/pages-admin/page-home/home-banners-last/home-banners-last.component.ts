@@ -5,8 +5,6 @@ import {
   OnInit,
   TemplateRef,
   ViewChild,
-  ViewChildren,
-  ViewContainerRef
 } from '@angular/core';
 
 @Component({
@@ -19,7 +17,7 @@ export class HomeBannersLastComponent implements OnInit, AfterViewInit {
   @ViewChild("praxiTemplate") public praxiTemplateRef!: TemplateRef<any>;
   @ViewChild("praxiEduTemplate") public praxiEduTemplateRef!: TemplateRef<any>;
 
-  banners: any[] = [];
+  banners: { template: TemplateRef<any> }[] = [];
 
   constructor(
     private _cdr: ChangeDetectorRef,
@@ -27,11 +25,9 @@ export class HomeBannersLastComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    // console.log(this.praxiTemplateRef)
   }
 
   ngAfterViewInit() {
-    // console.log(this.praxiTemplateRef)
     this.banners = [
       {
         template: this.praxiTemplateRef

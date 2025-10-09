@@ -1,10 +1,9 @@
 import {Injectable} from "@angular/core";
 import {environment} from "../../../../environments/environment";
-import {ActivatedRouteSnapshot, RouterStateSnapshot} from "@angular/router";
 import {map, Observable, of} from "rxjs";
 import {NavigationService} from "@core/services/navigation/navigation.service";
-import {ConsultTwoFactorAccountUseCase} from "@application/use-cases/account/consult-two-factor-account.use-case";
 import {catchError} from "rxjs/operators";
+import {ConsultTwoFactorAccountUseCase} from "@application/ports/in/account/consult-two-factor-account.use-case";
 
 @Injectable()
 export class TwoFactorGuard {

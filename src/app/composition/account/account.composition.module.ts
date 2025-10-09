@@ -12,10 +12,14 @@ import {ConsultSessionsAccountUseCase} from "@application/ports/in/account/consu
 import {ConsultTwoFactorAccountUseCase} from "@application/ports/in/account/consult-two-factor-account.use-case";
 import {CloseSessionAccountUseCase} from "@application/ports/in/account/close-session-account.use-case";
 import {LogoutAccountUseCase} from "@application/ports/in/account/logout-account.use-case";
+import {AdminGuard} from "@application/guards/auth/admin.guard";
+import {AuthGuard} from "@application/guards/auth/auth.guard";
+import {AccountOutHttpModule} from "@infrastructure/adapters/out/http/account/account.out.http.module";
 
 @NgModule({
   imports: [
     // ...Implementations
+    AccountOutHttpModule,
   ],
   providers: [
     FindAllAccountUseCase,
@@ -30,8 +34,13 @@ import {LogoutAccountUseCase} from "@application/ports/in/account/logout-account
     ConsultSessionsAccountUseCase,
     ConsultTwoFactorAccountUseCase,
     CloseSessionAccountUseCase,
-    LogoutAccountUseCase
-  ]
+    LogoutAccountUseCase,
+    AdminGuard,
+    AuthGuard
+  ],
+  // exports: [
+  //   AdminGuard
+  // ]
 })
 export class AccountCompositionModule {
 }

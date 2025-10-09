@@ -4,10 +4,12 @@ import {FindOneApplicationUseCase} from "@application/ports/in/application/find-
 import {CreateApplicationUseCase} from "@application/ports/in/application/create-application.use-case";
 import {UpdateApplicationUseCase} from "@application/ports/in/application/update-application.use-case";
 import {DeleteApplicationUseCase} from "@application/ports/in/application/delete-application.use-case";
+import {ApplicationOutHttpModule} from "@infrastructure/adapters/out/http/application/application.out.http.module";
 
 @NgModule({
   imports: [
     // ...Implementations
+    ApplicationOutHttpModule
   ],
   providers: [
     FindAllApplicationUseCase,

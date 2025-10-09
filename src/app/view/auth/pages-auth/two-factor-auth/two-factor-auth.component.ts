@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {NavigationService} from "@core/services/navigation/navigation.service";
-import {LogoutAccountUseCase} from "@application/use-cases/account/logout-account.use-case";
 import Swal from "sweetalert2";
-import {VerifyTwoFactorAccountUseCase} from "@application/use-cases/account/verify-two-factor-account.use-case";
+import {LogoutAccountUseCase} from "@application/ports/in/account/logout-account.use-case";
+import {VerifyTwoFactorAccountUseCase} from "@application/ports/in/account/verify-two-factor-account.use-case";
 
 @Component({
   selector: 'app-two-factor-auth',

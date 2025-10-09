@@ -1,13 +1,31 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {FindAllApplicationUseCase} from "@application/ports/in/application/find-all-application.use-case";
+import {CacheStorage} from "@infrastructure/adapters/out/storage/cache/cache.storage";
 
 @Component({
   selector: 'app-view',
-  templateUrl: './view.component.html',
-  styleUrls: ['./view.component.css']
+  template: `
+    <router-outlet></router-outlet>
+  `
 })
-export class ViewComponent {
+export class ViewComponent implements OnInit {
 
-  constructor() {
+  constructor(
+    private findAllApplicationUseCase: FindAllApplicationUseCase,
+    private _cacheStorage: CacheStorage,
+  ) {
+  }
+
+  ngOnInit() {
+    this.initApps();
+  }
+
+  private initApps(): void {
+    this.findAllApplicationUseCase.execute({}).subscribe({
+      next: (response) => {
+        console.log(response);
+      }
+    });
   }
 
 }

@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AdminHeaderComponent} from './admin-header/admin-header.component';
-import {AccountUseCaseModule} from "@application/use-cases/account/account.use-case.module";
 import {ClickOutsideModule} from "@core/directives/click-outside/click-outside.module";
 import {RouterLink} from "@angular/router";
 import {IconsModule} from "@ui/icons/icons.module";
+import {AccountCompositionModule} from "../../../composition/account/account.composition.module";
 
 
 @NgModule({
@@ -16,10 +16,10 @@ import {IconsModule} from "@ui/icons/icons.module";
   ],
   imports: [
     CommonModule,
-    AccountUseCaseModule,
     ClickOutsideModule,
     RouterLink,
-    IconsModule
+    IconsModule,
+    AccountCompositionModule
   ]
 })
 export class AdminUiModule {

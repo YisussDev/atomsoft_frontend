@@ -24,7 +24,6 @@ export class CarouselComponent implements OnInit, OnChanges, OnDestroy {
     if (changes) {
       if (changes["items"].currentValue) {
         this.items = changes["items"].currentValue;
-        console.log(this.items)
       }
     }
   }

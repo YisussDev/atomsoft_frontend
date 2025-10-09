@@ -3,8 +3,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Subject, takeUntil} from "rxjs";
 import {ThemeService} from "@core/services/theme/theme.service";
 import {NavigationService} from "@core/services/navigation/navigation.service";
-import {LoginAccountUseCase} from "@application/use-cases/account/login-account.use-case";
-import {LoginWithGoogleAccountUseCase} from "@application/use-cases/account/login-with-google-account.use-case";
+import {LoginAccountUseCase} from "@application/ports/in/account/login-account.use-case";
+import {LoginWithGoogleAccountUseCase} from "@application/ports/in/account/login-with-google-account.use-case";
 
 declare const google: any;
 
@@ -84,7 +84,6 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
   public loginWithGoogle(tokenGoogle: string): void {
     this.loginWithGoogleAccountUseCase.execute(tokenGoogle).subscribe({
       next: (response) => {
-        console.log(response);
       }
     })
   }

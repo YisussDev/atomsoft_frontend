@@ -7,6 +7,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {InputsModule} from "@ui/inputs/inputs.module";
 import {ButtonsModule} from "@ui/buttons/buttons.module";
 import {BoxModule} from "@ui/box/box.module";
+import {AccountCompositionModule} from "../../../../composition/account/account.composition.module";
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import {BoxModule} from "@ui/box/box.module";
     InputsModule,
     ButtonsModule,
     BoxModule,
+    AccountCompositionModule
   ],
   providers: []
 })
