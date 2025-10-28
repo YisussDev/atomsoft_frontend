@@ -12,6 +12,7 @@
 @import "./tooltip.css";
 @import "./spinner.css";
 @import "./borders.css";
+@import "./bg.css";
 
 * {
   margin: 0;

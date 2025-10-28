@@ -1,0 +1,47 @@
+<div class="bg-btw-secondary border border-btw rounded-xl shadow-lg p-6">
+  <h2 class="text-xl font-semibold text-btw mb-6 flex items-center">
+    <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+    </svg>
+    Seguridad
+  </h2>
+  <div class="space-y-4">
+    <div class="flex items-center justify-between p-4 border border-btw rounded-xl">
+      <div>
+        <h3 appTypography="subtitle">Cambiar contraseña</h3>
+        <p appTypography="paragraph">Actualiza tu contraseña regularmente</p>
+      </div>
+      <button
+        type="button"
+        (click)="openChangePassword()"
+        class="px-4 py-2 text-btw font-medium transition-colors duration-200"
+      >
+        Cambiar
+      </button>
+    </div>
+
+    <div class="flex items-center justify-between p-4 border border-btw rounded-xl">
+      <div>
+        <h3 appTypography="subtitle">Autenticación de dos factores</h3>
+        <p appTypography="paragraph">Agrega una capa extra de seguridad</p>
+      </div>
+      <div class="flex items-center space-x-3">
+        <span class="text-sm" [class]="account.two_factor_auth ? 'text-emerald-600' : 'text-slate-500'">
+          {{ account.two_factor_auth ? 'Activado' : 'Desactivado' }}
+        </span>
+        <button
+          type="button"
+          (click)="toggleTwoFactor()"
+          class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200"
+          [class]="account.two_factor_auth ? 'bg-emerald-600' : 'bg-slate-300'"
+        >
+        <span
+          class="inline-block h-4 w-4 transform rounded-full bg-btw-secondary transition-transform duration-200"
+          [class]="account.two_factor_auth ? 'translate-x-6' : 'translate-x-1'"
+        ></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

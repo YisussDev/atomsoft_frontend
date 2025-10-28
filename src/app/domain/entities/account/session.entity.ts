@@ -4,5 +4,6 @@ export interface SessionEntity {
   socket: string;
   agent: string;
   date: Date;
+  deviceType: "Desktop" | "Mobile";
   createdAt: Date;
 }

@@ -1,298 +1,171 @@
-<div class="w-full">
-  <div class="rounded-md shadow-md border-btw border animation-opacity bg-btw-secondary">
-    <ng-template [ngTemplateOutlet]="headerInfoTable"></ng-template>
-    <ng-template [ngTemplateOutlet]="headerSearchTable"></ng-template>
-    <table class="min-w-full">
-      <ng-template [ngTemplateOutlet]="headerTable"></ng-template>
-      <ng-container *ngIf="tableData.length > 0">
-        <ng-template [ngTemplateOutlet]="bodyTable"></ng-template>
-      </ng-container>
-    </table>
-    <ng-container *ngIf="tableData.length == 0">
-      <app-empty-table></app-empty-table>
+<div class="w-full bg-btw-secondary rounded-lg shadow-lg overflow-visible border border-btw">
+  <!-- Header -->
+  <div class="bg-primary px-6 py-4 rounded-t-lg">
+    <h2 class="text-2xl font-bold text-white">{{ tableTitle }}</h2>
+  </div>
+  <!-- Toolbar -->
+  <div
+    class="px-6 py-4 border-b border-btw flex flex-col sm:flex-row gap-4 justify-between items-center bg-btw-secondary">
+    <div *ngIf="showSearch" class="relative flex-1 max-w-md">
+      <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-btw w-5 h-5" fill="none"
+           stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+      </svg>
+      <input
+        type="text"
+        placeholder="Buscar..."
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearchChange()"
+        class="w-full pl-10 pr-4 py-2 border border-btw rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition bg-transparent"
+      />
+    </div>
+    <div *ngIf="showExport" class="flex gap-2">
+      <button
+        (click)="exportToCSV()"
+        class="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition shadow-md hover:shadow-lg"
+      >
+        <app-icon-material nameIcon="drive_export" sizeIcon="medium" class="text-white p-0 m-0"></app-icon-material>
+        Exportar Datos
+      </button>
+    </div>
+  </div>
+  <!-- Info -->
+  <div class="px-6 py-2 text-sm text-btw bg-btw-primary">
+    <ng-container *ngIf="usePaginationConfig; else defaultInfo">
+      Mostrando {{ getStartIndex() + 1 }} - {{ getEndIndex() }} de {{ totalItems }} registros
     </ng-container>
+    <ng-template #defaultInfo>
+      Mostrando {{ paginatedData.length }} de {{ sortedData.length }} registros
+      <span *ngIf="searchTerm"> (filtrado de {{ data.length }} totales)</span>
+    </ng-template>
+  </div>
+  <!-- Table -->
+  <div>
+    <table class="w-full">
+      <thead>
+      <tr class="bg-btw-primary border-b border-btw">
+        <th
+          *ngFor="let column of columns"
+          (click)="column.sortable !== false && handleSort(column.key)"
+          [class.cursor-pointer]="column.sortable !== false"
+          [class.hover:bg-gray-200]="column.sortable !== false"
+          class="px-6 py-4 text-left text-sm font-semibold text-btw select-none transition"
+        >
+          <div class="flex items-center gap-2">
+            {{ column.header }}
+
+            <!-- Icono cuando NO está ordenado (muestra ambas flechas) -->
+            <svg
+              *ngIf="column.sortable !== false && sortConfig.key !== column.key"
+              class="w-4 h-4 text-gray-400 opacity-50"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+            </svg>
+
+            <!-- Icono ascendente -->
+            <svg
+              *ngIf="column.sortable !== false && sortConfig.key === column.key && sortConfig.direction === 'asc'"
+              class="w-4 h-4 text-blue-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+            </svg>
+
+            <!-- Icono descendente -->
+            <svg
+              *ngIf="column.sortable !== false && sortConfig.key === column.key && sortConfig.direction === 'desc'"
+              class="w-4 h-4 text-blue-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr
+        *ngFor="let row of displayData; let i = index"
+        class="border-b border-btw hover:bg-opacity-25 transition"
+      >
+        <td
+          *ngFor="let column of columns"
+          class="px-6 py-4 text-sm text-btw"
+        >
+          <!-- Si existe template personalizado para esta columna -->
+          <ng-container *ngIf="getTemplateForColumn(column.key); else defaultCell">
+            <ng-container
+              *ngTemplateOutlet="getTemplateForColumn(column.key)!; context: { $implicit: row[column.key], row: row, index: i }"
+            ></ng-container>
+          </ng-container>
+
+          <!-- Template por defecto -->
+          <ng-template #defaultCell>
+            {{ row[column.key] }}
+          </ng-template>
+        </td>
+      </tr>
+      <tr *ngIf="displayData.length === 0">
+        <td [attr.colspan]="columns.length" class="px-6 py-12 text-center text-gray-500">
+          No se encontraron resultados
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- Pagination -->
+  <div
+    *ngIf="showPagination && calculatedTotalPages > 1"
+    class="px-6 py-4 border-t border-btw flex flex-col sm:flex-row gap-4 justify-between items-center bg-btw-primary rounded-b-lg"
+  >
+    <button
+      (click)="onPreviousPage()"
+      [disabled]="currentPageNumber === 1"
+      class="bg-primary text-white flex items-center gap-2 px-4 py-2 rounded-lg borderdisabled:bg-gray-100
+       border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition"
+    >
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+      </svg>
+      Anterior
+    </button>
+
+    <div class="flex gap-2 flex-wrap justify-center">
+      <button
+        *ngFor="let page of getVisiblePages()"
+        (click)="page !== '...' && onGoToPage(+page)"
+        [disabled]="page === '...'"
+        [class.bg-primary]="currentPageNumber === page"
+        [class.text-white]="currentPageNumber === page"
+        [class.shadow-md]="currentPageNumber === page"
+        [class.border]="currentPageNumber !== page && page !== '...'"
+        [class.border-gray-300]="currentPageNumber !== page && page !== '...'"
+        [class.hover:bg-gray-100]="currentPageNumber !== page && page !== '...'"
+        [class.cursor-default]="page === '...'"
+        class="px-4 py-2 rounded-lg transition min-w-[40px]"
+      >
+        {{ page }}
+      </button>
+    </div>
+    <button
+      (click)="onNextPage()"
+      [disabled]="currentPageNumber === calculatedTotalPages"
+      class="bg-primary text-white flex items-center gap-2 px-4 py-2 rounded-lg border disabled:bg-gray-100
+      border-btw disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition"
+    >
+      Siguiente
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+      </svg>
+    </button>
   </div>
 </div>
-
-<ng-template #headerInfoTable>
-  <div class="grid grid-cols-2 h-14">
-    <div class="flex flex-wrap justify-start gap-2 px-2 col-span-1">
-      <div class="grid gap-2" style="grid-template-columns: 50px 1fr">
-        <div class="h-full w-full flex justify-center items-center">
-          <div
-            class="h-10 w-10 bg-btw-primary flex justify-center items-center border border-btw text-btw text-xs rounded-md">
-            <app-icon-material [nameIcon]="tablePrincipalIcon" sizeIcon="large"></app-icon-material>
-          </div>
-        </div>
-        <div class="flex w-full justify-center items-start flex-col">
-          <p class="text-btw font-medium text-sm">{{ tablePrincipalTitle }}</p>
-          <p class="text-btw font-light text-xs">{{ tablePrincipalDescription }}</p>
-        </div>
-      </div>
-    </div>
-    <div class="flex flex-wrap items-center overflow-x-auto justify-end gap-2 px-2 col-span-1">
-      <ng-container *ngIf="headerActions">
-        <ng-container *ngFor="let action of tableHeaderActionsConfig">
-          <button
-            class="rounded-md flex gap-2
-              h-10 p-2 justify-center
-              border-btw border items-center
-              min-w-fit text-xs
-              select-none
-              cursor-pointer"
-            [ngStyle]="{
-            'background-color': action.background || 'var(--color-bg)',
-            'color': action.color || 'var(--color-text-btw)'
-            }"
-            (click)="eventRow('', action.nameEvent)">
-            <app-icon-material [nameIcon]="action.icon" sizeIcon="medium"></app-icon-material>
-            {{ action.label }}
-          </button>
-        </ng-container>
-      </ng-container>
-      <app-switch-simple [options]="switchOptionsTable" [activeValue]="switchOptionActive"
-                         (changed)="changeTypeView($event)"></app-switch-simple>
-    </div>
-  </div>
-  <hr class="text-btw">
-</ng-template>
-
-<ng-template #headerSearchTable>
-  <ng-container [formGroup]="tableFormQueries">
-    <div class="grid grid-cols-2 max-w-full overflow-hidden h-14 relative">
-      <div
-        class="flex gap-2 items-center text-btw bg-btw-secondary select-none border-r-btw w-full col-span-1 px-4">
-        <span class="material-symbols-outlined">search</span>
-        <input type="text" placeholder="Buscar..." formControlName="search"
-               class="h-full hover:outline-0 hover:active:outline-0 focus:outline-0 bg-transparent w-max">
-      </div>
-      <div class="flex flex-wrap justify-end gap-2 w-full col-span-1 overflow-x-auto items-center px-4">
-        <ng-container *ngIf="filterAction">
-          <button
-            class="rounded-md flex gap-2
-            border-btw border py-2 px-3 items-center
-            text-btw bg-btw-secondary select-none cursor-pointer"
-            (click)="openModalExportData()">
-            <span class="material-symbols-outlined">filter_alt</span>
-            <p class="text-xs">Filtros</p>
-          </button>
-        </ng-container>
-        <ng-container *ngIf="exportAction">
-          <button
-            class="rounded-md flex gap-2
-            border-btw border p-3 items-center
-            text-btw bg-btw-secondary select-none cursor-pointer"
-            (click)="openModalExportData()">
-            <span class="material-symbols-outlined">file_export</span>
-            <p class="text-xs">Exportar Datos</p>
-          </button>
-        </ng-container>
-        <button
-          *ngIf="true"
-          class="rounded-md flex gap-2
-          h-10 p-2 justify-center
-          border-btw border items-center
-          min-w-fit
-          text-btw bg-btw-secondary select-none cursor-pointer"
-          (click)="openModalEditColumns()">
-          <span class="material-symbols-outlined">tune</span>
-        </button>
-      </div>
-    </div>
-    <hr class="text-btw">
-  </ng-container>
-</ng-template>
-
-<ng-template #headerTable>
-  <thead class="border-b-btw text-btw">
-  <tr class="h-10 border-b-btw">
-    <ng-container *ngFor="let config of tableColumnConfig; let i = index;  trackBy: trackByFnHeader">
-      <th class="text-ellipsis text-sm py-2 border-r-btw cursor-pointer" *ngIf="configColumn(config)"
-          (click)="changeOrderColum(config)">
-        <div class="w-full grid px-2" style="grid-template-columns: 1fr 30px">
-          <ng-template #i>
-            <p>{{ config.column_translate }}</p>
-          </ng-template>
-          <p class="text-left text-over-1-line select-none" [ngxTippy]="i">
-            {{ config.column_translate }}
-          </p>
-          <div class="w-full h-full flex justify-center items-center border-l-btw select-none">
-            <ng-container *ngIf="!config.column_order || (config.column_order == 'none')">
-              <app-icon-material nameIcon="swap_vert"></app-icon-material>
-            </ng-container>
-            <ng-container *ngIf="config.column_order == 'asc'">
-              <app-icon-material nameIcon="arrow_upward"></app-icon-material>
-            </ng-container>
-            <ng-container *ngIf="config.column_order == 'desc'">
-              <app-icon-material nameIcon="arrow_downward"></app-icon-material>
-            </ng-container>
-          </div>
-        </div>
-      </th>
-    </ng-container>
-    <ng-container *ngIf="quicklyActions">
-      <th class="text-ellipsis text-sm overflow-hidden border-r-btw">A/Rápidas</th>
-    </ng-container>
-    <ng-container *ngIf="multipleActions">
-      <th class="text-ellipsis text-sm overflow-hidden border-r-btw">Acciones</th>
-    </ng-container>
-  </tr>
-  <ng-container *ngIf="searchActions">
-    <tr [formGroup]="tableFormQueries" class="text-btw h-10">
-      <ng-container *ngFor="let config of tableColumnConfig;  trackBy: trackByFnHeader">
-        <ng-container [ngSwitch]="config.column_type">
-          <th *ngIf="configColumn(config)" class="border-r-btw h-10">
-            <div class="grid w-full px-2 gap-1 h-10" style="grid-template-columns: 20px 1fr">
-              <div class="flex w-full h-full justify-center items-center text-xs">
-                <span class="material-symbols-outlined">search</span>
-              </div>
-              <div class="h-10">
-                <ng-container *ngSwitchCase="'text'">
-                  <ng-container *ngIf="!config.column_name.includes('.') && config.column_search">
-                    <input type="text" [placeholder]="config.column_translate" [formControlName]="config.column_name"
-                           class="w-full h-full bg-transparent px-4">
-                  </ng-container>
-                  <ng-container *ngIf="config.column_name.includes('.') && config.column_search">
-                    <input type="text" [placeholder]="config.column_translate" disabled
-                           class="w-full h-full bg-transparent px-4">
-                  </ng-container>
-                </ng-container>
-                <ng-container *ngSwitchCase="'number'">
-                  <ng-container *ngIf="!config.column_name.includes('.') && config.column_search">
-                    <input type="number" [placeholder]="config.column_translate" [formControlName]="config.column_name"
-                           class="w-full h-full bg-transparent px-4">
-                  </ng-container>
-                  <ng-container *ngIf="config.column_name.includes('.') && config.column_search">
-                    <input type="number" [placeholder]="config.column_translate" disabled
-                           class="w-full h-full bg-transparent px-4">
-                  </ng-container>
-                </ng-container>
-                <ng-container *ngSwitchCase="'select'">
-                  <ng-container *ngIf="!config.column_name.includes('.') && config.column_search">
-                    <select [formControlName]="config.column_name"
-                            class="w-full h-full bg-transparent px-4">
-                      <option [value]="null">Seleccione Una Opción</option>
-                      <ng-container *ngFor="let optionSelect of config.column_config">
-                        <option [value]="optionSelect.custom_key">{{ optionSelect.custom_label }}</option>
-                      </ng-container>
-                    </select>
-                  </ng-container>
-                  <ng-container *ngIf="config.column_name.includes('.') && config.column_search">
-                    <select [formControlName]="convertColumName(config.column_name)"
-                            [disabled]="true"
-                            class="w-full h-full bg-transparent px-4">
-                      <option [value]="null">Seleccione Una Opción</option>
-                      <ng-container *ngFor="let optionSelect of config.column_config">
-                        <option [value]="optionSelect.custom_key">{{ optionSelect.custom_label }}</option>
-                      </ng-container>
-                    </select>
-                  </ng-container>
-                </ng-container>
-                <ng-container *ngSwitchCase="'date'">
-                  <ng-container *ngIf="!config.column_name.includes('.') && config.column_search"
-                                class="w-full h-full bg-transparent px-4">
-                    <input type="date" [placeholder]="config.column_translate" [formControlName]="config.column_name">
-                  </ng-container>
-                  <ng-container *ngIf="config.column_name.includes('.')">
-                    <input type="date" [placeholder]="config.column_translate" disabled
-                           class="w-full h-full bg-transparent px-4">
-                  </ng-container>
-                </ng-container>
-              </div>
-            </div>
-          </th>
-        </ng-container>
-      </ng-container>
-      <ng-container *ngIf="quicklyActions">
-        <th class="border-r-btw"></th>
-      </ng-container>
-      <ng-container *ngIf="multipleActions">
-        <th></th>
-      </ng-container>
-    </tr>
-  </ng-container>
-  </thead>
-</ng-template>
-
-<ng-template #bodyTable>
-  <tbody>
-  <ng-container *ngFor="let dataRow of tableData; trackBy: trackByFnBody">
-    <tr class="h-12 text-sm border-b-btw text-btw">
-      <ng-container *ngFor="let config of tableColumnConfig; trackBy: trackByFnHeader">
-        <ng-container [ngSwitch]="config.column_pipe">
-          <ng-container *ngSwitchCase="'normal'">
-            <td class="max-w-96 text-ellipsis text-xs border-r-btw" *ngIf="configColumn(config)">
-              <p class="w-full px-3 text-ellipsis overflow-hidden max-h-24">
-                {{ getDataRow(dataRow, config) }}
-              </p>
-            </td>
-          </ng-container>
-          <ng-container *ngSwitchCase="'cash'">
-            <td class="max-w-96 text-ellipsis text-xs border-r-btw" *ngIf="configColumn(config)">
-              <p class="w-full px-3 text-ellipsis overflow-hidden">
-                {{ getDataRow(dataRow, config) | currency }}
-              </p>
-            </td>
-          </ng-container>
-          <ng-container *ngSwitchCase="'badge'">
-            <td *ngIf="configColumn(config)" class="max-w-96 border-r-btw">
-              <ng-container *ngFor="let optionBadge of config.column_config || []">
-                <div class="flex h-8 w-8 mx-auto rounded-md justify-center items-center text-white"
-                     [title]="optionBadge.custom_label"
-                     *ngIf="optionBadge.custom_key == getDataRow(dataRow, config)"
-                     [ngStyle]="{background: optionBadge.custom_color || 'var(--color-primary)'}">
-                  <span>
-                    <i class="fa fa-solid" [ngClass]="optionBadge.custom_icon"></i>
-                  </span>
-                </div>
-              </ng-container>
-            </td>
-          </ng-container>
-          <ng-container *ngSwitchCase="'custom'">
-            <td class="max-w-96 text-ellipsis text-xs border-r-btw"
-                *ngIf="configColumn(config)&&config.column_fn">
-              <p class="w-full px-3 text-ellipsis overflow-hidden max-h-24">
-                {{ config.column_fn(getDataRow(dataRow, config)) }}
-              </p>
-            </td>
-          </ng-container>
-        </ng-container>
-      </ng-container>
-      <ng-container *ngIf="quicklyActions">
-        <td class="border-r-btw">
-          <div class="flex gap-2 overflow-x-auto justify-center items-center my-auto h-12">
-            <ng-container *ngFor="let action of tableQuicklyActionsConfig">
-              <ng-container *ngIf="!action.condition && action.active">
-                <button [title]="action.label"
-                        class="h-8 w-8 flex justify-center items-center p-3 rounded-md bg-btw-primary border border-btw"
-                        (click)="eventRow(dataRow, action.nameEvent)" [ngStyle]="{
-              backgroundColor: action.background || 'var(--color-bg)',
-              color: action.color || 'var(--color-text-btw)'
-              }"><span><i
-                  [class]="'fa fa-solid fa-'+action.icon"></i></span></button>
-              </ng-container>
-              <ng-container *ngIf="action.condition && action.condition(dataRow) && action.active">
-                <button [title]="action.label"
-                        class="h-8 w-8 flex justify-center items-center p-3 rounded-md bg-btw-primary border border-btw"
-                        (click)="eventRow(dataRow, action.nameEvent)" [ngStyle]="{
-              backgroundColor: action.background || 'var(--color-bg)',
-              color: action.color || 'var(--color-text-btw)'
-              }"><span><i
-                  [class]="'fa fa-solid fa-'+action.icon"></i></span></button>
-              </ng-container>
-            </ng-container>
-          </div>
-        </td>
-      </ng-container>
-      <ng-container *ngIf="multipleActions">
-        <td>
-          <div class="flex gap-2 justify-center items-center my-auto h-12">
-            <app-button-dropdown [actions]="tableFieldActionsConfig" [data]="dataRow"
-                                 (eventClick)="eventRow($event.data, $event.event)"></app-button-dropdown>
-          </div>
-        </td>
-      </ng-container>
-    </tr>
-  </ng-container>
-  </tbody>
-</ng-template>

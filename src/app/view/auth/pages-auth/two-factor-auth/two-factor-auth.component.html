@@ -24,72 +24,100 @@
   <!-- OTP Input State -->
   <div *ngIf="!success" class="w-full max-w-md bg-btw-secondary rounded-lg shadow-md">
     <!-- Header -->
-    <div class="text-center space-y-2 pt-6 px-6">
-      <div class="mx-auto w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-        </svg>
-      </div>
-      <h1 class="text-2xl font-bold text-primary">Verificación en dos pasos</h1>
-      <p class="text-btw">
-        Ingresa el código de 6 dígitos que enviamos a tu aplicación autenticadora
-      </p>
-    </div>
+<!--    <div class="text-center space-y-2 pt-6 px-6">-->
+<!--      <div class="mx-auto w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">-->
+<!--        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">-->
+<!--          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"-->
+<!--                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>-->
+<!--        </svg>-->
+<!--      </div>-->
+<!--      <h1 class="text-2xl font-bold text-primary">Verificación en dos pasos</h1>-->
+<!--      <p class="text-btw">-->
+<!--        Ingresa el código de 6 dígitos que enviamos a tu aplicación autenticadora-->
+<!--      </p>-->
+<!--    </div>-->
     <!-- Content -->
-    <div class="space-y-6 p-6">
-      <form [formGroup]="formOtp" class="space-y-4">
-        <!-- OTP Input Fields -->
-        <div class="flex justify-center space-x-2">
-          <ng-container *ngFor="let value of otpValues; let i = index">
-            <input
-              [id]="'otp-' + i"
-              type="text"
-              maxlength="1"
-              [formControlName]="i"
-              (input)="onOtpChange(i, $event)"
-              (keydown)="onKeyDown(i, $event)"
-              [disabled]="isLoading"
-              class="w-12 h-12 text-center text-lg font-semibold border-2 border-gray-300 rounded-md focus:border-blue-500 focus:outline-none transition-colors duration-200 disabled:bg-gray-100 disabled:cursor-not-allowed bg-btw-primary text-btw"
-              [class.border-red-500]="error"
-            />
-          </ng-container>
+    <ng-container *ngIf="true">
+      <app-otp
+        [length]="4"
+        [title]="'Verificación de seguridad'"
+        [subtitle]="'Ingresa el código enviado a tu correo'"
+        [showResend]="false"
+        [resendTimeout]="60"
+        (otpComplete)="onVerify($event)"
+        (resend)="onResend()"
+      ></app-otp>
+    </ng-container>
+    <ng-container *ngIf="false">
+      <div class="space-y-6 p-6">
+        <form [formGroup]="formOtp" class="space-y-4">
+          <!-- OTP Input Fields -->
+          <div class="flex justify-center space-x-2">
+            <ng-container *ngFor="let value of otpValues; let i = index">
+              <input
+                [id]="'otp-' + i"
+                type="text"
+                maxlength="1"
+                [formControlName]="i"
+                (input)="onOtpChange(i, $event)"
+                (keydown)="onKeyDown(i, $event)"
+                [disabled]="isLoading"
+                class="w-12 h-12 text-center text-lg font-semibold border-2 border-gray-300 rounded-md focus:border-blue-500 focus:outline-none transition-colors duration-200 disabled:bg-gray-100 disabled:cursor-not-allowed bg-btw-primary text-btw"
+                [class.border-red-500]="error"
+              />
+            </ng-container>
+          </div>
+          <!-- Error Message -->
+          <div *ngIf="error" class="bg-red-50 border border-red-200 rounded-md p-3">
+            <p class="text-sm text-red-600">{{ error }}</p>
+          </div>
+          <!-- Verify Button -->
+<!--          <button-->
+<!--            type="button"-->
+<!--            (click)="onVerify()"-->
+<!--            [disabled]="formOtp.invalid"-->
+<!--            class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium py-2 px-4 rounded-md transition-colors duration-200 flex items-center justify-center">-->
+<!--            <svg *ngIf="isLoading" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">-->
+<!--              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>-->
+<!--              <path class="opacity-75" fill="currentColor"-->
+<!--                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>-->
+<!--            </svg>-->
+<!--            {{ isLoading ? 'Verificando...' : 'Verificar código' }}-->
+<!--          </button>-->
+        </form>
+        <!-- Resend Section -->
+        <div class="text-center space-y-4">
+          <p class="text-sm text-btw">¿No recibiste el código?</p>
+          <button
+            type="button"
+            (click)="onResend()"
+            [disabled]="isResending"
+            class="text-primary hover:text-blue-700 disabled:text-gray-400 disabled:cursor-not-allowed font-medium transition-colors duration-200 flex items-center justify-center mx-auto">
+            <svg *ngIf="isResending" class="animate-spin -ml-1 mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            {{ isResending ? 'Reenviando...' : 'Reenviar código' }}
+          </button>
         </div>
-        <!-- Error Message -->
-        <div *ngIf="error" class="bg-red-50 border border-red-200 rounded-md p-3">
-          <p class="text-sm text-red-600">{{ error }}</p>
+        <!-- Back to Login -->
+        <div class="pt-4 border-t border-gray-200">
+          <button
+            type="button"
+            (click)="onBackToLogin()"
+            class="w-full text-gray-600 hover:text-gray-700 font-medium py-2 px-4 rounded-md transition-colors duration-200 flex items-center justify-center">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            Volver al inicio de sesión
+          </button>
         </div>
-        <!-- Verify Button -->
-        <button
-          type="button"
-          (click)="onVerify()"
-          [disabled]="formOtp.invalid"
-          class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium py-2 px-4 rounded-md transition-colors duration-200 flex items-center justify-center">
-          <svg *ngIf="isLoading" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-          </svg>
-          {{ isLoading ? 'Verificando...' : 'Verificar código' }}
-        </button>
-      </form>
-      <!-- Resend Section -->
-      <div class="text-center space-y-4">
-        <p class="text-sm text-btw">¿No recibiste el código?</p>
-        <button
-          type="button"
-          (click)="onResend()"
-          [disabled]="isResending"
-          class="text-primary hover:text-blue-700 disabled:text-gray-400 disabled:cursor-not-allowed font-medium transition-colors duration-200 flex items-center justify-center mx-auto">
-          <svg *ngIf="isResending" class="animate-spin -ml-1 mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-          </svg>
-          {{ isResending ? 'Reenviando...' : 'Reenviar código' }}
-        </button>
       </div>
-      <!-- Back to Login -->
+    </ng-container>
+    <!-- Back to Login -->
+    <div class="py-6">
       <div class="pt-4 border-t border-gray-200">
         <button
           type="button"

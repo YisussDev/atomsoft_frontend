@@ -1,115 +1,65 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AccountEntity} from "@domain/entities/account/account.entity";
 import {CacheStorage} from "@infrastructure/adapters/out/storage/cache/cache.storage";
+import {TabInterface} from "@ui/tab/interfaces/tab.interface";
 
 @Component({
   selector: 'app-profile-configuration',
   templateUrl: './profile-configuration.component.html',
   styleUrls: ['./profile-configuration.component.css']
 })
-export class ProfileConfigurationComponent implements OnInit {
+export class ProfileConfigurationComponent implements OnInit, AfterViewInit {
 
   public account!: AccountEntity & { jti: string };
 
-  personalForm: FormGroup;
-  twoFactorEnabled = false;
+  public personalForm: FormGroup;
 
-  user = {
-    name: 'Juan Pérez',
-    email: 'juan.perez@ejemplo.com',
-    phone: '+52 55 1234 5678',
-    timezone: 'America/Mexico_City'
-  };
-
-  connectedDevices: any[] = [
-    {
-      id: '1',
-      name: 'MacBook Pro',
-      type: 'desktop',
-      browser: 'Chrome 120.0',
-      location: 'Ciudad de México, México',
-      lastActive: 'Ahora',
-      current: true
-    },
-    {
-      id: '2',
-      name: 'iPhone 15',
-      type: 'mobile',
-      browser: 'Safari Mobile',
-      location: 'Ciudad de México, México',
-      lastActive: 'Hace 2 horas',
-      current: false
-    },
-    {
-      id: '3',
-      name: 'iPad Air',
-      type: 'tablet',
-      browser: 'Safari',
-      location: 'Guadalajara, México',
-      lastActive: 'Hace 1 día',
-      current: false
-    },
-    {
-      id: '4',
-      name: 'Windows PC',
-      type: 'desktop',
-      browser: 'Edge 120.0',
-      location: 'Monterrey, México',
-      lastActive: 'Hace 3 días',
-      current: false
-    }
-  ];
-
-  notifications: any = {
+  public notifications: any = {
     email: true,
     push: true,
     sms: false,
     marketing: false
   };
 
+  @ViewChild('configurationData') configurationData!: TemplateRef<any>;
+  @ViewChild('configurationSecurity') configurationSecurity!: TemplateRef<any>;
+  @ViewChild('configurationSessions') configurationSessions!: TemplateRef<any>;
+
+  public componentTabs: TabInterface[] = [];
+
   constructor(
     private fb: FormBuilder,
-    private cacheStorage: CacheStorage
+    private cacheStorage: CacheStorage,
+    private _cdr: ChangeDetectorRef,
   ) {
-    this.personalForm = this.fb.group({
-      name: [this.user.name, [Validators.required]],
-      email: [this.user.email, [Validators.required, Validators.email]],
-      phone: [this.user.phone],
-      timezone: [this.user.timezone, [Validators.required]]
-    });
+    this.personalForm = this.fb.group({});
   }
 
   ngOnInit(): void {
     this.initAccount();
   }
 
+  ngAfterViewInit() {
+    this.componentTabs = [
+      {
+        label: "Personal",
+        content: this.configurationData
+      },
+      {
+        label: "Seguridad",
+        content: this.configurationSecurity
+      },
+      {
+        label: "Dispositivos",
+        content: this.configurationSessions
+      }
+    ];
+    this._cdr.detectChanges();
+  }
+
   private initAccount(): void {
     this.account = this.cacheStorage.getByKey("_account_data");
-  }
-
-  savePersonalInfo(): void {
-    if (this.personalForm.valid) {
-      console.log('Saving personal info:', this.personalForm.value);
-      // Aquí iría la lógica para guardar la información
-    }
-  }
-
-  openChangePassword(): void {
-    console.log('Opening change password modal');
-    // Aquí iría la lógica para abrir el modal de cambio de contraseña
-  }
-
-  toggleTwoFactor(): void {
-    this.twoFactorEnabled = !this.twoFactorEnabled;
-    console.log('Two factor authentication:', this.twoFactorEnabled);
-    // Aquí iría la lógica para activar/desactivar 2FA
-  }
-
-  disconnectDevice(deviceId: string): void {
-    this.connectedDevices = this.connectedDevices.filter(device => device.id !== deviceId);
-    console.log('Device disconnected:', deviceId);
-    // Aquí iría la lógica para desconectar el dispositivo
   }
 
   toggleNotification(type: keyof any): void {

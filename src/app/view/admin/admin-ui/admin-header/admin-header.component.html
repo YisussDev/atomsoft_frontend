@@ -1,5 +1,5 @@
-<header class="bg-btw-secondary border-b border-btw shadow-sm select-none">
-  <div class="px-2 lg:px-2 py-1">
+<header class="bg-btw-secondary border-b border-btw shadow-sm select-none fixed top-0 left-0 w-full z-50">
+  <div class="px-2 lg:px-2 py-1 w-full">
     <div class="flex justify-between items-center h-10">
       <!-- Logo -->
       <div class="flex gap-1 items-center">
@@ -7,17 +7,31 @@
              [widthBox]="300" [widthContainer]="40">
           <button
             (click)="toggleAppsMenu()"
-            class="h-10 w-10 rounded-md border border-btw flex justify-center items-center text-btw hover:bg-button-primary hover:text-white transition-colors duration-300 ease-out">
-            <app-icon-material nameIcon="apps" sizeIcon="extra_large"
-                               class="flex justify-center items-center"></app-icon-material>
+            class="h-10 w-10 rounded-md border border-btw flex justify-center items-center text-btw hover:bg-button-primary  transition-colors duration-300 ease-out">
+            <app-icon-material nameIcon="apps" sizeIcon="xxl"
+                               class="flex justify-center items-center text-primary hover:text-white"></app-icon-material>
           </button>
           <div *ngIf="isAppsMenuOpen"
-               class="absolute -left-4 top-full mt-2 w-56 bg-btw-secondary rounded-md shadow-lg border border-btw z-50 overflow-hidden w-screen max-w-80">
+               class="absolute -left-4 top-full mt-2 bg-btw-secondary rounded-md shadow-lg border border-btw z-50 overflow-hidden animation-scale max-w-80 w-screen">
             <div class="p-2">
-              <div class="grid grid-cols-3">
-                <div>App 1</div>
-                <div>App 2</div>
-                <div>App 3</div>
+              <p class="text-btw font-medium text-center">Mis Aplicaciones</p>
+              <hr class="my-2">
+              <div class="grid grid-cols-3 p-3">
+                <ng-container *ngFor="let app of appList">
+                  <div class="w-full h-22 flex justify-center items-center flex-col gap-1 cursor-pointer">
+                    <div class="h-16 w-16 rounded-md shadow-md border border-btw hover:scale-110 duration-300 ease-out">
+                      <img [src]="app.logo_url" alt="logo_app" class="object-cover">
+                    </div>
+                    <p class="text-btw text-center text-over-1-line text-sm font-semibold">{{ app.name }}</p>
+                  </div>
+                </ng-container>
+                <div class="w-full h-22 flex justify-center items-center flex-col gap-1 cursor-pointer"
+                     (click)="goToStore()">
+                  <div class="h-16 w-16 rounded-md shadow-md border border-btw hover:scale-110 duration-300 ease-out">
+                    <img src="assets/img/apps/shop.png" alt="logo_shop" class="object-cover">
+                  </div>
+                  <p class="text-btw text-center text-over-1-line text-sm font-semibold">Tienda</p>
+                </div>
               </div>
             </div>
           </div>
@@ -31,7 +45,7 @@
       <!-- Search -->
       <div class="flex-1 max-w-lg mx-8">
         <div class="relative">
-          <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4"
+          <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-btw h-4 w-4"
                fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607z"/>
@@ -39,7 +53,7 @@
           <input
             type="search"
             placeholder="Buscar aplicaciones..."
-            class="pl-10 pr-4 py-2 w-full border bg-btw-primary border-btw rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+            class="pl-10 pr-4 py-2 w-full border bg-btw-secondary border-btw rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
         </div>
       </div>
       <!-- User Menu -->
@@ -53,7 +67,7 @@
           </div>
           <div class="hidden md:block text-left max-w-32">
             <p class="text-sm font-medium text-over-1-line">{{ account.name }}</p>
-            <p class="text-xs">{{ account.roles[0].toUpperCase() }}</p>
+            <p class="text-xs">PraxiSoft©</p>
           </div>
           <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>

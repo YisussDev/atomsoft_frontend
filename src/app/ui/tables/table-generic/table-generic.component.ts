@@ -1,267 +1,246 @@
 import {
+  AfterContentInit,
   Component,
+  ContentChildren,
   EventEmitter,
   Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
   Output,
-  SimpleChanges
+  QueryList,
+  TemplateRef
 } from '@angular/core';
-import {PaginationInterface} from "@core-interfaces/tables/pagination.interface";
-import {TableColumnConfigInterface} from "@core-interfaces/tables/table-column-config.interface";
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {debounceTime, Subject, takeUntil} from "rxjs";
-import {Router} from "@angular/router";
-import {ActionEvent} from "@core-interfaces/actions/action.interface";
-import {ModalEditColumnsComponent} from "./utils/modal-edit-columns/modal-edit-columns.component";
-import {AsideService} from "../../aside/services/aside.service";
-import {ExportDataTableComponent} from "../components/export-data-table/export-data-table.component";
-import {generateQuerySearchUrl} from "@core-helpers/table/helper-table";
-import {SwitchOptionInterface} from "../../switch/interfaces/switch-option.interface";
-import {OrderDataService} from "@core-services/utils/order-data.service";
+import {ColumnTemplateDirective} from "@core/directives/column-template/column-template.directive";
+
+export interface TableColumn {
+  key: string;
+  header: string;
+  sortable?: boolean;
+}
+
+export interface PaginationConfig {
+  currentPage: number;
+  totalItems: number;
+  limit: number;
+}
+
+export interface SortConfig {
+  key: string;
+  direction: 'asc' | 'desc' | '';
+}
 
 @Component({
   selector: 'app-table-generic',
   templateUrl: './table-generic.component.html',
-  styleUrls: ['./table-generic.component.css'],
-  providers: [
-    OrderDataService
-  ]
 })
-export class TableGenericComponent implements OnInit, OnChanges, OnDestroy {
+export class TableGenericComponent implements AfterContentInit {
+  @Input() data: any[] = [];
+  @Input() columns: TableColumn[] = [];
+  @Input() tableTitle = 'Tabla de Datos';
+  @Input() showSearch = true;
+  @Input() showExport = true;
+  @Input() showPagination = true;
+  @Input() itemsPerPage = 10;
 
-  public tableFormQueries!: FormGroup;
-  public orderDataOriginal: any[] = [];
-  @Input() public switchOptionsTable: SwitchOptionInterface[] = [
-    {label: 'Tabla', value: 'table', icon: 'table-cells'},
-    {label: 'Tarjetas ', value: 'cards', icon: 'table-cells-large'}
-  ];
-  @Input() public switchOptionActive: 'table' | 'cards' | string = 'table';
+  // Paginación externa (backend)
+  @Input() currentPage?: number;
+  @Input() totalItems?: number;
+  @Input() limit?: number;
 
-  @Input() public tableName!: string;
-  @Input() public tablePrincipalTitle: string = "Title Default";
-  @Input() public tablePrincipalDescription: string = "Description Default";
-  @Input() public tablePrincipalIcon: string = "settings";
-  @Input() public tableColumnConfig: TableColumnConfigInterface[] = [];
-  @Input() public tableQuicklyActionsConfig: ActionEvent[] = [];
-  @Input() public tableHeaderActionsConfig: ActionEvent[] = [];
-  @Input() public tableFieldActionsConfig: ActionEvent[] = [];
-  @Input() public tableData: any[] = [];
-  @Input() public tableActions: ActionEvent[] = [];
-  @Input() public tablePagination!: PaginationInterface;
-  @Input() public tableHeaderIdentifier: string = 'colum_name';
-  @Input() public tableBodyIdentifier: string = 'id';
-  @Input() public tableLimit: number = 10;
-  @Input() public tableLimitList: number[] = [10, 20];
-  @Input() public headerActions: boolean = false;
-  @Input() public multipleActions: boolean = false;
-  @Input() public searchActions: boolean = false;
-  @Input() public quicklyActions: boolean = false;
-  @Input() public exportAction: boolean = false;
-  @Input() public filterAction: boolean = false;
+  @ContentChildren(ColumnTemplateDirective) columnTemplates!: QueryList<ColumnTemplateDirective>;
 
-  @Output() public tableEvents: EventEmitter<{ data: any; event: string }> = new EventEmitter<{
-    data: any;
-    event: string;
-  }>;
-  @Output() public eventLimitChange: EventEmitter<number> = new EventEmitter<number>;
-  @Output() public eventViewChange: EventEmitter<'table' | 'cards' | string> = new EventEmitter<'table' | 'cards' | string>;
+  // Eventos
+  @Output() pageChange = new EventEmitter<number>();
+  @Output() searchChange = new EventEmitter<string>();
 
-  private _subscriber: Subject<void> = new Subject<void>();
+  private templateMap = new Map<string, TemplateRef<any>>();
 
-  constructor(
-    private orderService: OrderDataService,
-    private _router: Router,
-    private _formBuilder: FormBuilder,
-    private asideService: AsideService,
-  ) {
+  searchTerm = '';
+  internalCurrentPage = 1;
+  sortConfig: SortConfig = {key: '', direction: ''};
+
+  ngAfterContentInit() {
+    // Mapear templates por columnKey
+    this.columnTemplates.forEach(item => {
+      this.templateMap.set(item.columnKey, item.template);
+    });
   }
 
-  ngOnInit() {
-    this.initTableFormQueries();
-    this.verifyLocalConfig();
-    this.initListenExportData();
+  getTemplateForColumn(columnKey: string): TemplateRef<any> | null {
+    return this.templateMap.get(columnKey) || null;
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes) {
-      if (changes['tableData'] && changes['tableData'].currentValue) {
-        this.orderDataOriginal = JSON.parse(JSON.stringify(this.tableData));
-      }
+  get usePaginationConfig(): boolean {
+    return this.currentPage !== undefined && this.totalItems !== undefined && this.limit !== undefined;
+  }
+
+  get currentPageNumber(): number {
+    return this.usePaginationConfig ? this.currentPage! : this.internalCurrentPage;
+  }
+
+  get calculatedTotalPages(): number {
+    if (this.usePaginationConfig) {
+      return Math.ceil(this.totalItems! / this.limit!);
     }
+    return Math.ceil(this.sortedData.length / this.itemsPerPage);
   }
 
-  public trackByFnHeader(index: number, item: any): string {
-    return item[this.tableHeaderIdentifier];
+  getStartIndex(): number {
+    if (!this.usePaginationConfig) return 0;
+    return (this.currentPage! - 1) * this.limit!;
   }
 
-  public trackByFnBody(index: number, item: any): string {
-    return item[this.tableBodyIdentifier];
+  getEndIndex(): number {
+    if (!this.usePaginationConfig) return 0;
+    const end = this.currentPage! * this.limit!;
+    return Math.min(end, this.totalItems!);
   }
 
-  public configColumn(columnConfig: TableColumnConfigInterface): boolean {
-    return columnConfig.visible;
-  }
-
-  public getDataRow(dataRow: any, config: TableColumnConfigInterface): string {
-    const columnName = config.column_name;
-
-    // Si no hay punto, se retorna directamente
-    if (!columnName.includes('.')) {
-      return dataRow[columnName];
+  get displayData(): any[] {
+    // 🔹 SIEMPRE usar sortedData para que el ordenamiento funcione
+    if (this.usePaginationConfig) {
+      return this.sortedData; // Ordenar los datos del backend
     }
-
-    // Si hay punto, se accede de forma anidada
-    const [firstKey, secondKey] = columnName.split('.');
-    return dataRow?.[firstKey]?.[secondKey] ?? 'N/A';
+    return this.paginatedData; // Ya incluye sorting + paginación
   }
 
-  public eventRow(data: any, nameEvent: string): void {
-    this.tableEvents.emit({data, event: nameEvent});
-  }
-
-  public convertColumName(columnName: string): string {
-    const indPoint: number | -1 = columnName.indexOf('.');
-    return `${columnName.slice(0, indPoint)}_id`
-  }
-
-  public changeTableLimit(limit: number): void {
-    this.eventLimitChange.emit(limit);
-  }
-
-  private initTableFormQueries(): void {
-    this.tableFormQueries = this._formBuilder.group({});
-    this.tableFormQueries.addControl('search', this._formBuilder.control(''));
-    for (let config of this.tableColumnConfig) {
-      if(config.column_search){
-        this.tableFormQueries.addControl(config.column_name, this._formBuilder.control(null));
-      }
-    }
-    this.tableFormQueries.valueChanges.pipe(
-      takeUntil(this._subscriber),
-      debounceTime(500)
-    ).subscribe({
-      next: (formData) => {
-        const queryGenerated = generateQuerySearchUrl(formData);
-        const path: string = window.location.pathname;
-        this._router.navigateByUrl(`${path}?page=1${queryGenerated}`)
-      }
-    })
-  }
-
-  public openModalEditColumns(): void {
-    this.asideService.openAsideComponent(
-      ModalEditColumnsComponent,
-      'Configurar Columnas',
-      'CONFIG_COLUMNS',
-      undefined,
-      undefined,
-      this.tableColumnConfig,
-      this.tableName
+  get filteredData(): any[] {
+    if (!this.searchTerm) return this.data;
+    return this.data.filter(row =>
+      Object.values(row).some(value =>
+        String(value).toLowerCase().includes(this.searchTerm.toLowerCase())
+      )
     );
   }
 
-  public openModalExportData(): void {
-    this.asideService.openAsideComponent(
-      ExportDataTableComponent,
-      'Exportar Datos',
-      'EXPORT_DATA',
-      undefined,
-      undefined,
-      this.tableColumnConfig,
-      undefined,
-      {
-        position: 'right',
-        size: 'fit'
-      }
-    );
+  get sortedData(): any[] {
+    const data = [...this.filteredData];
+
+    // 🔹 Ordenar SIEMPRE, sin importar el tipo de paginación
+    if (!this.sortConfig.key || !this.sortConfig.direction) return data;
+
+    return data.sort((a, b) => {
+      const aVal = a[this.sortConfig.key];
+      const bVal = b[this.sortConfig.key];
+      const dir = this.sortConfig.direction === 'asc' ? 1 : -1;
+
+      if (aVal < bVal) return -dir;
+      if (aVal > bVal) return dir;
+      return 0;
+    });
   }
 
-  private initListenExportData(): void {
-    this.asideService.closeAside.pipe(
-      takeUntil(this._subscriber),
-    ).subscribe(event => {
-      if (event) {
-        switch (event.eventName) {
-          case 'EXPORT_DATA':
-            this.eventRow(event.data, 'EXPORT_DATA');
-            break;
-        }
-      }
-    })
+  get paginatedData(): any[] {
+    const start = (this.internalCurrentPage - 1) * this.itemsPerPage;
+    return this.sortedData.slice(start, start + this.itemsPerPage);
   }
 
-  private verifyLocalConfig(): void {
-    // if (this.tableName) {
-    //   const configLocal: string | null = localStorage.getItem(this.tableName);
-    //   if (configLocal) {
-    //     this.tableColumnConfig = JSON.parse(configLocal);
-    //   }
-    // }
-  }
-
-  public changeOrderColum(config: TableColumnConfigInterface): void {
-    switch (config.column_order) {
-      case 'none':
-        this.changeAllOrderColumn(config);
-        this.applyOrderAscData(config);
-        break;
-      case 'asc':
-        this.changeAllOrderColumn(config);
-        this.applyOrderDescData(config);
-        break;
-      case 'desc':
-        this.changeAllOrderColumn(null);
-        this.applyOrderDataOriginal();
-        break;
-    }
-  }
-
-  private changeAllOrderColumn(config: TableColumnConfigInterface | null): void {
-    const copyConfig: TableColumnConfigInterface[] = JSON.parse(JSON.stringify(this.tableColumnConfig));
-    for (let configColum of copyConfig) {
-      if (config) {
-        if (configColum.column_name == config.column_name) {
-          if (config.column_order == 'none') {
-            configColum.column_order = 'asc';
-          } else if (config.column_order == 'asc') {
-            configColum.column_order = 'desc';
-          } else if (config.column_order == 'desc') {
-            configColum.column_order = 'none';
-          }
-        } else {
-          configColum.column_order = 'none';
-        }
+  handleSort(key: string) {
+    // Alternar dirección de ordenamiento
+    if (this.sortConfig.key === key) {
+      // Ciclo: asc -> desc -> sin orden
+      if (this.sortConfig.direction === 'asc') {
+        this.sortConfig.direction = 'desc';
+      } else if (this.sortConfig.direction === 'desc') {
+        this.sortConfig = {key: '', direction: ''};
       } else {
-        configColum.column_order = 'none';
+        this.sortConfig.direction = 'asc';
       }
+    } else {
+      this.sortConfig = {key, direction: 'asc'};
     }
-    this.tableColumnConfig = JSON.parse(JSON.stringify(copyConfig));
+
+    // 🔹 El ordenamiento se aplica automáticamente en el getter sortedData
+    // No se necesita emitir evento al backend si solo quieres ordenar la data actual
   }
 
-  private applyOrderAscData(config: TableColumnConfigInterface): void {
-    this.applyOrderDataOriginal();
-    this.tableData = this.orderService.orderAscData(this.tableData, config.column_name);
+  onSearchChange() {
+    if (this.usePaginationConfig) {
+      this.searchChange.emit(this.searchTerm);
+      // Reiniciar a página 1 cuando se busca
+      this.pageChange.emit(1);
+    } else {
+      this.internalCurrentPage = 1;
+    }
   }
 
-  private applyOrderDescData(config: TableColumnConfigInterface): void {
-    this.applyOrderDataOriginal();
-    this.tableData = this.orderService.orderDesData(this.tableData, config.column_name);
+  onGoToPage(page: number) {
+    if (this.usePaginationConfig) {
+      this.pageChange.emit(page);
+    } else {
+      this.internalCurrentPage = page;
+    }
   }
 
-  private applyOrderDataOriginal(): void {
-    this.tableData = JSON.parse(JSON.stringify(this.orderDataOriginal));
+  onPreviousPage() {
+    if (this.currentPageNumber > 1) {
+      this.onGoToPage(this.currentPageNumber - 1);
+    }
   }
 
-  public changeTypeView(type: 'table' | 'cards' | string): void {
-    this.switchOptionActive = type;
-    this.eventViewChange.emit(type);
+  onNextPage() {
+    if (this.currentPageNumber < this.calculatedTotalPages) {
+      this.onGoToPage(this.currentPageNumber + 1);
+    }
   }
 
-  ngOnDestroy() {
-    this._subscriber.next();
-    this._subscriber.complete();
+  getVisiblePages(): (number | string)[] {
+    const pages: (number | string)[] = [];
+    const maxVisible = 5;
+    const totalPages = this.calculatedTotalPages;
+    const currentPage = this.currentPageNumber;
+
+    if (totalPages <= maxVisible + 2) {
+      return Array.from({length: totalPages}, (_, i) => i + 1);
+    }
+
+    pages.push(1);
+
+    if (currentPage > 3) {
+      pages.push('...');
+    }
+
+    const start = Math.max(2, currentPage - 1);
+    const end = Math.min(totalPages - 1, currentPage + 1);
+
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+
+    if (currentPage < totalPages - 2) {
+      pages.push('...');
+    }
+
+    pages.push(totalPages);
+
+    return pages;
   }
 
+  exportToCSV() {
+    const dataToExport = this.usePaginationConfig ? this.data : this.sortedData;
+    const csv = [
+      this.columns.map(c => c.header).join(','),
+      ...dataToExport.map(row =>
+        this.columns.map(c => {
+          const val = row[c.key];
+          return typeof val === 'string' && val.includes(',') ? `"${val}"` : val;
+        }).join(',')
+      ),
+    ].join('\n');
+
+    const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `${this.tableTitle.replace(/\s+/g, '_')}.csv`;
+    link.click();
+    URL.revokeObjectURL(link.href);
+  }
+
+  exportToJSON() {
+    const dataToExport = this.usePaginationConfig ? this.data : this.sortedData;
+    const blob = new Blob([JSON.stringify(dataToExport, null, 2)], {type: 'application/json'});
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `${this.tableTitle.replace(/\s+/g, '_')}.json`;
+    link.click();
+    URL.revokeObjectURL(link.href);
+  }
 }

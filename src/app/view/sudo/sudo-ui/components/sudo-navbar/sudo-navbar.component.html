@@ -1,0 +1,118 @@
+<aside
+  [class]="getAsideClasses()"
+  [style.width.px]="isCollapsed ? collapsedWidth : expandedWidth"
+>
+  <!-- Header -->
+  <div class="flex items-center justify-between border-b border-btw h-12">
+    <div
+      [class]="'flex items-center gap-3 transition-opacity duration-200 ' + (isCollapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100')">
+      <div class="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold bg-btw-primary p-2">
+        <img src="assets/img/logos/logo_praxi.svg" alt="logo_company" class="object-cover">
+      </div>
+      <span appTypography="subtitle">{{ appName }}</span>
+    </div>
+    <button
+      (click)="toggleCollapse()"
+      class="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+      [title]="isCollapsed ? 'Expandir' : 'Contraer'"
+    >
+      <svg class="w-5 h-5 text-btw" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path *ngIf="!isCollapsed" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path>
+        <path *ngIf="isCollapsed" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
+      </svg>
+    </button>
+  </div>
+  <!-- Navigation Items -->
+  <nav class="flex-1 overflow-y-auto py-4 px-2">
+    <ng-container *ngFor="let item of navItems; let i = index">
+      <ng-container *ngIf="item.divider">
+        <hr *ngIf="item.divider" class="my-2 border-btw">
+      </ng-container>
+      <ng-container *ngIf="!item.divider">
+        <div *ngIf="!item.divider">
+          <!-- Parent Item -->
+          <div
+            (click)="handleItemClick(item, i)"
+            [class]="getItemClasses(item, i)"
+            [attr.title]="isCollapsed ? item.label : ''"
+          >
+            <div class="flex items-center gap-3 flex-1 min-w-0">
+              <ng-container *ngIf="item.icon">
+                <app-icon-material [nameIcon]="item.icon" sizeIcon="large" class="p-0 m-0 text-btw"></app-icon-material>
+              </ng-container>
+              <span
+                appTypography="semi_medium"
+                [class]="'truncate transition-all duration-200 ' + (isCollapsed ? 'opacity-0 w-0' : 'opacity-100')">
+                  {{ item.label  | titlecase }}
+                </span>
+              <span
+                *ngIf="item.badge && !isCollapsed"
+                class="ml-auto px-2 py-0.5 text-xs rounded-full bg-red-500 text-white flex-shrink-0"
+              >
+                  {{ item.badge }}
+                </span>
+            </div>
+            <!-- Chevron for items with children -->
+            <svg
+              *ngIf="item.children && item.children.length > 0 && !isCollapsed"
+              [@rotate]="expandedItems[i] ? 'expanded' : 'collapsed'"
+              class="w-4 h-4 text-gray-400 flex-shrink-0 ml-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <!-- Children Items -->
+          <div
+            *ngIf="item.children && item.children.length > 0 && !isCollapsed && expandedItems[i]"
+            [@slideDown]
+            class="ml-4 mt-1 space-y-1"
+          >
+            <div
+              *ngFor="let child of item.children; let j = index"
+              (click)="handleChildClick(child, i, j)"
+              [class]="getChildClasses(child, i, j)"
+            >
+              <div class="flex items-center gap-3 flex-1 min-w-0">
+                <ng-container *ngIf="child.icon">
+                  <app-icon-material [nameIcon]="child.icon" sizeIcon="large" class="p-0 m-0 text-btw"></app-icon-material>
+                </ng-container>
+                <span appTypography="semi_medium" class="truncate">{{ child.label }}</span>
+                <span
+                  *ngIf="child.badge"
+                  class="ml-auto px-2 py-0.5 text-xs rounded-full bg-red-500 text-white flex-shrink-0"
+                >
+                    {{ child.badge }}
+                  </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </nav>
+  <!-- Footer -->
+  <div class="border-t border-gray-200 p-4">
+    <div [class]="'flex items-center gap-3 transition-all duration-200 ' + (isCollapsed ? 'justify-center' : '')">
+      <div
+        class="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
+        {{ userInitial }}
+      </div>
+      <div
+        [class]="'flex-1 min-w-0 transition-opacity duration-200 ' + (isCollapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100')">
+        <p class="font-semibold text-sm text-gray-800 truncate">{{ userName }}</p>
+        <p class="text-xs text-gray-500 truncate">{{ userRole }}</p>
+      </div>
+    </div>
+  </div>
+  <!-- Mobile Overlay -->
+  <div
+    *ngIf="isMobileOpen"
+    (click)="closeMobile()"
+    class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+  ></div>
+</aside>

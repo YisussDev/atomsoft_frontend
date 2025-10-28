@@ -1,0 +1,35 @@
+<div class="otp-container">
+  <h2 class="otp-title">{{ title }}</h2>
+  <p class="otp-subtitle">{{ subtitle }}</p>
+
+  <div class="otp-inputs">
+    <input
+      *ngFor="let digit of digits; let i = index; trackBy: trackByIndex"
+      #otpInput
+      type="text"
+      inputmode="numeric"
+      maxlength="1"
+      class="otp-digit"
+      [class.filled]="digits[i]"
+      [class.error]="hasError"
+      (input)="onInput($event, i)"
+      (keydown)="onKeyDown($event, i)"
+      (paste)="onPaste($event, i)"
+    />
+  </div>
+
+  <div *ngIf="hasError" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <div class="otp-actions">
+    <button
+      *ngIf="showResend"
+      class="resend-button"
+      (click)="onResendClick()"
+      [disabled]="resendDisabled"
+    >
+<!--      {{ resendDisabled ? `Reenviar en ${countdown}s` : 'Reenviar código' }}-->
+    </button>
+  </div>
+</div>

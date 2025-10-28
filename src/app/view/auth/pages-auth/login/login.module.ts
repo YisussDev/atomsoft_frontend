@@ -8,6 +8,7 @@ import {InputsModule} from "@ui/inputs/inputs.module";
 import {ButtonsModule} from "@ui/buttons/buttons.module";
 import {BoxModule} from "@ui/box/box.module";
 import {AccountCompositionModule} from "../../../../composition/account/account.composition.module";
+import {AuthCompositionModule} from "../../../../composition/auth/auth.composition.module";
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import {AccountCompositionModule} from "../../../../composition/account/account.
     InputsModule,
     ButtonsModule,
     BoxModule,
-    AccountCompositionModule
+    AuthCompositionModule
   ],
   providers: []
 })

@@ -19,6 +19,11 @@ const routes: Routes = [
         canActivate: [AdminGuard]
       },
       {
+        path: 'sudo',
+        loadChildren: () => import('./sudo/sudo.module').then(m => m.SudoModule),
+        canActivate: [AdminGuard]
+      },
+      {
         path: "**", redirectTo: "auth"
       }
     ]

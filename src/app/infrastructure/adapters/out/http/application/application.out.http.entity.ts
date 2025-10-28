@@ -8,6 +8,7 @@ export interface ApplicationOutHttpEntity {
   description: string;
   chips: string[];
   price: string;
+  color_primary: string;
 
   url_production: string;
   url_sandbox: string;

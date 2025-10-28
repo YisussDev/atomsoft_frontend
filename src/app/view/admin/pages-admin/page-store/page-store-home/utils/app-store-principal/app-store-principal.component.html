@@ -1,0 +1,16 @@
+<ng-container *ngIf="appPrincipal">
+  <div class="rounded-xl p-8 text-white mb-8 hover:shadow-2xl transition-shadow ease-out duration-300" #gradientBlock>
+    <div class="flex items-center gap-8 flex-col sm:flex-row">
+      <div class="rounded-2xl p-6 w-32 h-32 flex items-center justify-center">
+        <img [src]="appPrincipal.logo_url" alt="application_logo" class="object-cover">
+      </div>
+      <div class="flex-1">
+        <h3 appTypography="title" class="text-white mb-2">{{ appPrincipal.name }}</h3>
+        <p appTypography="paragraph" class="text-white mb-2">{{ appPrincipal.description }}</p>
+        <button class="bg-white text-primary px-6 py-2 rounded-md font-semibold hover:bg-gray-100 transition-colors">
+          Obtener
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-container>

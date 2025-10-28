@@ -17,9 +17,7 @@ export class PagesAdminComponent implements OnInit {
     initials: 'JP'
   };
 
-  constructor(
-
-  ) {
+  constructor() {
   }
 
   ngOnInit(): void {

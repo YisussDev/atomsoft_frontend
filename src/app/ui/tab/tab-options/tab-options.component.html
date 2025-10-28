@@ -1,0 +1,34 @@
+<div class="tab-container" [class]="containerClass">
+  <div class="">
+    <div
+      class="gap-2 flex flex-wrap bg-btw-secondary rounded-t-md w-full border-t border-l border-r border-btw px-2 py-2"
+      [class]="buttonsContainerClass">
+      <button
+        *ngFor="let tab of tabs; let i = index"
+        [class]="getButtonClasses(tab)"
+        [style]="getButtonStyles(tab)"
+        [disabled]="tab.disabled"
+        (click)="selectTab(tab.value)"
+        class="flex px-3 py-1 justify-center items-center gap-1 rounded-md bg-btw-secondary text-btw transition-colors duration-300 ease-out text-xs">
+        <ng-container *ngIf="tab.icon">
+          <app-icon-material [nameIcon]="tab.icon"></app-icon-material>
+        </ng-container>
+        <span class="tab-title">
+          {{ tab.title || 'Tab ' + tab.value }}
+        </span>
+        <span *ngIf="tab.badge" class="tab-badge">{{ tab.badge }}</span>
+        <span
+          *ngIf="closable"
+          class="tab-close"
+          (click)="closeTab($event, tab.value)">×</span>
+      </button>
+    </div>
+  </div>
+  <div class="tab-content rounded-b-md" [class]="contentClass">
+    <ng-container *ngFor="let tab of tabs">
+      <div *ngIf="value === tab.value" class="tab-panel">
+        <ng-container *ngTemplateOutlet="tab.content"></ng-container>
+      </div>
+    </ng-container>
+  </div>
+</div>

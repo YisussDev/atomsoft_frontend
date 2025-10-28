@@ -4,7 +4,8 @@ import {CommonModule} from '@angular/common';
 import {TwoFactorAuthRoutingModule} from './two-factor-auth-routing.module';
 import {TwoFactorAuthComponent} from './two-factor-auth.component';
 import {ReactiveFormsModule} from "@angular/forms";
-import {AccountCompositionModule} from "../../../../composition/account/account.composition.module";
+import {OtpModule} from "@infrastructure/ui/components/otp/otp.module";
+import {AuthCompositionModule} from "../../../../composition/auth/auth.composition.module";
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import {AccountCompositionModule} from "../../../../composition/account/account.
     CommonModule,
     TwoFactorAuthRoutingModule,
     ReactiveFormsModule,
-    AccountCompositionModule
+    AuthCompositionModule,
+    OtpModule
   ]
 })
 export class TwoFactorAuthModule {

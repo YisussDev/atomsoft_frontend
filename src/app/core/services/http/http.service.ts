@@ -2,12 +2,16 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpContext, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {catchError, tap} from "rxjs/operators";
+import {NotificationService} from "@core/services/notification/notification.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class HttpService {
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private notificationService: NotificationService,
+  ) {
   }
 
   private logRequest(method: string, url: string, options?: any) {
@@ -19,7 +23,7 @@ export class HttpService {
   }
 
   private handleError(error: any) {
-    console.error("HTTP Error:", error);
+    // console.error("HTTP Error:", error);
     return throwError(() => error);
   }
 

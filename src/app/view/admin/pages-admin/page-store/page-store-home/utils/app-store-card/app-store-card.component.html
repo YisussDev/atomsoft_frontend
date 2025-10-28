@@ -1,0 +1,28 @@
+<ng-container *ngIf="appPrincipal">
+  <div
+    class="app-card bg-btw-primary rounded-lg overflow-hidden cursor-pointer border border-btw hover:shadow-2xl transition-shadow ease-out duration-300">
+    <div class="p-6">
+      <div
+        class="text-5xl rounded-xl w-20 h-20 flex items-center justify-center mb-4">
+        <img [src]="appPrincipal.logo_url" alt="logo_application">
+      </div>
+      <h3 appTypography="title">{{ appPrincipal.name }}</h3>
+      <p appTypography="paragraph" class="text-over-2-line">{{ appPrincipal.description }}</p>
+      <div class="flex items-center gap-2 mb-3">
+        <div class="flex items-center gap-1" #starContainer>
+        </div>
+        <span appTypography="subtitle">{{ 5 }}</span>
+        <span appTypography="subtitle">({{ "12k" }})</span>
+      </div>
+      <div class="flex items-center justify-between">
+        <!--      <span class="text-sm font-semibold text-blue-600">{{appPrincipal.price}</span>-->
+        <!--      <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">{{ appPrincipal.category || "Productividad"}}</span>-->
+      </div>
+    </div>
+    <div class="px-6 pb-6">
+      <button class="w-full text-white py-2 rounded-md font-medium transition-colors bg-opacity-25" #gradientBlock>
+        Obtener
+      </button>
+    </div>
+  </div>
+</ng-container>

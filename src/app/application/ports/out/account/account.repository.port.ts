@@ -18,7 +18,7 @@ export interface AccountRepositoryPort {
 
   create(
     dataToCreate: AccountEntity,
-  ): Observable<AccountEntity>;
+  ): Observable<{ token: string; is_two_factor: 0 | 1 }>;
 
   update(
     keyToSearch: string,
@@ -28,28 +28,5 @@ export interface AccountRepositoryPort {
   delete(
     keyToDelete: string,
   ): Observable<void>;
-
-  login(dataToLogin: { email: string; password: string }):
-    Observable<{
-      token: string;
-      is_two_factor: 0 | 1;
-    }>
-
-  loginGoogle(tokenGoogle: string):
-    Observable<{
-      token: string;
-    }>
-
-  logout(): Observable<void>;
-
-  verify(): Observable<{ token: string; account: AccountEntity & { jti: string } }>
-
-  consultSessions(username: string): Observable<{ sessions: SessionEntity[] }>
-
-  closeSession(username: string, idSession: string): Observable<{ message: string }>
-
-  consultTwoFactor(): Observable<{ twoFactorCompleted: 0 | 1; }>;
-
-  verifyTwoFactor(otp: string): Observable<{ validTwoFactor: 0 | 1; }>;
 
 }

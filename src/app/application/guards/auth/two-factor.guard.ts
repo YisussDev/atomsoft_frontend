@@ -3,7 +3,7 @@ import {environment} from "../../../../environments/environment";
 import {map, Observable, of} from "rxjs";
 import {NavigationService} from "@core/services/navigation/navigation.service";
 import {catchError} from "rxjs/operators";
-import {ConsultTwoFactorAccountUseCase} from "@application/ports/in/account/consult-two-factor-account.use-case";
+import {ConsultTwoFactorAccountUseCase} from "@application/ports/in/auth/consult-two-factor-account.use-case";
 
 @Injectable()
 export class TwoFactorGuard {

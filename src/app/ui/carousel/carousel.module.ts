@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CarouselComponent } from './carousel/carousel.component';
+import {CarouselComponent, CarouselSlideDirective} from './carousel/carousel.component';
 import {FormsModule} from "@angular/forms";
 
 
 
 @NgModule({
   declarations: [
-    CarouselComponent
+    CarouselComponent,
+    CarouselSlideDirective
   ],
   exports: [
-    CarouselComponent
+    CarouselComponent,
+    CarouselSlideDirective
   ],
   imports: [
     CommonModule,

@@ -10,6 +10,8 @@ export class ApplicationEntity {
   chips!: string[];
   price!: string;
 
+  color_primary!: string;
+
   url_production!: string;
   url_sandbox!: string;
   url_test!: string;

@@ -10,6 +10,7 @@ import {IconsModule} from "@ui/icons/icons.module";
 import {ChipModule} from "@ui/chip/chip.module";
 import {ButtonsModule} from "@ui/buttons/buttons.module";
 import {CarouselModule} from "@ui/carousel/carousel.module";
+import {CardApplicationCarouselModule} from "@ui/cards/card-application-carousel/card-application-carousel.module";
 
 
 @NgModule({
@@ -18,14 +19,15 @@ import {CarouselModule} from "@ui/carousel/carousel.module";
     HomeBannersLastComponent,
     HomeSectionLastAppsComponent
   ],
-  imports: [
-    CommonModule,
-    PageHomeRoutingModule,
-    BoxModule,
-    IconsModule,
-    ChipModule,
-    ButtonsModule,
-    CarouselModule
-  ]
+    imports: [
+        CommonModule,
+        PageHomeRoutingModule,
+        BoxModule,
+        IconsModule,
+        ChipModule,
+        ButtonsModule,
+        CarouselModule,
+        CardApplicationCarouselModule
+    ]
 })
 export class PageHomeModule { }

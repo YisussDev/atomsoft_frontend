@@ -40,17 +40,9 @@ export class CacheStorage {
 }
 
 export type dataAllowType =
-  "_account_data"
-  | "_user_data"
-  | "_company_data"
-  | "_suffix"
-  | "_company_config"
-  | "_customer_data"
-  | "_credit_list"
-  | "_credit_history_list"
-  | "_validation_list"
-  | "_credit_study_list"
-  | "_full_payment_list"
-  | "_agreement_list"
-  | "_agreement_selected"
+  "_account_data" |
+  "_app_list_data" |
+  "_apps_charged" |
+  "_licenses_charged" |
+  "_customer_carged"
   ;

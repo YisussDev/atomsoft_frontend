@@ -1,6 +1,6 @@
 <div class="bg-btw-secondary backdrop-blur-sm rounded-xl shadow-md p-6 border border-btw">
   <h2 class="text-xl font-semibold text-btw mb-6 flex items-center">
-    <svg class="w-5 h-5 mr-2 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
     </svg>
@@ -10,22 +10,21 @@
     <div *ngFor="let session of sessions"
          class="flex items-center justify-between p-4 border border-btw rounded-xl">
       <div class="flex items-center space-x-4">
-        <div class="w-10 h-10 bg-btw-primary rounded-lg flex items-center justify-center">
-          <!--          <svg *ngIf="device.type === 'desktop'" class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">-->
-          <!--            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>-->
-          <!--          </svg>-->
-          <!--          <svg *ngIf="device.type === 'mobile'" class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">-->
-          <!--            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>-->
-          <!--          </svg>-->
-          <svg *ngIf="true" class="w-5 h-5 text-btw" fill="none" stroke="currentColor"
+        <div class="w-10 h-10 bg-btw-primary rounded-lg flex items-center justify-center text-primary">
+          <svg *ngIf="session.deviceType === 'Desktop'" class="w-5 h-5" fill="none" stroke="currentColor"
                viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                  d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+          </svg>
+          <svg *ngIf="session.deviceType === 'Mobile'" class="w-5 h-5" fill="none" stroke="currentColor"
+               viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
           </svg>
         </div>
         <div>
           <div class="flex items-center space-x-2">
-            <h3 class="font-medium text-btw">{{ session.ip }}</h3>
+            <h3 appTypography="subtitle">{{ session.ip }}</h3>
             <span *ngIf="session.id == account.jti"
                   class="px-2 py-1 bg-emerald-100 text-emerald-700 text-xs rounded-full">
               Actual

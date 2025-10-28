@@ -1,1 +1,29 @@
-<p>profile-detail works!</p>
+<div class="w-full">
+  <div class="mb-6 overflow-hidden shadow-lg rounded-lg border border-btw bg-btw-secondary">
+    <div class="h-32 bg-chill bg-primary">
+    </div>
+    <div class="px-8 pb-8">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between -mt-16 mb-6">
+        <div class="flex flex-col md:flex-row md:items-end gap-6">
+          <div class="h-32 w-32 border-4 border-card shadow-xl rounded-full flex justify-center items-center overflow-hidden bg-btw-secondary p-3">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/2354/2354573.png"
+              alt="profile_image" class="h-full w-full object-cover"/>
+          </div>
+          <div class="flex flex-col justify-items-end h-full">
+            <h1 appTypography="title" class="mb-1">{{ dataAccount.name | titlecase }}</h1>
+            <p appTypography="subtitle">{{ dataAccount.roles[0] | titlecase}}</p>
+          </div>
+        </div>
+        <div class="flex gap-3 mt-4 md:mt-0">
+<!--          <button class="shadow-md">-->
+<!--            Contactar-->
+<!--          </button>-->
+<!--          <button>-->
+<!--            Compartir-->
+<!--          </button>-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

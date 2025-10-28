@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {NavigationService} from "@core/services/navigation/navigation.service";
 import Swal from "sweetalert2";
-import {LogoutAccountUseCase} from "@application/ports/in/account/logout-account.use-case";
-import {VerifyTwoFactorAccountUseCase} from "@application/ports/in/account/verify-two-factor-account.use-case";
+import {LogoutAccountUseCase} from "@application/ports/in/auth/logout-account.use-case";
+import {VerifyTwoFactorAccountUseCase} from "@application/ports/in/auth/verify-two-factor-account.use-case";
 
 @Component({
   selector: 'app-two-factor-auth',
@@ -30,6 +30,26 @@ export class TwoFactorAuthComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
+  }
+
+  onOtpComplete(otp: string) {
+    this.validateOtp(otp);
+  }
+
+  onResend() {
+
+    // Aquí puedes llamar a tu servicio para reenviar el código
+    this.resendOtpCode();
+  }
+
+  private validateOtp(otp: string) {
+    // Simular validación
+    // this.http.post('/api/verify-otp', { otp }).subscribe(...)
+  }
+
+  private resendOtpCode() {
+    // Simular reenvío
+    // this.http.post('/api/resend-otp', {}).subscribe(...)
   }
 
   private initForm(): void {
@@ -73,9 +93,8 @@ export class TwoFactorAuthComponent implements OnInit {
     }, 100);
   }
 
-  async onVerify() {
-    const otpToSend: string = this.extractOtp();
-    this.verifyTwoFactorAccountUseCase.execute(otpToSend).subscribe();
+  public onVerify(otp: string) {
+    this.verifyTwoFactorAccountUseCase.execute(otp).subscribe();
   }
 
   public extractOtp(): string {
@@ -87,28 +106,28 @@ export class TwoFactorAuthComponent implements OnInit {
     return otp;
   }
 
-  async onResend() {
-    this.isResending = true;
-    this.error = '';
-
-    try {
-      // Simular reenvío del código
-      await new Promise(resolve => setTimeout(resolve, 1500));
-
-      // Limpiar campos
-      this.otpValues = ['', '', '', '', '', ''];
-      for (let i = 0; i < 6; i++) {
-        const input = document.getElementById(`otp-${i}`) as HTMLInputElement;
-        if (input) {
-          input.value = '';
-        }
-      }
-      // this.otpForm.patchValue({otp: ''});
-
-    } finally {
-      this.isResending = false;
-    }
-  }
+  // async onResend() {
+  //   this.isResending = true;
+  //   this.error = '';
+  //
+  //   try {
+  //     // Simular reenvío del código
+  //     await new Promise(resolve => setTimeout(resolve, 1500));
+  //
+  //     // Limpiar campos
+  //     this.otpValues = ['', '', '', '', '', ''];
+  //     for (let i = 0; i < 6; i++) {
+  //       const input = document.getElementById(`otp-${i}`) as HTMLInputElement;
+  //       if (input) {
+  //         input.value = '';
+  //       }
+  //     }
+  //     // this.otpForm.patchValue({otp: ''});
+  //
+  //   } finally {
+  //     this.isResending = false;
+  //   }
+  // }
 
   public onBackToLogin() {
     Swal.fire({
@@ -128,8 +147,6 @@ export class TwoFactorAuthComponent implements OnInit {
   }
 
   onContinue() {
-    // Implementar navegación después del éxito
-    console.log('Continuar');
   }
 
 }

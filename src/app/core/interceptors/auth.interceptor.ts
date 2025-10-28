@@ -8,8 +8,8 @@ import {Router} from "@angular/router";
 export class AuthInterceptor implements HttpInterceptor {
 
   private pathExcludes: string[] = [
-    "api/account/login",
-    "api/account/login/google",
+    "api/auth/login",
+    "api/auth/login/google",
   ];
 
   constructor() {

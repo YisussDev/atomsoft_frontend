@@ -4,7 +4,7 @@ import {map, Observable, of} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {NavigationService} from "@core/services/navigation/navigation.service";
 import {CacheStorage} from "@infrastructure/adapters/out/storage/cache/cache.storage";
-import {VerifyAccountUseCase} from "@application/ports/in/account/verify-account.use-case";
+import {VerifyAccountUseCase} from "@application/ports/in/auth/verify-account.use-case";
 
 @Injectable()
 export class AdminGuard {

@@ -6,8 +6,8 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {ViewComponent} from "@view/view.component";
 import {ButtonsModule} from "@ui/buttons/buttons.module";
 import {ModalModule} from "@ui/modal/modal.module";
-import {AccountCompositionModule} from "../composition/account/account.composition.module";
 import {ApplicationCompositionModule} from "../composition/application/application.composition.module";
+import {AuthCompositionModule} from "../composition/auth/auth.composition.module";
 
 
 @NgModule({
@@ -21,7 +21,7 @@ import {ApplicationCompositionModule} from "../composition/application/applicati
     ReactiveFormsModule,
     ButtonsModule,
     ModalModule,
-    AccountCompositionModule,
+    AuthCompositionModule,
     ApplicationCompositionModule
   ]
 })

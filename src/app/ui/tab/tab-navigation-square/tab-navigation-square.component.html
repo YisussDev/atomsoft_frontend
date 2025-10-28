@@ -6,7 +6,7 @@
       [routerLink]="config.path" routerLinkActive="border-primary">
       <div class="h-7 w-7 flex justify-center items-center">
         <ng-container *ngIf="config.typeResource == 'icon'">
-          <app-icon-material [nameIcon]="config.resource" sizeIcon="extra_large"></app-icon-material>
+          <app-icon-material [nameIcon]="config.resource" sizeIcon="medium"></app-icon-material>
         </ng-container>
         <ng-container *ngIf="config.typeResource == 'img'">
           <img [src]="config.resource" class="object-scale-down h-full w-full" alt="img_provider">

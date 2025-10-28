@@ -55,6 +55,26 @@
   }
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
 .animation-opacity {
   animation: renderOpacity .3s ease-in-out;
 }
@@ -69,4 +89,12 @@
 
 .ibox {
   animation: renderOpacity .5s ease-in-out;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-float {
+  animation: float 1s ease-in-out infinite;
 }

@@ -1,0 +1,42 @@
+<div
+  class="min-h-screen flex items-center justify-center bg-gradient-to-br bg-btw-primary p-4 bg-auth transition-colors duration-300 ease-out">
+  <div class="w-full max-w-md shadow-xl border-0 bg-btw-secondary backdrop-blur-sm rounded-lg animation-scale">
+    <!-- Header -->
+    <div class="space-y-6 pb-8 pt-8 px-6">
+      <div class="flex justify-center">
+        <app-box-image className="w-24 h-24 flex justify-center items-center overflow-hidden">
+          <img src="assets/img/logos/logo_praxi.svg" alt="logo_praxi" class="object-cover h-full">
+        </app-box-image>
+      </div>
+      <div class="text-center space-y-2">
+        <h1 class="text-2xl font-semibold text-btw">Recuperar cuenta</h1>
+        <p class="text-btw">Ingresa tu correo electrónico</p>
+      </div>
+    </div>
+    <!-- Content -->
+    <div class="space-y-6 px-6 pb-8">
+      <form [formGroup]="formLogin">
+        <combo-input-text
+          inputLabel="Correo electrónico"
+          inputPlaceholder="correo@ejemplo.com"
+          inputIcon="envelope"
+          inputName="email"
+          [inputIconActive]="true"
+          [control]="formLogin.controls['email']"
+        >
+        </combo-input-text>
+        <!-- Login Button -->
+        <div class="space-y-2 grid">
+        <app-button-container (clickEvent)="onSubmit()" variant="primary" [disabled]="formLogin.invalid"
+                              className="text-white w-full">
+          Restaurar contraseña
+        </app-button-container>
+        <app-button-container (clickEvent)="onCancel()" type="button" variant="outline"
+                              className="text-primary w-full">
+          Cancelar
+        </app-button-container>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -3,8 +3,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Subject, takeUntil} from "rxjs";
 import {ThemeService} from "@core/services/theme/theme.service";
 import {NavigationService} from "@core/services/navigation/navigation.service";
-import {LoginAccountUseCase} from "@application/ports/in/account/login-account.use-case";
-import {LoginWithGoogleAccountUseCase} from "@application/ports/in/account/login-with-google-account.use-case";
+import {LoginAccountUseCase} from "@application/ports/in/auth/login-account.use-case";
+import {LoginWithGoogleAccountUseCase} from "@application/ports/in/auth/login-with-google-account.use-case";
 
 declare const google: any;
 
@@ -38,7 +38,6 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
       window.handleCredentialResponse = (response: any) => {
         this.loginWithGoogleAccountUseCase.execute(response.credential).subscribe({
           next: (event) => {
-            console.log(event);
           }
         });
       };
@@ -64,7 +63,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private initForm(): void {
     this.formLogin = this._formBuilder.group({
-      email: ["admin@test.com", Validators.required],
+      email: ["paguayjesus@gmail.com", Validators.required],
       password: ["123asd123@A", [Validators.required]],
     })
   }

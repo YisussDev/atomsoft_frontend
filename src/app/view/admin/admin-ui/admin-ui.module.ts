@@ -4,10 +4,14 @@ import {AdminHeaderComponent} from './admin-header/admin-header.component';
 import {ClickOutsideModule} from "@core/directives/click-outside/click-outside.module";
 import {RouterLink} from "@angular/router";
 import {IconsModule} from "@ui/icons/icons.module";
-import {AccountCompositionModule} from "../../../composition/account/account.composition.module";
+import {NavigationUi} from "@infrastructure/ui/services/navigation/navigation.ui";
+import {AuthCompositionModule} from "../../../composition/auth/auth.composition.module";
 
 
 @NgModule({
+  providers: [
+    NavigationUi
+  ],
   declarations: [
     AdminHeaderComponent
   ],
@@ -19,7 +23,7 @@ import {AccountCompositionModule} from "../../../composition/account/account.com
     ClickOutsideModule,
     RouterLink,
     IconsModule,
-    AccountCompositionModule
+    AuthCompositionModule,
   ]
 })
 export class AdminUiModule {

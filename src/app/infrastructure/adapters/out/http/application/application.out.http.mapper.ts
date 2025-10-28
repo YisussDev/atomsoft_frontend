@@ -20,6 +20,7 @@ export class ApplicationOutHttpMapper {
     entityDomain.url_front_sandbox = dataInfrastructure.url_front_sandbox;
     entityDomain.url_front_test = dataInfrastructure.url_front_test;
     entityDomain.recursive_payment = dataInfrastructure.recursive_payment;
+    entityDomain.color_primary = dataInfrastructure.color_primary;
     // Base...
     entityDomain.created_at = dataInfrastructure.created_at;
     entityDomain.updated_at = dataInfrastructure.updated_at;
@@ -44,6 +45,7 @@ export class ApplicationOutHttpMapper {
       url_front_sandbox: dataDomain.url_front_sandbox,
       url_front_test: dataDomain.url_front_test,
       recursive_payment: dataDomain.recursive_payment,
+      color_primary: dataDomain.color_primary,
       // Base...
       created_at: dataDomain.created_at,
       updated_at: dataDomain.updated_at,

@@ -17,7 +17,12 @@ export class FindAllAccountUseCase {
   ) {
   }
 
-  public execute(query: { [key: string]: string | number }): Observable<{ data: AccountEntity[] }> {
+  public execute(query: { [key: string]: string | number }): Observable<{
+    data: AccountEntity[];
+    pageActual?: number;
+    limitActual?: number;
+    totalFounded?: number;
+  }> {
     return of(query).pipe(
       mergeMap(() => {
         return this.repository.findAll(query);

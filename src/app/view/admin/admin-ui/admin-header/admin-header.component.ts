@@ -3,7 +3,9 @@ import {AccountEntity} from "@domain/entities/account/account.entity";
 import Swal from "sweetalert2";
 import {NavigationService} from "@core/services/navigation/navigation.service";
 import {CacheStorage} from "@infrastructure/adapters/out/storage/cache/cache.storage";
-import {LogoutAccountUseCase} from "@application/ports/in/account/logout-account.use-case";
+import {ApplicationEntity} from "@domain/entities/application/application.entity";
+import {NavigationUi} from "@infrastructure/ui/services/navigation/navigation.ui";
+import {LogoutAccountUseCase} from "@application/ports/in/auth/logout-account.use-case";
 
 @Component({
   selector: 'app-admin-header',
@@ -17,15 +19,25 @@ export class AdminHeaderComponent implements OnInit {
 
   public account!: AccountEntity;
 
+  public appList: ApplicationEntity[] = [];
+
   constructor(
     private logoutAccountUseCase: LogoutAccountUseCase,
     private navigationService: NavigationService,
+    private navigationUi: NavigationUi,
     private cacheStorage: CacheStorage
   ) {
   }
 
   ngOnInit() {
     this.initAccountData();
+    this.initAppsData();
+  }
+
+  private initAppsData(): void {
+    setTimeout(() => {
+      this.appList = this.cacheStorage.getByKey("_app_list_data");
+    }, 1000);
   }
 
   private initAccountData(): void {
@@ -45,6 +57,11 @@ export class AdminHeaderComponent implements OnInit {
   }
 
   public closeAppsMenu(): void {
+    this.isAppsMenuOpen = false;
+  }
+
+  public goToStore(): void {
+    this.navigationUi.goToUrl(this.navigationUi.urlAdminPrefix + "store");
     this.isAppsMenuOpen = false;
   }
 

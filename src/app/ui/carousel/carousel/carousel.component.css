@@ -92,11 +92,11 @@
 }
 
 .nav-button.prev {
-  left: 20px;
+  left: 10px;
 }
 
 .nav-button.next {
-  right: 20px;
+  right: 10px;
 }
 
 .carousel-indicators {
@@ -118,12 +118,12 @@
 }
 
 .indicator:hover:not(:disabled) {
-  border-color: #2563eb;
+  border-color: var(--color-primary);
 }
 
 .indicator.active {
-  background: #2563eb;
-  border-color: #2563eb;
+  background: var(--color-primary);
+  border-color: var(--color-primary);
   width: 32px;
   border-radius: 6px;
 }
@@ -160,6 +160,16 @@
 .control-item span {
   font-size: 0.95rem;
   color: #374151;
+}
+
+.carousel-slides {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+}
+
+.carousel-slide {
+  min-width: 100%;
+  flex-shrink: 0;
 }
 
 @media (max-width: 768px) {

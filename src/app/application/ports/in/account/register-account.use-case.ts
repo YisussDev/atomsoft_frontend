@@ -18,7 +18,8 @@ export class RegisterAccountUseCase {
   ) {
   }
 
-  public execute(dataToRegister: { email: string; password: string }): Observable<{ token: string }> {
+  public execute(dataToRegister: AccountEntity): Observable<{ token: string; is_two_factor: 0 | 1 }> {
+    console.log("peticion...")
     return of(dataToRegister).pipe(
       map(dataLogin => {
         const accountLogin: AccountEntity = Object.assign(new AccountEntity(), dataToRegister);
@@ -26,11 +27,15 @@ export class RegisterAccountUseCase {
         return dataLogin;
       }),
       mergeMap((dataLogin) => {
-        return this.repository.login(dataLogin).pipe(
+        return this.repository.create(dataLogin).pipe(
           tap((response) => {
             localStorage.setItem('x-token', response.token);
             this.notificationService.success("Login successfully!");
-            this.navigationService.navigateTo("/admin").then();
+            if (response.is_two_factor == 1) {
+              this.navigationService.navigateTo("/auth/two-factor-auth").then();
+            } else {
+              this.navigationService.navigateTo("/admin").then();
+            }
           })
         )
       }),

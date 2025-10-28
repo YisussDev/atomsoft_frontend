@@ -1,25 +1,21 @@
 import {
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   OnDestroy,
   OnInit,
   Output,
-  SimpleChanges
 } from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {SwitchOptionInterface} from "../../switch/interfaces/switch-option.interface";
-import {TableColumnConfigInterface} from "@core-interfaces/tables/table-column-config.interface";
-import {ActionEvent} from "@core-interfaces/actions/action.interface";
-import {PaginationInterface} from "@core-interfaces/tables/pagination.interface";
+import {SwitchOptionInterface} from "@ui/switch/interfaces/switch-option.interface";
 import {debounceTime, Subject, takeUntil} from "rxjs";
 import {Router} from "@angular/router";
-import {AsideService} from "../../aside/services/aside.service";
-import {ModalEditColumnsComponent} from "../table-generic/utils/modal-edit-columns/modal-edit-columns.component";
-import {generateQuerySearchUrl} from "@core-helpers/table/helper-table";
+import {AsideService} from "@ui/aside/services/aside.service";
 import {ConfigPrincipleRowInterface} from "../table-mobile-generic/interfaces/configPrincipleRow.interface";
+import {TableColumnConfigInterface} from "@core/interfaces/tables/table-column-config.interface";
+import {ActionEvent} from "@core/interfaces/actions/action.interface";
+import {PaginationInterface} from "@core/interfaces/tables/pagination.interface";
+import {generateQuerySearchUrl} from "@shared/helpers/helper-table";
 
 @Component({
   selector: 'app-table-container',
@@ -122,15 +118,15 @@ export class TableContainerComponent implements OnInit, OnDestroy {
   }
 
   public openModalEditColumns(): void {
-    this.asideService.openAsideComponent(
-      ModalEditColumnsComponent,
-      'Configurar Columnas',
-      'CONFIG_COLUMNS',
-      undefined,
-      undefined,
-      this.tableColumnConfig,
-      this.tableName
-    );
+    // this.asideService.openAsideComponent(
+    //   ModalEditColumnsComponent,
+    //   'Configurar Columnas',
+    //   'CONFIG_COLUMNS',
+    //   undefined,
+    //   undefined,
+    //   this.tableColumnConfig,
+    //   this.tableName
+    // );
   }
 
   ngOnDestroy() {

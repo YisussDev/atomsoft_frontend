@@ -16,6 +16,10 @@ const routes: Routes = [
         loadChildren: () => import("./page-profile/page-profile.module").then(m => m.PageProfileModule)
       },
       {
+        path: 'store',
+        loadChildren: () => import("./page-store/page-store.module").then(m => m.PageStoreModule)
+      },
+      {
         path: '**', redirectTo: 'home'
       }
     ]

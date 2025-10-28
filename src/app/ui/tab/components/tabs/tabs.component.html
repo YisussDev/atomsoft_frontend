@@ -1,0 +1,33 @@
+<div [class]="'w-full ' + className">
+  <!-- Tab Headers -->
+  <div [class]="getHeaderClasses()">
+    <div
+      *ngFor="let tab of tabs; let i = index"
+      (click)="handleTabClick(i, tab)"
+      [class]="getTabClasses(i) + ' ' + (fullWidth ? 'flex-1 justify-center' : '') + ' ' + (tab.disabled ? 'opacity-50 cursor-not-allowed' : '')"
+      [attr.role]="'tab'"
+      [attr.aria-selected]="activeTab === i"
+      [attr.aria-disabled]="tab.disabled"
+    >
+      <span *ngIf="tab.icon" class="text-xl">{{ tab.icon }}</span>
+      <span>{{ tab.label }}</span>
+      <span *ngIf="tab.badge" class="ml-2 px-2 py-0.5 text-xs rounded-full bg-red-500 text-white">
+            {{ tab.badge }}
+          </span>
+    </div>
+  </div>
+
+  <!-- Tab Content -->
+  <div *ngIf="!navigable" class="mt-4">
+    <div
+      *ngFor="let tab of tabs; let i = index"
+      [class]="(activeTab === i ? 'block' : 'hidden') + ' animate-fadeIn'"
+      [attr.role]="'tabpanel'"
+    >
+      <ng-container *ngIf="activeTab === i">
+        <ng-container *ngIf="isTemplate(tab.content)" [ngTemplateOutlet]="tab.content"></ng-container>
+        <div *ngIf="!isTemplate(tab.content)" [innerHTML]="tab.content"></div>
+      </ng-container>
+    </div>
+  </div>
+</div>

@@ -1,47 +1,127 @@
-<div class="relative" appClickOutSide [widthBox]="200"
-     (clickOutside)="clickOutside()"
-     [widthContainer]="widthContainer" #container>
-  <button (click)="open = !open"
-          class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-btw-secondary px-3 py-2 text-sm font-semibold text-btw shadow-sm">
-    {{ label }}
-    <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-      <path fill-rule="evenodd"
-            d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-            clip-rule="evenodd"/>
-    </svg>
-  </button>
-  <ng-container *ngIf="open">
-    <div style="width: 200px"
-         class="absolute bg-btw-secondary border-btw rounded z-30"
-         [ngStyle]="getOverflowStyle()">
-      <div class="py-1" role="none">
-        <ng-container *ngFor="let action of actions">
-          <ng-container *ngIf="!action.condition">
-            <div class="flex cursor-pointer px-4 py-2 text-sm text-btw gap-1"
-                 (click)="clickOptionAction(action.nameEvent, data)">
-              <ng-container *ngIf="action.typeIcon && (action.typeIcon == 'material')">
-                <span class="material-symbols-outlined">{{ action.icon }}</span>
-              </ng-container>
-              <ng-container *ngIf="!action.typeIcon || (action.typeIcon == 'fa')">
-                <span><i class="fa fa-solid" [ngClass]="'fa-'+action.icon"></i></span>
-              </ng-container>
-              <p>{{ action.label }}</p>
-            </div>
-          </ng-container>
-          <ng-container *ngIf="action.condition && action.condition(data)">
-            <div class="flex cursor-pointer px-4 py-2 text-sm text-btw gap-1"
-                 (click)="clickOptionAction(action.nameEvent, data)">
-              <ng-container *ngIf="action.typeIcon && (action.typeIcon == 'material')">
-                <span class="material-symbols-outlined">{{ action.icon }}</span>
-              </ng-container>
-              <ng-container *ngIf="!action.typeIcon || (action.typeIcon == 'fa')">
-                <span><i class="fa fa-solid" [ngClass]="'fa-'+action.icon"></i></span>
-              </ng-container>
-              <p>{{ action.label }}</p>
-            </div>
-          </ng-container>
-        </ng-container>
-      </div>
+<div class="relative inline-block" #dropdownContainer>
+  <!-- Button Trigger (Custom o Default) -->
+  <ng-container *ngIf="triggerTemplate; else defaultTrigger">
+    <div (click)="toggleDropdown()" [class.opacity-50]="disabled" [class.cursor-not-allowed]="disabled">
+      <ng-container
+        *ngTemplateOutlet="triggerTemplate; context: { $implicit: isOpen, disabled: disabled }">
+      </ng-container>
     </div>
   </ng-container>
+  <!-- Default Trigger -->
+  <ng-template #defaultTrigger>
+    <button
+      type="button"
+      (click)="toggleDropdown()"
+      [disabled]="disabled"
+      [class]="getButtonClasses()"
+      class="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-offset-2"
+    >
+      <!-- Icon Left -->
+      <svg *ngIf="iconLeft" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" [attr.d]="getIconPath(iconLeft)"></path>
+      </svg>
+
+      <!-- Label -->
+      <span *ngIf="label">{{ label }}</span>
+
+      <!-- Loading Spinner -->
+      <svg *ngIf="loading" class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+
+      <!-- Dropdown Arrow -->
+      <svg
+        *ngIf="!loading"
+        [class.rotate-180]="isOpen"
+        class="w-4 h-4 transition-transform duration-200"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+      </svg>
+
+      <!-- Badge -->
+      <span
+        *ngIf="badge"
+        class="absolute -top-1 -right-1 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 rounded-full"
+      >
+            {{ badge }}
+          </span>
+    </button>
+  </ng-template>
+  <!-- Dropdown Menu -->
+  <div
+    *ngIf="isOpen"
+    [class]="getMenuPositionClasses()"
+    class="absolute z-50 mt-2 bg-btw-secondary rounded-lg shadow-xl border border-btw overflow-hidden animate-dropdown"
+    [style.min-width]="minWidth"
+  >
+    <!-- Search Input -->
+    <div *ngIf="searchable" class="p-2 border-b border-btw">
+      <div class="relative">
+        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" fill="none"
+             stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (click)="$event.stopPropagation()"
+          placeholder="Buscar..."
+          class="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        />
+      </div>
+    </div>
+    <!-- Menu Items -->
+    <div [class]="maxHeight ? 'overflow-y-auto' : ''" [style.max-height]="maxHeight">
+      <ng-container *ngFor="let item of itemTemplates; let i = index">
+        <!-- Divider -->
+        <div *ngIf="item.divider" class="border-t border-btw my-1"></div>
+        <!-- Menu Item -->
+        <div
+          *ngIf="!item.divider"
+          (click)="selectItem(item)"
+          [class]="getItemClasses(item)"
+          [class.opacity-50]="item.disabled"
+          [class.cursor-not-allowed]="item.disabled"
+          [class.cursor-pointer]="!item.disabled"
+          class="transition-colors"
+        >
+          <ng-container *ngTemplateOutlet="item.template; context: {
+                $implicit: item.value,
+                selected: isSelected(item),
+                disabled: item.disabled,
+                index: i
+              }"></ng-container>
+        </div>
+      </ng-container>
+      <!-- No Results -->
+      <div *ngIf="itemTemplates.length === 0" class="px-4 py-8 text-center text-sm text-gray-500">
+        <ng-container *ngIf="emptyTemplate; else defaultEmpty">
+          <ng-container *ngTemplateOutlet="emptyTemplate"></ng-container>
+        </ng-container>
+        <ng-template #defaultEmpty>
+          No se encontraron resultados
+        </ng-template>
+      </div>
+    </div>
+    <!-- Footer Actions -->
+    <div *ngIf="footerTemplate" class="border-t border-btw">
+      <ng-container *ngTemplateOutlet="footerTemplate; context: {
+            close: closeDropdown.bind(this),
+            clear: clearSelection.bind(this),
+            selected: selectedItems
+          }"></ng-container>
+    </div>
+  </div>
+  <!-- Backdrop -->
+  <div
+    *ngIf="isOpen && backdrop"
+    (click)="closeDropdown()"
+    class="fixed inset-0 z-40 bg-black bg-opacity-25 backdrop-blur-sm animate-fade-in"
+  ></div>
 </div>

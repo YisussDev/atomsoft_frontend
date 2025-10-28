@@ -1,0 +1,39 @@
+<div
+  class="min-w-full sm:min-h-96 h-fit flex flex-col-reverse sm:grid sm:grid-cols-2 bg-btw-secondary rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+  <div
+    class="sm:py-12 w-full flex flex-col justify-center items-center sm:items-start sm:px-24 space-y-4 min-h-full h-fit px-12 py-4 sm:rounded-l-md">
+    <app-chip
+      className="text-gray-900 text-xxs bg-gray-200 font-medium px-3 py-1">{{ application.chips[0] || 'Default' }}
+    </app-chip>
+    <h2 class="w-full text-2xl font-bold text-foreground text-btw text-center sm:text-left">
+      {{ application.name || 'Default' }}
+    </h2>
+    <p class="w-full text-xs font-light text-gray-500 text-center sm:text-left">
+      {{ application.description || 'Default' }}
+    </p>
+    <ul class="w-full">
+      <ng-container *ngFor="let chip of application.chips; let i = index">
+        <ng-container *ngIf="i != 0">
+          <li class="text-btw font-semibold text-xs text-center sm:text-left">{{ chip }}</li>
+        </ng-container>
+      </ng-container>
+    </ul>
+    <div class="flex gap-2 sm:justify-start justify-center w-full">
+      <app-button-container variant="primary" size="sm" className="text-white gap-2"
+                            (clickEvent)="goToApp(application.code)">
+        Ver más
+        <app-icon-material nameIcon="arrow_forward"></app-icon-material>
+      </app-button-container>
+      <app-button-container variant="outline" size="sm" className="gap-2" (clickEvent)="goToApp(application.code)">
+        Probar ahora
+      </app-button-container>
+    </div>
+  </div>
+  <div
+    class="w-full h-full flex justify-center items-center rounded-md sm:rounded-none sm:rounded-r-md" #gradientBlock>
+    <div
+      class="h-36 w-36 flex justify-center items-center select-none rounded-md hover:scale-110 transition-transform duration-300 ease-linear my-6">
+      <img [src]="application.logo_url" [alt]="application.code" class="object-cover select-none">
+    </div>
+  </div>
+</div>

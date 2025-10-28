@@ -36,7 +36,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           this._router.navigateByUrl('/auth/login');
         }
         if (!showErrorToast) {
-          this.toastrService.error(error.error.message, 'Error');
+          // this.toastrService.error(error.error.message, 'Error');
         }
         req.headers.delete('hidden-toast');
         return throwError(error);

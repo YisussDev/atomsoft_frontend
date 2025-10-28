@@ -24,7 +24,7 @@ export class AccountEntity {
     this.validateNameEntity();
     this.validateUsernameEntity();
     this.validatePasswordEntity();
-    this.validateTenantCodeEntity();
+    // this.validateTenantCodeEntity();
   }
 
   validateToUpdate(): void {

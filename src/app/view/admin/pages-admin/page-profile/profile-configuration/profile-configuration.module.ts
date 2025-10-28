@@ -8,7 +8,13 @@ import {BoxModule} from "@ui/box/box.module";
 import {ConfigurationDataComponent} from './configuration-data/configuration-data.component';
 import {ConfigurationNotificationComponent} from './configuration-notification/configuration-notification.component';
 import {InputsModule} from "@ui/inputs/inputs.module";
-import { ConfigurationSessionsComponent } from './configuration-sessions/configuration-sessions.component';
+import {ConfigurationSessionsComponent} from './configuration-sessions/configuration-sessions.component';
+import {AuthCompositionModule} from "../../../../../composition/auth/auth.composition.module";
+import {AccountCompositionModule} from "../../../../../composition/account/account.composition.module";
+import {ConfigurationSecurityComponent} from './configuration-security/configuration-security.component';
+import {RecoverCompositionModule} from "../../../../../composition/recover/recover.composition.module";
+import {TypographyModule} from "@core/directives/typography/typography.module";
+import {TabModule} from "@ui/tab/tab.module";
 
 
 @NgModule({
@@ -16,7 +22,8 @@ import { ConfigurationSessionsComponent } from './configuration-sessions/configu
     ProfileConfigurationComponent,
     ConfigurationDataComponent,
     ConfigurationNotificationComponent,
-    ConfigurationSessionsComponent
+    ConfigurationSessionsComponent,
+    ConfigurationSecurityComponent
   ],
   imports: [
     CommonModule,
@@ -24,6 +31,11 @@ import { ConfigurationSessionsComponent } from './configuration-sessions/configu
     ReactiveFormsModule,
     BoxModule,
     InputsModule,
+    AuthCompositionModule,
+    AccountCompositionModule,
+    RecoverCompositionModule,
+    TypographyModule,
+    TabModule
   ]
 })
 export class ProfileConfigurationModule {

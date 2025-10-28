@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Subject, takeUntil} from "rxjs";
 import {ThemeService} from "@core/services/theme/theme.service";
 import {NavigationService} from "@core/services/navigation/navigation.service";
-import {RegisterAccountUseCase} from "@application/ports/in/account/register-account.use-case";
+import {CreateAccountUseCase} from "@application/ports/in/account/create-account.use-case";
 
 @Component({
   selector: 'app-register',
@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   constructor(
     private themeService: ThemeService,
     private navigationService: NavigationService,
-    private registerAccountUseCase: RegisterAccountUseCase,
+    private createAccountUseCase: CreateAccountUseCase,
     private _formBuilder: FormBuilder,
   ) {
 
@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.formRegister = this._formBuilder.group({
       name: ["TestUser", Validators.required],
       username: ["TestUser", Validators.required],
-      email: ["admin@test.com", Validators.required],
+      email: ["paguayjesus+test1@gmail.com", Validators.required],
       password: ["123asd123@A", [Validators.required]],
       password_confirmation: ["123asd123@A", [Validators.required]],
     })
@@ -49,10 +49,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   public onSubmit(): void {
     if (this.formRegister.valid) {
-      const {email, password} = this.formRegister.controls;
-      this.registerAccountUseCase.execute({email: email.value, password: password.value}).subscribe({
-        next: () => {
-
+      this.createAccountUseCase.execute(this.formRegister.value).subscribe({
+        next: (response) => {
         }
       })
     }

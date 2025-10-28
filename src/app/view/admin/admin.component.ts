@@ -2,6 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SocketService} from "@infrastructure/ports/socket/services/socket.service";
 import {AccountEventsRepository} from "@infrastructure/ports/socket/events/account/account.events.repository";
 import {Subject, takeUntil} from "rxjs";
+import {FindAllApplicationUseCase} from "@application/ports/in/application/find-all-application.use-case";
+import {CacheStorage} from "@infrastructure/adapters/out/storage/cache/cache.storage";
 
 @Component({
   selector: 'app-admin',
@@ -10,17 +12,33 @@ import {Subject, takeUntil} from "rxjs";
 })
 export class AdminComponent implements OnInit, OnDestroy {
 
+  public loading: boolean = true;
+
   private $destroy: Subject<void> = new Subject<void>();
 
   constructor(
     private socketService: SocketService,
     private accountEventsRepository: AccountEventsRepository,
+    private findAllApplicationUseCase: FindAllApplicationUseCase,
+    private _cacheStorage: CacheStorage,
   ) {
   }
 
   ngOnInit() {
     // this.initSocket();
     // this.initListenCloseSession();
+    this.initApps();
+    setTimeout(() => {
+      this.loading = false;
+    }, 3000);
+  }
+
+  private initApps(): void {
+    this.findAllApplicationUseCase.execute({}).subscribe({
+      next: (response) => {
+        this._cacheStorage.setByKey("_app_list_data", response.data);
+      }
+    });
   }
 
   private initSocket(): void {
