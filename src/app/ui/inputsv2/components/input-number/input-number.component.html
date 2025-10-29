@@ -1,0 +1,71 @@
+<div class="w-full">
+  <!-- Label -->
+  <label *ngIf="label" [for]="id" class="block text-sm font-medium text-gray-700 mb-2">
+    {{ label }}
+    <span *ngIf="control?.hasError('required')" class="text-red-500">*</span>
+  </label>
+  <!-- Input Container -->
+  <div class="relative">
+    <!-- Icon -->
+    <div *ngIf="icon" class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+      <span class="transition-colors duration-200 flex justify-center items-center"
+            [ngClass]="showError ? 'text-red-500' : 'text-gray-400'">
+        <app-icon-material sizeIcon="large" class="m-0 p-0" [nameIcon]="icon"></app-icon-material>
+      </span>
+    </div>
+    <!-- Input con máscara de dinero -->
+    <input
+      *ngIf="useCurrencyMask"
+      [id]="id"
+      type="text"
+      [formControl]="control"
+      [placeholder]="placeholder"
+      [disabled]="disabled"
+      [class]="inputClasses"
+      appCurrencyMask
+      [currencySymbol]="currencySymbol"
+      [decimalPlaces]="decimalPlaces"
+      [thousandsSeparator]="thousandsSeparator"
+      [decimalSeparator]="decimalSeparator"
+      (blur)="onBlur()"
+    />
+    <!-- Input normal -->
+    <input
+      *ngIf="!useCurrencyMask"
+      [id]="id"
+      [type]="type"
+      [formControl]="control"
+      [placeholder]="placeholder"
+      [disabled]="disabled"
+      [class]="inputClasses"
+      (blur)="onBlur()"
+    />
+    <!-- Error Icon -->
+    <div *ngIf="showError" class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+      <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd"
+              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+              clip-rule="evenodd"/>
+      </svg>
+    </div>
+    <!-- Success Icon -->
+    <div *ngIf="control?.valid && control?.dirty && !disabled"
+         class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+      <svg class="h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+              clip-rule="evenodd"/>
+      </svg>
+    </div>
+  </div>
+  <!-- Error Message -->
+  <div *ngIf="showError" class="mt-2 flex items-start">
+    <p class="text-sm text-red-600 animate-shake">
+      {{ errorMessage }}
+    </p>
+  </div>
+  <!-- Hint -->
+  <p *ngIf="hint && !showError" class="mt-2 text-sm text-gray-500">
+    {{ hint }}
+  </p>
+</div>

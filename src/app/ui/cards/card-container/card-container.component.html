@@ -1,0 +1,17 @@
+<div [class]="'bg-btw-secondary rounded-lg border border-btw p-6 ' + className">
+  <div class="flex flex-row items-center justify-between pb-2">
+    <div appTypography="subtitle" class="space-y-1">
+      <ng-container *ngIf="title">
+        <span>{{ title }}</span>
+      </ng-container>
+      <ng-container *ngIf="subTitle">
+        <br>
+        <span appTypography="paragraph">{{ subTitle }}</span>
+      </ng-container>
+    </div>
+    <ng-container *ngIf="icon">
+      <app-icon-material sizeIcon="large" [nameIcon]="icon" class="text-btw"></app-icon-material>
+    </ng-container>
+  </div>
+  <ng-content></ng-content>
+</div>

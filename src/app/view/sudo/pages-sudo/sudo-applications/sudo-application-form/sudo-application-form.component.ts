@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {ApplicationEntity} from "@domain/entities/application/application.entity";
 import {NotificationService} from "@core/services/notification/notification.service";
+import {NavigationService} from "@core/services/navigation/navigation.service";
 
 @Component({
   selector: 'app-sudo-application-form',
@@ -9,6 +10,7 @@ import {NotificationService} from "@core/services/notification/notification.serv
   styleUrls: ['./sudo-application-form.component.css']
 })
 export class SudoApplicationFormComponent implements OnInit {
+
   @Input() mode: 'create' | 'update' = 'create';
   @Input() data?: ApplicationEntity;
   @Input() loading = false;
@@ -17,11 +19,14 @@ export class SudoApplicationFormComponent implements OnInit {
   @Output() submitForm = new EventEmitter<Partial<ApplicationEntity>>();
   @Output() cancel = new EventEmitter<void>();
 
+  public step: number = 1;
+
   public form!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     private notificationService: NotificationService,
+    private navigationService: NavigationService,
   ) {
   }
 
@@ -77,6 +82,7 @@ export class SudoApplicationFormComponent implements OnInit {
   }
 
   public onSubmit() {
+    // event.preventDefault();
     if (this.form.invalid) {
       Object.keys(this.form.controls).forEach(key => {
         this.form.get(key)?.markAsTouched();
@@ -96,17 +102,22 @@ export class SudoApplicationFormComponent implements OnInit {
     this.submitForm.emit(accountData);
   }
 
-  public onUpload(event: any): void {
-    const file: File = event.target.files[0];
-    const {logo_url} = this.form.controls;
-    logo_url.setValue(file);
-    this.notificationService.success("Archivo cargado!");
+  public onSubmitStepOne(): void {
+    console.log(this.form.value);
+    return;
+    this.step = 2;
   }
 
-  public onRemove(): void {
-    const {logo_url} = this.form.controls;
-    logo_url.setValue(null);
-    this.notificationService.info("Archivo removido!");
+  public onCancelStepOne(): void {
+    this.navigationService.navigateTo("/sudo/application/list");
+  }
+
+  public onSubmitStepTwo(): void {
+    this.onSubmit();
+  }
+
+  public onCancelStepTwo(): void {
+    this.step = 1;
   }
 
   private getChangedValues(formValue: any): Partial<ApplicationEntity> {
@@ -143,4 +154,5 @@ export class SudoApplicationFormComponent implements OnInit {
   public onCancel() {
     this.cancel.emit();
   }
+
 }

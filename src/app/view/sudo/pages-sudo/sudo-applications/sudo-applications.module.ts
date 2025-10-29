@@ -18,6 +18,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {Inputsv2Module} from "@ui/inputsv2/inputsv2.module";
 import {TypographyModule} from "@core/directives/typography/typography.module";
 import {DocumentViewerModule} from "@ui/document-viewer/document-viewer.module";
+import { ApplicationFormStepOneComponent } from './sudo-application-form/application-form-step-one/application-form-step-one.component';
+import { ApplicationFormStepTwoComponent } from './sudo-application-form/application-form-step-two/application-form-step-two.component';
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import {DocumentViewerModule} from "@ui/document-viewer/document-viewer.module";
     SudoApplicationListComponent,
     SudoApplicationDetailComponent,
     SudoApplicationFormComponent,
-    SudoApplicationUpdateComponent
+    SudoApplicationUpdateComponent,
+    ApplicationFormStepOneComponent,
+    ApplicationFormStepTwoComponent
   ],
   imports: [
     CommonModule,

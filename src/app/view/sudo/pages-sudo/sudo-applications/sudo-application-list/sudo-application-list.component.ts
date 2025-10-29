@@ -4,6 +4,7 @@ import {NavigationService} from "@core/services/navigation/navigation.service";
 import Swal from "sweetalert2";
 import {ApplicationEntity} from "@domain/entities/application/application.entity";
 import {FindAllApplicationUseCase} from "@application/ports/in/application/find-all-application.use-case";
+import {DeleteApplicationUseCase} from "@application/ports/in/application/delete-application.use-case";
 
 @Component({
   selector: 'app-sudo-application-list',
@@ -53,6 +54,7 @@ export class SudoApplicationListComponent implements OnInit {
 
   constructor(
     private findAllApplicationUseCase: FindAllApplicationUseCase,
+    private deleteApplicationUseCase: DeleteApplicationUseCase,
     private navigationService: NavigationService,
   ) {
   }
@@ -69,7 +71,6 @@ export class SudoApplicationListComponent implements OnInit {
     }
     this.findAllApplicationUseCase.execute(queryComplete).subscribe({
       next: (response) => {
-        console.log(response);
         this.tableData = response.data;
         this.page = response.pageActual || 1;
         this.limit = response.limitActual || 10;
@@ -87,6 +88,9 @@ export class SudoApplicationListComponent implements OnInit {
       case "edit":
         this.eventUpdate(data);
         break;
+      case "delete":
+        this.eventDelete(data);
+        break;
     }
   }
 
@@ -103,6 +107,27 @@ export class SudoApplicationListComponent implements OnInit {
     }).then(result => {
       if (result.isConfirmed) {
         this.navigationService.navigateTo(`/sudo/application/update/${data.id}`);
+      }
+    });
+  }
+
+  public eventDelete(data: ApplicationEntity): void {
+    Swal.fire({
+      icon: "question",
+      title: "Confirmación",
+      text: `¿Deseas eliminar ${data.name}?`,
+      confirmButtonText: "Eliminar",
+      showCancelButton: true,
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: "var(--color-primary)",
+      reverseButtons: true
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.deleteApplicationUseCase.execute(data.id.toString()).subscribe({
+          next: (response) => {
+            this.initApplications({});
+          }
+        })
       }
     });
   }

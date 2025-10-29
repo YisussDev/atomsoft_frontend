@@ -22,7 +22,6 @@ export class AccountEventsRepository {
   public listenCloseSessionAccount(): Observable<{ idSession: string }> {
     return this.socketService.listen("account:close-session").pipe(
       tap(({idSession}) => {
-        console.log("PING")
         localStorage.removeItem("x-token");
         this.socketService.disconnect();
         this.navigationService.navigateTo("/auth/login").then();

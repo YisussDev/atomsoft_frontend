@@ -37,17 +37,17 @@
             (itemSelected)="onSelect($event, row)"
           >
             <ng-template appDropdownItem [value]="'edit'">
-              <div class="flex items-center gap-3 px-4 py-3">
+              <button class="flex items-center gap-3 px-4 py-3">
                 <app-icon-material nameIcon="edit" sizeIcon="medium" class="text-btw p-0 m-0"></app-icon-material>
                 <span>Editar</span>
-              </div>
+              </button>
             </ng-template>
             <ng-template appDropdownItem [divider]="true"></ng-template>
             <ng-template appDropdownItem [value]="'delete'" color="danger">
-              <div class="flex items-center gap-3 px-4 py-3">
+              <button class="flex items-center gap-3 px-4 py-3">
                 <app-icon-material nameIcon="cancel" sizeIcon="medium" class="p-0 m-0"></app-icon-material>
                 <span>Eliminar</span>
-              </div>
+              </button>
             </ng-template>
           </app-button-dropdown>
         </div>

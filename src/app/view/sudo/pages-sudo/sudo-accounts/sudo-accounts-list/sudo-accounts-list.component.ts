@@ -74,7 +74,6 @@ export class SudoAccountsListComponent implements OnInit {
     }
     this.findAllAccountUseCase.execute(queryComplete).subscribe({
       next: (response) => {
-        console.log(response);
         this.tableData = response.data;
         this.page = response.pageActual || 1;
         this.limit = response.limitActual || 10;

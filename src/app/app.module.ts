@@ -31,7 +31,7 @@ const tippyConfig: NgxTippyProps = {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     HttpClientModule,

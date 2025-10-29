@@ -64,14 +64,14 @@ export class ProfileConfigurationComponent implements OnInit, AfterViewInit {
 
   toggleNotification(type: keyof any): void {
     this.notifications[type] = !this.notifications[type];
-    console.log('Notification settings updated:', this.notifications);
+    // console.log('Notification settings updated:', this.notifications);
     // Aquí iría la lógica para actualizar las preferencias de notificaciones
   }
 
   openDeleteAccount(): void {
     const confirmed = confirm('¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer.');
     if (confirmed) {
-      console.log('Account deletion confirmed');
+      // console.log('Account deletion confirmed');
       // Aquí iría la lógica para eliminar la cuenta
     }
   }

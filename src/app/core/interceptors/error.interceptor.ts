@@ -29,7 +29,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         if (newToken) {
           localStorage.setItem('x-token', newToken);
         }
-        if (error.error.code == 401) {
+        if (error.error.codeStatus == 401) {
           this.toastrService.info("Sesión expirada o no válida.", 'Sesión no válida');
           localStorage.removeItem('data-account');
           localStorage.removeItem('x-token');

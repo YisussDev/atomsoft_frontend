@@ -10,7 +10,7 @@ export class TypographyDirective implements OnInit, AfterViewInit {
     subtitle: 'text-xl font-medium text-btw',
     medium: 'text-lg font-medium text-btw',
     semi_medium: 'text-sm font-medium text-btw',
-    paragraph: 'text-sm font-light text-btw',
+    paragraph: 'text-xs font-light text-btw',
   };
 
   @Input('appTypography') type!: 'title' | 'subtitle' | 'paragraph' | "medium" | "semi_medium";

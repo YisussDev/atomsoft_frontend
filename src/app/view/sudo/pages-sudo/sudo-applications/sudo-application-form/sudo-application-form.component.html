@@ -5,90 +5,25 @@
       <h2 class="text-2xl font-bold text-white">{{ title }}</h2>
     </div>
     <!-- Form -->
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="p-6 space-y-6">
-      <div class="space-y-3 w-full flex justify-center gap-2">
-        <app-document-viewer width="200px" height="200px"
-                             [source]="form.controls['logo_url'].value"></app-document-viewer>
-        <div class="flex justify-center gap-2 flex-col items-center">
-          <button class="h-12 w-12 rounded-md bg-red-500 text-white flex justify-center items-center p-2"
-                  (click)="onRemove()">
-            <app-icon-material nameIcon="delete" class="p-0 m-0" sizeIcon="maximum"></app-icon-material>
-          </button>
-          <button class="h-12 w-12 rounded-md bg-green-500 text-white flex justify-center items-center p-2 relative">
-            <input class="absolute w-full h-full bg-transparent text-transparent opacity-0 cursor-pointer" type="file"
-                   accept=".png, .jpg"
-                   (change)="onUpload($event)">
-            <app-icon-material nameIcon="upload" class="p-0 m-0" sizeIcon="maximum"></app-icon-material>
-          </button>
-        </div>
-      </div>
-      <!-- Información Básica -->
-      <div class="space-y-4">
-        <h3 appTypography="semi_medium" class="border-b pb-2">Información Básica</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <!-- Code -->
-          <div class="form-group">
-            <app-input-text
-              [control]="$any(form.controls['code'])"
-              label="Código de app"
-              placeholder="Ingresa un código identificador"
-              type="text"
-              id="code"
-              hint="Sin espacios"
-              icon="person"
-            >
-            </app-input-text>
-          </div>
-          <!-- Name -->
-          <div class="form-group">
-            <app-input-text
-              [control]="$any(form.controls['name'])"
-              label="Nombre"
-              placeholder="Ingresa el nombre de la app"
-              type="text"
-              id="name"
-              icon="person"
-            >
-            </app-input-text>
-          </div>
-          <!-- Description -->
-          <div class="form-group">
-            <app-input-text
-              [control]="$any(form.controls['description'])"
-              label="Descripción"
-              placeholder="Ingresa una descripción"
-              type="text"
-              id="description"
-              hint="Sin espacios"
-              icon="person"
-            >
-            </app-input-text>
-          </div>
-        </div>
-      </div>
-      <!-- Actions -->
-      <div class="flex flex-col sm:flex-row gap-3 pt-4 border-t">
-        <button
-          type="button"
-          (click)="onCancel()"
-          [disabled]="loading"
-          class="flex-1 px-6 py-3 border-2 border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          Cancelar
-        </button>
-        <button
-          type="submit"
-          [disabled]="form.invalid || loading"
-          class="flex-1 px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-        >
-          <svg *ngIf="loading" class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-          </svg>
-          <span>{{ submitButtonText }}</span>
-        </button>
-      </div>
-    </form>
+    <div [formGroup]="form" class="p-6 space-y-6">
+      <ng-container *ngIf="step == 1">
+        <!-- Información Básica -->
+        <app-application-form-step-one [formStep]="form"
+                                       [loading]="loading"
+                                       [mode]="mode"
+                                       (submitStep)="onSubmitStepOne()"
+                                       (cancelStep)="onCancelStepOne()">
+
+        </app-application-form-step-one>
+      </ng-container>
+      <ng-container *ngIf="step == 2">
+        <app-application-form-step-two [formStep]="form"
+                                       [loading]="loading"
+                                       [mode]="mode"
+                                       (submitStep)="onSubmitStepTwo()"
+                                       (cancelStep)="onCancelStepTwo()">
+        </app-application-form-step-two>
+      </ng-container>
+    </div>
   </div>
 </div>

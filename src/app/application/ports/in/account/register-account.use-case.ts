@@ -19,7 +19,6 @@ export class RegisterAccountUseCase {
   }
 
   public execute(dataToRegister: AccountEntity): Observable<{ token: string; is_two_factor: 0 | 1 }> {
-    console.log("peticion...")
     return of(dataToRegister).pipe(
       map(dataLogin => {
         const accountLogin: AccountEntity = Object.assign(new AccountEntity(), dataToRegister);

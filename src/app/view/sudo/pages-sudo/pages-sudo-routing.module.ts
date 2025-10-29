@@ -19,6 +19,9 @@ const routes: Routes = [
         path: "application",
         loadChildren: () => import("./sudo-applications/sudo-applications.module").then(m => m.SudoApplicationsModule)
       },
+      {
+        path: "**", redirectTo: "home"
+      }
     ]
   }
 ];

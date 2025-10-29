@@ -1,1 +1,121 @@
-<p>sudo-home works!</p>
+<div class="flex min-h-screen animation-opacity">
+  <main class="flex-1 overflow-auto">
+    <header class="sticky top-0 z-10 border-b border-btw bg-btw-secondary">
+      <div class="flex h-16 items-center justify-between px-8">
+        <div>
+          <h1 appTypography="subtitle" class="font-semibold">Panel de Control</h1>
+          <p appTypography="paragraph">Gestión completa de la plataforma SaaS</p>
+        </div>
+        <div class="flex items-center gap-4">
+              <span
+                class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-gray-300 text-xs font-medium text-gray-700">
+                <div class="h-2 w-2 rounded-full bg-green-500"></div>
+                Sistema Operativo
+              </span>
+          <button
+            class="inline-flex items-center px-3 py-1.5 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
+            <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            3 Alertas
+          </button>
+        </div>
+      </div>
+    </header>
+    <div class="p-8">
+      <!-- Stats Grid -->
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
+        <app-card-container title="Usuarios totales" subTitle="Total usuarios registrados" icon="group"
+                            className="shadow-md">
+          <div appTypography="title">50</div>
+          <p class="text-xs text-gray-500 flex items-center gap-1 mt-1">
+            <svg class="h-3 w-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+            </svg>
+            <span class="text-green-500">+12.5%</span> vs mes anterior
+          </p>
+        </app-card-container>
+        <app-card-container title="Ingresos" icon="analytics" subTitle="Total ingresos aplicaciones"
+                            className="shadow-md">
+          <div appTypography="title">{{ 50000000 | currency }}</div>
+          <p class="text-xs text-gray-500 flex items-center gap-1 mt-1">
+            <svg class="h-3 w-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+            </svg>
+            <span class="text-green-500">+12.5%</span> vs mes anterior
+          </p>
+        </app-card-container>
+        <app-card-container title="Uso de Servidor" icon="analytics" subTitle="Métricas del servidor"
+                            className="shadow-md">
+          <div appTypography="title">68.4%</div>
+          <p class="text-xs text-gray-500 flex items-center gap-1 mt-1">
+            <svg class="h-3 w-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+            <span>CPU: 45% | RAM: 72%</span>
+          </p>
+        </app-card-container>
+      </div>
+      <!-- Charts -->
+      <div class="grid gap-6 md:grid-cols-2 mb-8">
+        <app-card-container title="Ingresos Mensuales" subTitle="Evolución de ingresos en los últimos 6 meses" className="shadow-md">
+          <div class="mt-4 h-[300px] flex items-end justify-between gap-2">
+            <div *ngFor="let item of revenueData" class="flex-1 flex flex-col items-center gap-2">
+              <div class="w-full bg-blue-500 rounded-t-lg transition-all hover:bg-blue-600"
+                   [style.height.%]="(item.revenue / 70000) * 100"></div>
+              <span class="text-xs text-gray-600">{{ item.month }}</span>
+            </div>
+          </div>
+        </app-card-container>
+        <app-card-container title="Usuarios Activos" subTitle="Usuarios activos diarios en la última semana" className="shadow-md">
+          <div class="mt-4 h-[300px] flex items-end justify-between gap-2">
+            <div *ngFor="let item of revenueData" class="flex-1 flex flex-col items-center gap-2">
+              <div class="w-full bg-blue-500 rounded-t-lg transition-all hover:bg-blue-600"
+                   [style.height.%]="(item.revenue / 70000) * 100"></div>
+              <span class="text-xs text-gray-600">{{ item.month }}</span>
+            </div>
+          </div>
+        </app-card-container>
+      </div>
+      <!-- Recent Users Table -->
+      <ng-container *ngIf="false">
+        <div class="bg-white rounded-lg border border-gray-200 p-6">
+          <div class="mb-4">
+            <h3 class="text-lg font-semibold text-gray-900">Usuarios Recientes</h3>
+            <p class="text-sm text-gray-500">Últimos usuarios registrados en la plataforma</p>
+          </div>
+          <div class="space-y-4">
+            <div *ngFor="let user of recentUsers; let last = last"
+                 class="flex items-center justify-between pb-4"
+                 [class.border-b]="!last"
+                 [class.border-gray-200]="!last">
+              <div class="flex items-center gap-4">
+                <div
+                  class="h-10 w-10 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm font-medium">
+                  {{ getInitials(user.name) }}
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-gray-900">{{ user.name }}</p>
+                  <p class="text-xs text-gray-500">{{ user.email }}</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-4">
+                  <span [class]="user.status === 'active'
+                    ? 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800'
+                    : 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800'">
+                    {{ user.status === 'active' ? 'Activo' : 'Pendiente' }}
+                  </span>
+                <span
+                  class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border border-gray-300 text-gray-700">
+                    {{ user.plan }}
+                  </span>
+                <span class="text-xs text-gray-500 w-20 text-right">{{ user.joined }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </main>
+</div>

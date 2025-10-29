@@ -76,7 +76,6 @@ export class PagesSudoComponent implements OnInit {
 
   public handleNavigation(item: NavItem): void {
     this.currentRoute = item.route || item.label;
-    console.log(item.route)
     this.navigationService.navigateTo(item.route || "/sudo");
   }
 

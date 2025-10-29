@@ -79,7 +79,7 @@ export class SudoHeaderComponent implements OnInit {
       if (result.isConfirmed) {
         this.logoutAccountUseCase.execute().subscribe({
           next: (response) => {
-            console.log(response);
+            // console.log(response);
           }
         });
       }

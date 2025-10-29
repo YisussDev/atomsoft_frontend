@@ -9,6 +9,7 @@ import {ApplicationEntity} from "@domain/entities/application/application.entity
 import {ApplicationOutHttpEntity} from "@infrastructure/adapters/out/http/application/application.out.http.entity";
 import {ApplicationOutHttpMapper} from "@infrastructure/adapters/out/http/application/application.out.http.mapper";
 import {HttpHeaders} from "@angular/common/http";
+import {objectToQueryParams} from "@shared/helpers/object-to-query-params";
 
 @Injectable()
 export class ApplicationOutHttpRepository implements ApplicationRepositoryPort {
@@ -31,12 +32,13 @@ export class ApplicationOutHttpRepository implements ApplicationRepositoryPort {
     limitActual?: number;
     totalFounded?: number;
   }> {
+    const queryTransform = objectToQueryParams(query);
     return this.httpService.get<{
       data: ApplicationOutHttpEntity[];
       pageActual?: number;
       limitActual?: number;
       totalFounded?: number;
-    }>(`${this.apiUrl}application`).pipe(
+    }>(`${this.apiUrl}application${queryTransform}`).pipe(
       map((response) => {
         const dataMapped: ApplicationEntity[] = response.data.map(itemInfra => {
           return this.mapper.toDomain(itemInfra);
