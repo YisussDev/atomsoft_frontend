@@ -1,3 +1,5 @@
+import {DomainError} from "@shared/exceptions/domain.exception";
+
 export function validateEmail(
   value: string,
   fieldName: string,
@@ -15,6 +17,6 @@ export function validateEmail(
     messageErrorResponse = `${fieldName} no tiene un formato válido.`;
   }
   if (messageErrorResponse) {
-    throw new Error(messageErrorResponse);
+    throw new DomainError(messageErrorResponse);
   }
 }

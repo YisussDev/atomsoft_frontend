@@ -1,0 +1,96 @@
+<div class="document-viewer-container p-3" [style.width]="width" [style.height]="height">
+  <!-- Loading Spinner -->
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="spinner"></div>
+    <p class="loading-text">Cargando documento...</p>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="hasError" class="error-container">
+    <svg class="error-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+    </svg>
+    <h3 class="error-title">Error al cargar documento</h3>
+    <p class="error-message">{{ errorMessage }}</p>
+    <button *ngIf="source" (click)="openInNewTab()" class="retry-button">
+      Abrir en nueva pestaña
+    </button>
+  </div>
+
+  <!-- File Info Bar -->
+  <div *ngIf="!hasError && isFile" class="file-info-bar">
+    <div class="file-info">
+      <svg class="file-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+      </svg>
+      <div class="file-details">
+        <span class="file-name">{{ fileName }}</span>
+        <span class="file-size">{{ getFileSizeFormatted() }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div *ngIf="!hasError && (showDownload || showOpenNew)" class="action-buttons">
+    <button *ngIf="showDownload" (click)="downloadFile()" class="action-btn download-btn" title="Descargar">
+      <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+      </svg>
+    </button>
+    <button *ngIf="showOpenNew" (click)="openInNewTab()" class="action-btn open-btn" title="Abrir en nueva pestaña">
+      <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Document Display -->
+  <div *ngIf="!hasError" class="document-content" [class.with-file-info]="isFile">
+    <!-- PDF Viewer -->
+    <iframe
+      *ngIf="fileType === 'pdf'"
+      [src]="safeUrl"
+      (load)="onLoad()"
+      (error)="onError()"
+      class="document-frame"
+      frameborder="0"
+    ></iframe>
+
+    <!-- Image Viewer -->
+    <img
+      *ngIf="fileType === 'image'"
+      [src]="objectUrl || source"
+      [alt]="fileName"
+      (load)="onLoad()"
+      (error)="onError()"
+      class="document-image"
+    />
+
+    <!-- Video Viewer -->
+    <video
+      *ngIf="fileType === 'video'"
+      [src]="objectUrl || source"
+      (loadeddata)="onLoad()"
+      (error)="onError()"
+      controls
+      class="document-video"
+    >
+      Tu navegador no soporta el elemento de video.
+    </video>
+
+    <!-- URL/Web Page Viewer -->
+    <iframe
+      *ngIf="fileType === 'url'"
+      [src]="safeUrl"
+      (load)="onLoad()"
+      (error)="onError()"
+      class="document-frame"
+      frameborder="0"
+      sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+    ></iframe>
+  </div>
+</div>

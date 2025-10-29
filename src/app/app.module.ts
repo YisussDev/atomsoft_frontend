@@ -10,7 +10,8 @@ import {SpinnerInterceptor} from "@core/interceptors/spinner.interceptor";
 import {SpinnerModule} from "@ui/spinner/spinner.module";
 import {ErrorInterceptor} from "@core/interceptors/error.interceptor";
 import {AuthInterceptor} from "@core/interceptors/auth.interceptor";
-import {SocketModule} from "@infrastructure/ports/socket/socket.module";
+import {SocketModule} from "@infrastructure/adapters/in/socket/socket.module";
+
 
 const tippyConfig: NgxTippyProps = {
   delay: [100, 0], // [delayShow, delayHide] en milisegundos

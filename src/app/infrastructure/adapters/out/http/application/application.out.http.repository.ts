@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {map, Observable} from "rxjs";
+import {map, Observable, of} from "rxjs";
 import {HttpService} from "@core/services/http/http.service";
 
 import {environment} from "../../../../../../environments/environment";
@@ -8,6 +8,7 @@ import {ApplicationRepositoryPort} from "@application/ports/out/application/appl
 import {ApplicationEntity} from "@domain/entities/application/application.entity";
 import {ApplicationOutHttpEntity} from "@infrastructure/adapters/out/http/application/application.out.http.entity";
 import {ApplicationOutHttpMapper} from "@infrastructure/adapters/out/http/application/application.out.http.mapper";
+import {HttpHeaders} from "@angular/common/http";
 
 @Injectable()
 export class ApplicationOutHttpRepository implements ApplicationRepositoryPort {
@@ -67,7 +68,15 @@ export class ApplicationOutHttpRepository implements ApplicationRepositoryPort {
   public create(
     dataToCreate: ApplicationEntity
   ): Observable<ApplicationEntity> {
-    return this.httpService.post<ApplicationEntity, ApplicationEntity>(`${this.apiUrl}application`, dataToCreate);
+    const headers: HttpHeaders = new HttpHeaders({
+      // "Content-Type": "multipart/form-data",
+    })
+    const formData: FormData = new FormData();
+    for (let dataToCreateKey of Object.keys(dataToCreate)) {
+      // @ts-ignore
+      formData.append(dataToCreateKey, dataToCreate[dataToCreateKey]);
+    }
+    return this.httpService.post<ApplicationEntity, FormData>(`${this.apiUrl}application`, formData, {headers});
   }
 
   public update(

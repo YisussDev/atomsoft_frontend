@@ -55,7 +55,7 @@ export class AccountOutHttpRepository implements AccountRepositoryPort {
   ): Observable<{ data: AccountEntity | null }> {
     return this.httpService.get<{
       data: AccountEntity | null;
-    }>(`${this.apiUrl}account`).pipe(
+    }>(`${this.apiUrl}account/${query["id"]}`).pipe(
       map((response) => {
         return {
           data: response.data ? (this.mapper.toDomain(response.data)) : null,

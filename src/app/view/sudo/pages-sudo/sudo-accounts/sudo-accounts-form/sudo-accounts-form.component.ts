@@ -49,15 +49,12 @@ export class SudoAccountsFormComponent implements OnInit {
     return texts[this.mode];
   }
 
-  initForm() {
+  public initForm() {
     const baseControls = {
       email: ['', [Validators.required, Validators.email]],
       username: ['', [Validators.required, Validators.minLength(5)]],
       name: ['', [Validators.required, Validators.minLength(5)]],
       password: ['', this.mode === 'create' ? [Validators.required, this.passwordValidator()] : []],
-      tenant_code: ['', this.mode === 'create' ? [Validators.required, Validators.minLength(4)] : [Validators.minLength(4)]],
-      active: [true],
-      two_factor_auth: [false],
     };
 
     // Agregar confirmPassword solo para modo create
@@ -83,7 +80,7 @@ export class SudoAccountsFormComponent implements OnInit {
     });
   }
 
-  setupPasswordValidation() {
+  public setupPasswordValidation() {
     this.accountForm.get('password')?.valueChanges.subscribe(password => {
       if (password) {
         this.hasMinLength = password.length >= 8;
@@ -95,7 +92,7 @@ export class SudoAccountsFormComponent implements OnInit {
     });
   }
 
-  passwordValidator() {
+  public passwordValidator() {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value;
       if (!value) return null;
@@ -112,14 +109,14 @@ export class SudoAccountsFormComponent implements OnInit {
     };
   }
 
-  passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
+  public passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
     const password = group.get('password')?.value;
     const confirmPassword = group.get('confirmPassword')?.value;
 
     return password === confirmPassword ? null : {passwordMismatch: true};
   }
 
-  patchFormValues() {
+  public patchFormValues() {
     if (!this.account) return;
 
     const values: any = {
@@ -134,17 +131,17 @@ export class SudoAccountsFormComponent implements OnInit {
     this.accountForm.patchValue(values);
   }
 
-  isFieldInvalid(fieldName: string): boolean {
+  public isFieldInvalid(fieldName: string): boolean {
     const field = this.accountForm.get(fieldName);
     return !!(field && field.invalid && (field.dirty || field.touched));
   }
 
-  isFieldValid(fieldName: string): boolean {
+  public isFieldValid(fieldName: string): boolean {
     const field = this.accountForm.get(fieldName);
     return !!(field && field.valid && (field.dirty || field.touched));
   }
 
-  getErrorMessage(fieldName: string): string {
+  public getErrorMessage(fieldName: string): string {
     const field = this.accountForm.get(fieldName);
     if (!field || !field.errors) return '';
 
@@ -161,7 +158,7 @@ export class SudoAccountsFormComponent implements OnInit {
     return errorMessages[errorKey] || 'Campo inválido';
   }
 
-  onSubmit() {
+  public onSubmit() {
     if (this.accountForm.invalid) {
       Object.keys(this.accountForm.controls).forEach(key => {
         this.accountForm.get(key)?.markAsTouched();
@@ -170,7 +167,49 @@ export class SudoAccountsFormComponent implements OnInit {
     }
 
     const formValue = this.accountForm.value;
-    const accountData: Partial<AccountEntity> = {
+    let accountData: Partial<AccountEntity>;
+
+    if (this.mode === 'update' && this.account) {
+      accountData = this.getChangedValues(formValue);
+    } else {
+      accountData = this.prepareAccountData(formValue);
+    }
+
+    this.submitForm.emit(accountData);
+  }
+
+  private getChangedValues(formValue: any): Partial<AccountEntity> {
+    const changes: Partial<AccountEntity> = {};
+
+    // Campos de texto
+    const textFields = ['email', 'username', 'name', 'tenant_code'];
+    textFields.forEach(field => {
+      if (this.account![field as keyof AccountEntity] !== formValue[field] && formValue[field]) {
+        changes[field as keyof AccountEntity] = formValue[field];
+      }
+    });
+
+    // Password (siempre incluir si tiene valor)
+    if (formValue.password) {
+      changes.password = formValue.password;
+    }
+
+    // Campos booleanos convertidos a número
+    const newActive = formValue.active ? 1 : 0;
+    if (this.account!.active !== newActive) {
+      changes.active = newActive;
+    }
+
+    const newTwoFactor = formValue.two_factor_auth ? 1 : 0;
+    if (this.account!.two_factor_auth !== newTwoFactor) {
+      changes.two_factor_auth = newTwoFactor;
+    }
+
+    return changes;
+  }
+
+  private prepareAccountData(formValue: any): Partial<AccountEntity> {
+    return {
       email: formValue.email,
       username: formValue.username,
       name: formValue.name,
@@ -179,20 +218,9 @@ export class SudoAccountsFormComponent implements OnInit {
       active: formValue.active ? 1 : 0,
       two_factor_auth: formValue.two_factor_auth ? 1 : 0,
     };
-
-    // Limpiar campos vacíos en modo update
-    if (this.mode === 'update') {
-      Object.keys(accountData).forEach(key => {
-        if (!accountData[key as keyof AccountEntity]) {
-          delete accountData[key as keyof AccountEntity];
-        }
-      });
-    }
-
-    this.submitForm.emit(accountData);
   }
 
-  onCancel() {
+  public onCancel() {
     this.cancel.emit();
   }
 }

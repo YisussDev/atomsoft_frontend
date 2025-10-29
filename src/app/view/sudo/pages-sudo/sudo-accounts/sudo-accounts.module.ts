@@ -16,6 +16,7 @@ import {ButtonsModule} from "@ui/buttons/buttons.module";
 import {DropdownItemDirective} from "@core/directives/dropdown/dropdown-item.directive";
 import {IconsModule} from "@ui/icons/icons.module";
 import {ReactiveFormsModule} from "@angular/forms";
+import {Inputsv2Module} from "@ui/inputsv2/inputsv2.module";
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import {ReactiveFormsModule} from "@angular/forms";
     DropdownItemDirective,
     IconsModule,
     ReactiveFormsModule,
+    Inputsv2Module,
   ]
 })
 export class SudoAccountsModule {

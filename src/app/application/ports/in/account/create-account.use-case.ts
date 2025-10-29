@@ -5,6 +5,7 @@ import {AccountEntity} from "@domain/entities/account/account.entity";
 import {AccountRepositoryPort} from "@application/ports/out/account/account.repository.port";
 import {NavigationService} from "@core/services/navigation/navigation.service";
 import {NotificationService} from "@core/services/notification/notification.service";
+import {DomainError} from "@shared/exceptions/domain.exception";
 
 @Injectable()
 export class CreateAccountUseCase {
@@ -18,7 +19,6 @@ export class CreateAccountUseCase {
   }
 
   public execute(dataToCreate: AccountEntity): Observable<{ token: string; is_two_factor: 0 | 1 }> {
-    console.log("Peticion...")
     return of(dataToCreate).pipe(
       tap(dataConverted => {
         const accountLogin: AccountEntity = Object.assign(new AccountEntity(), dataConverted);
@@ -28,17 +28,16 @@ export class CreateAccountUseCase {
       mergeMap((dataMapped) => {
         return this.repository.create(dataMapped).pipe(
           tap((response) => {
-            localStorage.setItem('x-token', response.token);
-            this.notificationService.success("Login successfully!");
-            if (response.is_two_factor == 1) {
-              this.navigationService.navigateTo("/auth/two-factor-auth").then();
-            } else {
-              this.navigationService.navigateTo("/admin").then();
-            }
+            this.notificationService.success("Account created successfully!");
           })
         );
       }),
       catchError((error: any) => {
+        if (error instanceof DomainError) {
+          this.notificationService.info("Error de dominio: " + error.message);
+        } else {
+          this.notificationService.info(error.error.message);
+        }
         return throwError(() => error);
       })
     )

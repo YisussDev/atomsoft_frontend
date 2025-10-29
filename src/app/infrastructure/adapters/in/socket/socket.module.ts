@@ -1,8 +1,7 @@
 import {NgModule} from "@angular/core";
-import {AccountEventsRepository} from "@infrastructure/ports/socket/events/account/account.events.repository";
 import {SocketIoModule} from "ngx-socket-io";
-import {SocketService} from "@infrastructure/ports/socket/services/socket.service";
-
+import {SocketService} from "@infrastructure/adapters/in/socket/services/socket.service";
+import {AccountEventsRepository} from "@infrastructure/adapters/in/socket/events/account/account.events.repository";
 @NgModule({
     imports: [
         SocketIoModule

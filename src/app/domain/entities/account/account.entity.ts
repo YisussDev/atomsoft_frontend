@@ -37,12 +37,6 @@ export class AccountEntity {
     if (this.email) {
       this.validateEmailEntity();
     }
-    if (this.password) {
-      this.validatePasswordEntity();
-    }
-    if (this.tenant_code) {
-      this.validateTenantCodeEntity();
-    }
   }
 
   validateToLogin(): void {

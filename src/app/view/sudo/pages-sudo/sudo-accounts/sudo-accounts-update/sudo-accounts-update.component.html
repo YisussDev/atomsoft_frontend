@@ -1,3 +1,4 @@
-<div>
-  <app-sudo-accounts-form></app-sudo-accounts-form>
+<div class="w-full h-fit" *ngIf="dataToUpdate">
+  <app-sudo-accounts-form [account]="dataToUpdate" mode="update" title="Actualizar Cuenta"
+                          (submitForm)="onSubmit($event)" (cancel)="onCancel()"></app-sudo-accounts-form>
 </div>

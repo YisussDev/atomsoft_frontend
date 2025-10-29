@@ -2,12 +2,12 @@
   <app-sudo-header class="flex-shrink-0"></app-sudo-header>
   <div class="flex flex-1 overflow-hidden">
     <app-sudo-navbar
-      [navItems]="navItems"
       appName="PraxiSoft©"
       appInitial="PS"
-      userName="Juan Pérez"
-      userRole="Administrador"
-      userInitial="JP"
+      userRole="PraxiSoft"
+      userInitial="P"
+      [navItems]="navItems"
+      [userName]="accountData.name"
       (onNavigate)="handleNavigation($event)"
       (onCollapseChange)="handleCollapseChange($event)"
     ></app-sudo-navbar>

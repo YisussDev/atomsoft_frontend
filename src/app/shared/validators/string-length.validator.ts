@@ -1,3 +1,5 @@
+import {DomainError} from "@shared/exceptions/domain.exception";
+
 export function validateMinLength(
   value: string,
   minLength: number,
@@ -5,7 +7,7 @@ export function validateMinLength(
 ): void {
   if (!value || value.length < minLength) {
     const messageErrorResponse = `${fieldName} debe tener al menos ${minLength} caracteres`;
-    throw new Error(messageErrorResponse);
+    throw new DomainError(messageErrorResponse);
   }
 }
 
@@ -16,6 +18,6 @@ export function validateMaxLength(
 ): void {
   if (value && value.length > maxLength) {
     const messageErrorResponse = `${fieldName} no debe tener más de ${maxLength} caracteres`;
-    throw new Error(messageErrorResponse);
+    throw new DomainError(messageErrorResponse);
   }
 }

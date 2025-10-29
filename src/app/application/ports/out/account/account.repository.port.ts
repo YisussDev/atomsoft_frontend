@@ -22,7 +22,7 @@ export interface AccountRepositoryPort {
 
   update(
     keyToSearch: string,
-    dataToUpdate: AccountEntity,
+    dataToUpdate: Partial<AccountEntity>,
   ): Observable<{ data: AccountEntity }>;
 
   delete(

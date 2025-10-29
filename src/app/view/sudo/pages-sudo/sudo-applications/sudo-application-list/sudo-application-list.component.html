@@ -1,0 +1,57 @@
+<div class="w-full h-full overflow-auto p-3 sm:p-6 animate-fadeIn">
+  <app-table-generic
+    [data]="tableData"
+    [columns]="tableColumns"
+    [tableTitle]="'Lista de aplicaciones'"
+    [showSearch]="true"
+    [showPagination]="true"
+    [showExport]="true"
+    [currentPage]="page"
+    [totalItems]="totalFounded"
+    [limit]="limit"
+    (pageChange)="onPageChange($event)"
+  >
+    <ng-template appColumnTemplate="logo_url" let-value>
+      <div class="h-10 w-10 rounded-md text-xs font-semibold">
+        <img [src]="value" alt="logo_app">
+      </div>
+    </ng-template>
+    <ng-template appColumnTemplate="recursive_payment" let-value>
+          <span [class]="(value == 1 )? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'"
+                class="px-3 py-1 rounded-full text-xs font-semibold">
+           {{ (value == 1) ? 'Sí' : 'No' }}
+          </span>
+    </ng-template>
+    <ng-template appColumnTemplate="price" let-value>
+          <span
+            class="px-3 py-1 rounded-full text-xs font-semibold">
+           {{ value  | currency }}
+          </span>
+    </ng-template>
+    <ng-template appColumnTemplate="acciones" let-row="row">
+      <div class="flex gap-2">
+        <div class="relative">
+          <app-button-dropdown
+            variant="outline"
+            position="right"
+            (itemSelected)="onSelect($event, row)"
+          >
+            <ng-template appDropdownItem [value]="'edit'">
+              <div class="flex items-center gap-3 px-4 py-3">
+                <app-icon-material nameIcon="edit" sizeIcon="medium" class="text-btw p-0 m-0"></app-icon-material>
+                <span>Editar</span>
+              </div>
+            </ng-template>
+            <ng-template appDropdownItem [divider]="true"></ng-template>
+            <ng-template appDropdownItem [value]="'delete'" color="danger">
+              <div class="flex items-center gap-3 px-4 py-3">
+                <app-icon-material nameIcon="cancel" sizeIcon="medium" class="p-0 m-0"></app-icon-material>
+                <span>Eliminar</span>
+              </div>
+            </ng-template>
+          </app-button-dropdown>
+        </div>
+      </div>
+    </ng-template>
+  </app-table-generic>
+</div>

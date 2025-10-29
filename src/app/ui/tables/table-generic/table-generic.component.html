@@ -1,6 +1,6 @@
-<div class="w-full bg-btw-secondary rounded-lg shadow-lg overflow-visible border border-btw">
+<div class="w-full bg-btw-secondary rounded-lg shadow-lg border border-btw">
   <!-- Header -->
-  <div class="bg-primary px-6 py-4 rounded-t-lg">
+  <div class="bg-primary bg-chill px-6 py-4 rounded-t-lg">
     <h2 class="text-2xl font-bold text-white">{{ tableTitle }}</h2>
   </div>
   <!-- Toolbar -->
@@ -40,10 +40,10 @@
       <span *ngIf="searchTerm"> (filtrado de {{ data.length }} totales)</span>
     </ng-template>
   </div>
-  <!-- Table -->
-  <div>
+  <!-- Table Container with fixed space at bottom -->
+  <div class="overflow-x-auto pb-48">
     <table class="w-full">
-      <thead>
+      <thead class="sticky top-0 z-10">
       <tr class="bg-btw-primary border-b border-btw">
         <th
           *ngFor="let column of columns"
@@ -94,12 +94,14 @@
       </thead>
       <tbody>
       <tr
-        *ngFor="let row of displayData; let i = index"
+        *ngFor="let row of displayData; let i = index; let last = last"
         class="border-b border-btw hover:bg-opacity-25 transition"
       >
         <td
           *ngFor="let column of columns"
           class="px-6 py-4 text-sm text-btw"
+          [class.static]="!last"
+          [class.relative]="last"
         >
           <!-- Si existe template personalizado para esta columna -->
           <ng-container *ngIf="getTemplateForColumn(column.key); else defaultCell">
@@ -107,7 +109,6 @@
               *ngTemplateOutlet="getTemplateForColumn(column.key)!; context: { $implicit: row[column.key], row: row, index: i }"
             ></ng-container>
           </ng-container>
-
           <!-- Template por defecto -->
           <ng-template #defaultCell>
             {{ row[column.key] }}
@@ -138,7 +139,6 @@
       </svg>
       Anterior
     </button>
-
     <div class="flex gap-2 flex-wrap justify-center">
       <button
         *ngFor="let page of getVisiblePages()"

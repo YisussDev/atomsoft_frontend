@@ -1,9 +1,9 @@
 import {Injectable} from "@angular/core";
-import {SocketService} from "@infrastructure/ports/socket/services/socket.service";
 import {Observable} from "rxjs";
 import {tap} from "rxjs/operators";
 import {NotificationService} from "@core/services/notification/notification.service";
 import {NavigationService} from "@core/services/navigation/navigation.service";
+import {SocketService} from "@infrastructure/adapters/in/socket/services/socket.service";
 
 declare const google: any;
 

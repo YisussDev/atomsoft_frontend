@@ -4,6 +4,7 @@ import {Subject, takeUntil} from "rxjs";
 import {ThemeService} from "@core/services/theme/theme.service";
 import {NavigationService} from "@core/services/navigation/navigation.service";
 import {CreateAccountUseCase} from "@application/ports/in/account/create-account.use-case";
+import {NotificationService} from "@core/services/notification/notification.service";
 
 @Component({
   selector: 'app-register',
@@ -17,8 +18,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   constructor(
     private themeService: ThemeService,
-    private navigationService: NavigationService,
     private createAccountUseCase: CreateAccountUseCase,
+    private navigationService: NavigationService,
+    private notificationService: NotificationService,
     private _formBuilder: FormBuilder,
   ) {
 
@@ -51,6 +53,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
     if (this.formRegister.valid) {
       this.createAccountUseCase.execute(this.formRegister.value).subscribe({
         next: (response) => {
+          localStorage.setItem('x-token', response.token);
+          this.notificationService.success("Login successfully!");
+          if (response.is_two_factor == 1) {
+            this.navigationService.navigateTo("/auth/two-factor-auth").then();
+          } else {
+            this.navigationService.navigateTo("/admin").then();
+          }
         }
       })
     }

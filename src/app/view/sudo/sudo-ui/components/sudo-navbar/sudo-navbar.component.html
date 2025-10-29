@@ -79,7 +79,8 @@
             >
               <div class="flex items-center gap-3 flex-1 min-w-0">
                 <ng-container *ngIf="child.icon">
-                  <app-icon-material [nameIcon]="child.icon" sizeIcon="large" class="p-0 m-0 text-btw"></app-icon-material>
+                  <app-icon-material [nameIcon]="child.icon" sizeIcon="large"
+                                     class="p-0 m-0 text-btw"></app-icon-material>
                 </ng-container>
                 <span appTypography="semi_medium" class="truncate">{{ child.label }}</span>
                 <span
@@ -99,13 +100,13 @@
   <div class="border-t border-gray-200 p-4">
     <div [class]="'flex items-center gap-3 transition-all duration-200 ' + (isCollapsed ? 'justify-center' : '')">
       <div
-        class="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
+        class="w-10 h-10 bg-chill bg-primary rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
         {{ userInitial }}
       </div>
       <div
         [class]="'flex-1 min-w-0 transition-opacity duration-200 ' + (isCollapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100')">
-        <p class="font-semibold text-sm text-gray-800 truncate">{{ userName }}</p>
-        <p class="text-xs text-gray-500 truncate">{{ userRole }}</p>
+        <p appTypography="semi_medium" class="truncate">{{ userName }}</p>
+        <p appTypography="paragraph" class="truncate">{{ userRole }}</p>
       </div>
     </div>
   </div>

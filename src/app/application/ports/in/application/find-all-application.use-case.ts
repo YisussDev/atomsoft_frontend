@@ -14,9 +14,14 @@ export class FindAllApplicationUseCase {
   ) {
   }
 
-  public execute(query: { [key: string]: string | number }): Observable<{ data: ApplicationEntity[] }> {
+  public execute(query: { [key: string]: string | number }): Observable<{
+    data: ApplicationEntity[];
+    pageActual?: number;
+    limitActual?: number;
+    totalFounded?: number;
+  }> {
     return of(query).pipe(
-      mergeMap(() => {
+      mergeMap((query) => {
         return this.repository.findAll(query);
       }),
       catchError((error: any) => {

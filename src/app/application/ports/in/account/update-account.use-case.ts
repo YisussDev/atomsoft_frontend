@@ -6,6 +6,7 @@ import {NotificationService} from "@core/services/notification/notification.serv
 import {AccountEntity} from "@domain/entities/account/account.entity";
 import {NavigationService} from "@core/services/navigation/navigation.service";
 import {AccountRepositoryPort} from "@application/ports/out/account/account.repository.port";
+import {DomainError} from "@shared/exceptions/domain.exception";
 
 @Injectable()
 export class UpdateAccountUseCase {
@@ -18,28 +19,28 @@ export class UpdateAccountUseCase {
   ) {
   }
 
-  public execute(keyToSearch: string, dataToUpdate: AccountEntity): Observable<{ data: AccountEntity }> {
+  public execute(keyToSearch: string, dataToUpdate: Partial<AccountEntity>): Observable<{ data: AccountEntity }> {
     return of(dataToUpdate).pipe(
-      map(dataLogin => {
-        const accountLogin: AccountEntity = Object.assign(new AccountEntity(), dataToUpdate);
+      map(dataToMap => {
+        const accountLogin: AccountEntity = Object.assign(new AccountEntity(), dataToMap);
         accountLogin.validateToUpdate();
-        return dataLogin;
+        return dataToMap;
       }),
-      mergeMap((dataLogin) => {
+      mergeMap((dataToUpdate) => {
         return this.repository.update(keyToSearch, dataToUpdate).pipe(
           tap((response) => {
             this.notificationService.success("Update successfully!");
             setTimeout(() => {
-              window.location.reload();
+              // window.location.reload();
             }, 500);
           })
         )
       }),
       catchError((error: any) => {
-        if ((error instanceof Error)) {
+        if ((error instanceof DomainError)) {
           this.notificationService.error(`Error de dominio..., ${error}`);
         } else {
-          const message = 'Ocurrió un error inesperado';
+          const message = error.error.message;
           this.notificationService.error(message);
         }
         return throwError(() => error);

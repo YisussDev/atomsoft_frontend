@@ -1,3 +1,5 @@
+import {DomainError} from "@shared/exceptions/domain.exception";
+
 export function validatePassword(
   value: string,
   fieldName: string
@@ -22,6 +24,6 @@ export function validatePassword(
   }
 
   if (messageErrorResponse) {
-    throw Error(messageErrorResponse)
+    throw new DomainError(messageErrorResponse)
   }
 }

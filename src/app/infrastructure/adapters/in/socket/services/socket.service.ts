@@ -1,9 +1,9 @@
 import {Injectable} from "@angular/core";
 import {Socket, SocketIoConfig} from "ngx-socket-io";
 import {EMPTY, Observable, of, Subject, take} from "rxjs";
-import {SocketEvents} from "@infrastructure/ports/socket/socket.events";
-import {SocketConfig} from "@infrastructure/ports/socket/socket.config";
 import {tap} from "rxjs/operators";
+import {SocketConfig} from "@infrastructure/adapters/in/socket/socket.config";
+import {SocketEvents} from "@infrastructure/adapters/in/socket/socket.events";
 
 @Injectable({
   providedIn: "root",

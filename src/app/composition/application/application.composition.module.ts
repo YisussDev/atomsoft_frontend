@@ -5,6 +5,7 @@ import {CreateApplicationUseCase} from "@application/ports/in/application/create
 import {UpdateApplicationUseCase} from "@application/ports/in/application/update-application.use-case";
 import {DeleteApplicationUseCase} from "@application/ports/in/application/delete-application.use-case";
 import {ApplicationOutHttpModule} from "@infrastructure/adapters/out/http/application/application.out.http.module";
+import {NotificationUi} from "@infrastructure/ui/services/notification/notification.ui";
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import {ApplicationOutHttpModule} from "@infrastructure/adapters/out/http/applic
     CreateApplicationUseCase,
     UpdateApplicationUseCase,
     DeleteApplicationUseCase,
+    NotificationUi
   ]
 })
 export class ApplicationCompositionModule {

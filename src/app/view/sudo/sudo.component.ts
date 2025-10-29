@@ -1,9 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subject, takeUntil} from "rxjs";
-import {SocketService} from "@infrastructure/ports/socket/services/socket.service";
-import {AccountEventsRepository} from "@infrastructure/ports/socket/events/account/account.events.repository";
 import {FindAllApplicationUseCase} from "@application/ports/in/application/find-all-application.use-case";
 import {CacheStorage} from "@infrastructure/adapters/out/storage/cache/cache.storage";
+import {AccountEventsRepository} from "@infrastructure/adapters/in/socket/events/account/account.events.repository";
+import {SocketService} from "@infrastructure/adapters/in/socket/services/socket.service";
 
 @Component({
   selector: 'app-sudo',

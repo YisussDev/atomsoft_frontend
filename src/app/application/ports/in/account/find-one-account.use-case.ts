@@ -15,7 +15,7 @@ export class FindOneAccountUseCase {
   }
 
   public execute(query: { [key: string]: string | number }): Observable<{ data: AccountEntity | null }> {
-    return of().pipe(
+    return of(query).pipe(
       mergeMap(() => {
         return this.repository.findOne(query);
       }),

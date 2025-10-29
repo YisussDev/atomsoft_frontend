@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Injectable({providedIn: 'root'})
 export class NavigationService {
 
   constructor(
-    private _router: Router
+    private _router: Router,
+    private _activatedRoute: ActivatedRoute,
   ) {
   }
 
@@ -32,4 +33,9 @@ export class NavigationService {
   public navigateToLogin() {
     return this._router.navigateByUrl('/auth/login');
   }
+
+  public extractParamsRouteActual(): { [key: string]: any; } {
+    return this._activatedRoute.snapshot.params;
+  }
+
 }
