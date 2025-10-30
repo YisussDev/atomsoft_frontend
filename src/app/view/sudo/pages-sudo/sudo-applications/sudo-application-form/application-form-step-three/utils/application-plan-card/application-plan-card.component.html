@@ -1,0 +1,60 @@
+<div
+  class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-200 max-w-sm">
+  <!-- Header -->
+  <div class="bg-gradient-to-r bg-primary text-white">
+    <div class="flex flex-col justify-center items-center p-2">
+      <div class="flex-1 truncate">
+        <h3 class="text-xl font-semibold mb-1 truncate" [title]="plan.name">{{ plan.name }}</h3>
+      </div>
+      <div class="text-center">
+        <div class="text-2xl font-bold truncate" [title]="plan.price">${{ plan.price | number:'1.0-0' }}</div>
+        <div class="text-xs opacity-90 truncate" [title]="plan.currency">{{ plan.currency }}</div>
+      </div>
+    </div>
+  </div>
+  <!-- Content -->
+  <div class="p-4 space-y-3">
+    <!-- Description -->
+    <p class="text-gray-600 text-sm leading-relaxed">{{ plan.description }}</p>
+    <!-- Limit -->
+    <div class="flex items-center justify-between py-2 border-t border-gray-100">
+      <span class="text-gray-500 text-sm">Límite de cuentas</span>
+      <span class="font-medium text-gray-900">{{ plan.limit_account }}</span>
+    </div>
+    <!-- Chips -->
+    <div *ngIf="plan.chips && plan.chips.length > 0" class="flex flex-wrap gap-1.5 pt-2">
+          <span
+            *ngFor="let chip of plan.chips"
+            class="px-2.5 py-1 bg-blue-50 text-blue-700 text-xs font-medium rounded-full"
+          >
+            {{ chip }}
+          </span>
+    </div>
+  </div>
+  <!-- Actions -->
+  <div class="border-t border-gray-100 px-4 py-3 bg-gray-50 flex gap-2">
+    <button
+      (click)="onEdit.emit(plan)"
+      class="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors duration-150 text-sm font-medium"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+        <path d="m15 5 4 4"/>
+      </svg>
+      Edit
+    </button>
+    <button
+      (click)="handleDelete()"
+      class="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-white border border-red-300 text-red-600 rounded-md hover:bg-red-50 transition-colors duration-150 text-sm font-medium"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 6h18"/>
+        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+      </svg>
+      Delete
+    </button>
+  </div>
+</div>

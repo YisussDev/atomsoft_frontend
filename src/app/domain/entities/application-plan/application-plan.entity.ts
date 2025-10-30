@@ -9,14 +9,17 @@ export class ApplicationPlanEntity {
 
   //More properties...
 
+  code!: string;
   name!: string;
   description!: string;
   price!: number;
   limit_account!: number;
   currency!: string;
   config?: Record<string, any>;
+  chips?: string[];
 
   validateToCreate(): void {
+    this.validateCode();
     this.validateName();
     this.validateDescription();
     this.validatePrice();
@@ -24,10 +27,16 @@ export class ApplicationPlanEntity {
     this.validateCurrency();
   }
 
+  validateCode(): void {
+    IsRequiredValidator(this.code, "code");
+    IsMinLengthValidator(this.code, "code", 4);
+    IsMaxLengthValidator(this.code, "name", 50);
+  }
+
   validateName(): void {
     IsRequiredValidator(this.name, "name");
     IsMinLengthValidator(this.name, "name", 4);
-    IsMaxLengthValidator(this.name, "name", 12);
+    IsMaxLengthValidator(this.name, "name", 50);
   }
 
   validateDescription(): void {

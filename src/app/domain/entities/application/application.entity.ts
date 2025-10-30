@@ -33,6 +33,7 @@ export class ApplicationEntity {
     this.validateCode();
     this.validateName();
     this.validateDescription();
+    this.validatePlans();
   }
 
   validateToUpdate(): void {
@@ -56,6 +57,14 @@ export class ApplicationEntity {
     IsMaxLengthValidator(this.description, "description", 255);
   }
 
+  validatePlans(): void {
+    if (this.plans && this.plans.length > 0) {
+      this.plans.forEach(plan => {
+        const instancePlan: ApplicationPlanEntity = Object.assign(new ApplicationPlanEntity(), plan);
+        instancePlan.validateToCreate();
+      });
+    }
+  }
 
   created_at!: Date;
   updated_at!: Date;

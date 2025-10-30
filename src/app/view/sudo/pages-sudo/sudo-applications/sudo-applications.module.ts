@@ -21,6 +21,9 @@ import {DocumentViewerModule} from "@ui/document-viewer/document-viewer.module";
 import { ApplicationFormStepOneComponent } from './sudo-application-form/application-form-step-one/application-form-step-one.component';
 import { ApplicationFormStepTwoComponent } from './sudo-application-form/application-form-step-two/application-form-step-two.component';
 import { ApplicationFormStepThreeComponent } from './sudo-application-form/application-form-step-three/application-form-step-three.component';
+import {ModalModule} from "@ui/modal/modal.module";
+import {CardsModule} from "@ui/cards/cards.module";
+import { ApplicationPlanCardComponent } from './sudo-application-form/application-form-step-three/utils/application-plan-card/application-plan-card.component';
 
 
 @NgModule({
@@ -33,7 +36,8 @@ import { ApplicationFormStepThreeComponent } from './sudo-application-form/appli
     SudoApplicationUpdateComponent,
     ApplicationFormStepOneComponent,
     ApplicationFormStepTwoComponent,
-    ApplicationFormStepThreeComponent
+    ApplicationFormStepThreeComponent,
+    ApplicationPlanCardComponent
   ],
   imports: [
     CommonModule,
@@ -48,7 +52,9 @@ import { ApplicationFormStepThreeComponent } from './sudo-application-form/appli
     Inputsv2Module,
     ReactiveFormsModule,
     TypographyModule,
-    DocumentViewerModule
+    DocumentViewerModule,
+    ModalModule,
+    CardsModule
   ]
 })
 export class SudoApplicationsModule {

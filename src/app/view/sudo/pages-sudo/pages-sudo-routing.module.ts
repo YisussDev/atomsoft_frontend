@@ -12,6 +12,10 @@ const routes: Routes = [
         loadChildren: () => import("./sudo-home/sudo-home.module").then(m => m.SudoHomeModule)
       },
       {
+        path: "profile",
+        loadChildren: () => import("./sudo-profile/sudo-profile.module").then(m => m.SudoProfileModule)
+      },
+      {
         path: "account",
         loadChildren: () => import("./sudo-accounts/sudo-accounts.module").then(m => m.SudoAccountsModule)
       },

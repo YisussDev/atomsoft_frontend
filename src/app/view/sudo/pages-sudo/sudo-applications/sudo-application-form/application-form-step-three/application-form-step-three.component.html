@@ -1,16 +1,24 @@
 <div class="space-y-4">
-  <h3 appTypography="semi_medium" class="border-b pb-2">Información Planes</h3>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <!-- Chips -->
-    <div class="form-group">
-      <app-input-chips
-        [control]="$any(formStep.controls['chips'])"
-        label="Carácterísticas"
-        placeholder="Agregar carácterística..."
-        hint="Presiona Enter o coma para agregar"
-        icon="label"
-      ></app-input-chips>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 border-b pb-2 border-btw">
+    <div class="w-full h-full flex justify-center items-center">
+      <h3 appTypography="semi_medium">Información Planes</h3>
     </div>
+    <button
+      (click)="openModalCreatePlan()"
+      class="flex-1 px-6 py-3 bg-primary text-white font-medium rounded-lg hover:bg-blue-700 transition flex items-center justify-center gap-2"
+    >
+      <app-icon-material nameIcon="add" sizeIcon="large"></app-icon-material>
+      <span>Agregar Plan</span>
+    </button>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-2">
+    <ng-container *ngFor="let plan of formStep.controls['plans'].value">
+      <app-application-plan-card
+        [plan]="plan"
+        (onDelete)="removePlan($event)"
+        (onEdit)="openModalUpdatePlan($event)">
+      </app-application-plan-card>
+    </ng-container>
   </div>
 </div>
 <!-- Actions -->
@@ -37,3 +45,98 @@
     <span>{{ submitButtonText }}</span>
   </button>
 </div>
+
+<ng-container *ngIf="isVisibleModalPlan">
+  <app-modal-simple [title]="isEditing ? ('Actualizar Plan'):('Crear Plan')" (close)="onCloseModal()">
+    <ng-container [formGroup]="formPlans">
+      <div class="w-screen grid max-w-screen-md grid-cols-1 md:grid-cols-2 gap-4 p-6">
+        <div class="form-group">
+          <app-input-text
+            [control]="$any(formPlans.controls['name'])"
+            label="Nombre"
+            placeholder="Ingresa una descripción"
+            type="text"
+            id="name"
+            icon="person"
+          >
+          </app-input-text>
+        </div>
+        <div class="form-group">
+          <app-input-text
+            [control]="$any(formPlans.controls['description'])"
+            label="Descripción"
+            placeholder="Ingresa una descripción"
+            type="text"
+            id="description"
+            icon="person"
+          >
+          </app-input-text>
+        </div>
+        <div class="form-group">
+          <app-input-number
+            [control]="$any(formPlans.controls['price'])"
+            label="Precio"
+            placeholder="Ingrese el precio del plan"
+            type="text"
+            [useCurrencyMask]="true"
+            [allowNegative]="false"
+            currencySymbol="$"
+            id="price"
+            icon="attach_money"
+          >
+          </app-input-number>
+        </div>
+        <div class="form-group">
+          <app-input-select
+            [control]="$any(formPlans.controls['currency'])"
+            [options]="currencyTypeList"
+            label="Tipo de moneda"
+            placeholder="Ingresa una moneda"
+            type="text"
+            id="currency"
+            icon="attach_money"
+          >
+          </app-input-select>
+        </div>
+        <div class="form-group">
+          <app-input-select
+            [control]="$any(formPlans.controls['limit_account'])"
+            [options]="limitAccountList"
+            label="Límite de cuentas"
+            placeholder="Ingrese un límite"
+            type="text"
+            id="limit_account"
+            icon="person"
+          >
+          </app-input-select>
+        </div>
+        <div class="form-group col-span-1 md:col-span-2">
+          <app-input-chips
+            [control]="$any(formPlans.controls['chips'])"
+            label="Carácterísticas"
+            placeholder="Agregar carácterística..."
+            hint="Presiona Enter o coma para agregar"
+            icon="label"
+          ></app-input-chips>
+        </div>
+        <div class="col-span-1 md:col-span-2 flex flex-col sm:flex-row gap-3 pt-4 border-t">
+          <button
+            type="button"
+            (click)="onCloseModal()"
+            class="flex-1 px-3 py-2 border-2 border-t-btw text-btw font-medium rounded-lg hover:bg-gray-50 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Cerrar
+          </button>
+          <button
+            type="submit"
+            (click)="isEditing ? submitModalUpdatePlan() : submitModalPlan()"
+            [disabled]="!validationFormPlan"
+            class="flex-1 px-3 py-2 bg-primary text-white font-medium rounded-lg hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          >
+            <span>{{ isEditing ? 'Actualizar' : 'Añadir' }}</span>
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </app-modal-simple>
+</ng-container>

@@ -6,7 +6,7 @@
   </label>
 
   <!-- Chips Container -->
-  <div class="relative">
+  <div class="relative overflow-hidden">
     <!-- Icon -->
     <div *ngIf="icon" class="absolute top-2.5 left-0 pl-3 flex items-center pointer-events-none z-10">
       <span class="transition-colors duration-200 flex justify-center items-center"
@@ -23,12 +23,12 @@
 
       <!-- Chips Display -->
       <div *ngFor="let chip of chips; let i = index"
-           class="inline-flex items-center gap-1 bg-primary text-white px-3 py-1 rounded-full text-sm transition-all duration-200 hover:bg-opacity-90">
-        <span>{{ chip }}</span>
+           class="inline-flex items-center gap-1 bg-primary text-white px-3 py-1 rounded-full text-sm transition-all duration-200 hover:bg-opacity-90 max-w-full">
+        <span class="truncate max-w-[200px]" [title]="chip">{{ chip }}</span>
         <button *ngIf="!disabled"
                 type="button"
                 (click)="removeChip(i); $event.stopPropagation()"
-                class="hover:bg-white hover:bg-opacity-20 rounded-full p-0.5 transition-colors duration-200">
+                class="hover:bg-white hover:bg-opacity-20 rounded-full p-0.5 transition-colors duration-200 flex-shrink-0">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
           </svg>

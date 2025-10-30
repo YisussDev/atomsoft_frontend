@@ -1,1 +1,10 @@
-<p>sudo-application-update works!</p>
+<div *ngIf="dataToUpdate">
+  <app-sudo-application-form
+    mode="update"
+    title="Actualizar Aplicación"
+    subTitle="Formulario para crear aplicaciones"
+    [data]="dataToUpdate"
+    (submitForm)="onSubmit($event)"
+    (cancel)="onCancel()">
+  </app-sudo-application-form>
+</div>

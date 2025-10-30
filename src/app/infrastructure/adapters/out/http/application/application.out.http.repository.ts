@@ -56,10 +56,12 @@ export class ApplicationOutHttpRepository implements ApplicationRepositoryPort {
   public findOne(
     query: { [p: string]: string },
   ): Observable<{ data: ApplicationEntity | null }> {
+    const queryTransform = objectToQueryParams(query);
     return this.httpService.get<{
       data: ApplicationEntity | null;
-    }>(`${this.apiUrl}application`).pipe(
+    }>(`${this.apiUrl}application/one${queryTransform}`).pipe(
       map((response) => {
+        console.log(response)
         return {
           data: response.data ? (this.mapper.toDomain(response.data)) : null,
         }
@@ -97,9 +99,31 @@ export class ApplicationOutHttpRepository implements ApplicationRepositoryPort {
     keyToSearch: string,
     dataToUpdate: ApplicationEntity
   ): Observable<{ data: ApplicationEntity }> {
+    const formData: FormData = new FormData();
+
+    // Claves cuyos valores deben ser convertidos a JSON
+    const keysToStringify: (keyof ApplicationEntity)[] = ['chips', 'img_chips', 'plans'];
+
+    (Object.keys(dataToUpdate) as (keyof ApplicationEntity)[]).forEach((key) => {
+      const value = dataToUpdate[key];
+
+      if (value === undefined || value === null) return; // Evita campos vacíos
+
+      // Si la clave está en la lista, convertir el valor a JSON string
+      if (keysToStringify.includes(key)) {
+        formData.append(key as string, JSON.stringify(value));
+      } else if (value instanceof File || value instanceof Blob) {
+        // Soporte para archivos o blobs
+        formData.append(key as string, value);
+      } else {
+        // Asegura que siempre se agregue como string
+        formData.append(key as string, String(value));
+      }
+    });
+
     return this.httpService.patch<{
       data: ApplicationEntity
-    }, ApplicationEntity>(`${this.apiUrl}application/${keyToSearch}`, dataToUpdate);
+    }, FormData>(`${this.apiUrl}application/update?id=${keyToSearch}`, formData);
   }
 
   public delete(

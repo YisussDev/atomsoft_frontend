@@ -9,6 +9,7 @@ export class ApplicationOutHttpMapper {
     // More properties...
     entityDomain.code = dataInfrastructure.code;
     entityDomain.name = dataInfrastructure.name;
+    entityDomain.description = dataInfrastructure.description;
     entityDomain.logo_url = dataInfrastructure.logo_url;
     entityDomain.description = dataInfrastructure.description;
     entityDomain.chips = dataInfrastructure.chips;

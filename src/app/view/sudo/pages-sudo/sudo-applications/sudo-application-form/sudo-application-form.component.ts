@@ -1,7 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ApplicationEntity} from "@domain/entities/application/application.entity";
-import {NotificationService} from "@core/services/notification/notification.service";
 import {NavigationService} from "@core/services/navigation/navigation.service";
 
 @Component({
@@ -9,12 +8,13 @@ import {NavigationService} from "@core/services/navigation/navigation.service";
   templateUrl: './sudo-application-form.component.html',
   styleUrls: ['./sudo-application-form.component.css']
 })
-export class SudoApplicationFormComponent implements OnInit {
+export class SudoApplicationFormComponent implements OnInit, OnChanges {
 
   @Input() mode: 'create' | 'update' = 'create';
   @Input() data?: ApplicationEntity;
   @Input() loading = false;
-  @Input() title = 'Formulario de Aplicación';
+  @Input() title: string = '';
+  @Input() subTitle: string = '';
 
   @Output() submitForm = new EventEmitter<Partial<ApplicationEntity>>();
   @Output() cancel = new EventEmitter<void>();
@@ -25,7 +25,6 @@ export class SudoApplicationFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private notificationService: NotificationService,
     private navigationService: NavigationService,
   ) {
   }
@@ -37,12 +36,19 @@ export class SudoApplicationFormComponent implements OnInit {
     }
   }
 
-  public initForm() {
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes && changes["data"].currentValue) {
+      // console.log(this.data);
+    }
+  }
+
+  public initForm(): void {
     const baseControls = {
-      name: ['PraxiInventory', [Validators.required, Validators.minLength(5)]],
-      code: ['praxi_inventory', [Validators.required, Validators.minLength(5)]],
-      description: ['Descripción corta para aplicación.', [Validators.required, Validators.minLength(5)]],
-      logo_url: ["https://pub-73f3f74bc61d42d3a64738ae825a6112.r2.dev/microservices/application/praxi_inventory.png", [Validators.required]],
+      name: ['', [Validators.required, Validators.minLength(5)]],
+      code: ['', [Validators.required, Validators.minLength(5)]],
+      description: ['', [Validators.required, Validators.minLength(5)]],
+      logo_url: ["", [Validators.required]],
+      color_primary: ["#FFFFFF", [Validators.required]],
       url_production: ["http://test.com/", [Validators.required]],
       url_sandbox: ["http://test.com/", [Validators.required]],
       url_test: ["http://test.com/", [Validators.required]],
@@ -63,13 +69,52 @@ export class SudoApplicationFormComponent implements OnInit {
       // baseControls.name = ['', [Validators.minLength(5)]];
     }
     this.form = this.fb.group(baseControls);
+    this.initDataFormTest();
   }
 
-  public patchFormValues() {
+  public initDataFormTest(): void {
+    const dataTest = {
+      name: "Name Test",
+      code: "code_test",
+      description: 'Descripción corta para aplicación.',
+      logo_url: "https://pub-73f3f74bc61d42d3a64738ae825a6112.r2.dev/microservices/application/praxi_inventory.png",
+      url_production: "http://test.com/",
+      url_sandbox: "http://test.com/",
+      url_test: "http://test.com/",
+      url_front_production: "http://test.com/",
+      url_front_sandbox: "http://test.com/",
+      url_front_test: "http://test.com/",
+      recursive_payment: 0,
+      chips: ["Rapido", "Flexible", "Escalable"],
+      img_chips: [
+        "https://pub-73f3f74bc61d42d3a64738ae825a6112.r2.dev/microservices/application/inventory_banner_one.png",
+        "https://pub-73f3f74bc61d42d3a64738ae825a6112.r2.dev/microservices/application/inventory_banner_two.png",
+        "https://pub-73f3f74bc61d42d3a64738ae825a6112.r2.dev/microservices/application/inventory_banner_three.png",
+      ],
+      plans: []
+    };
+    this.form.patchValue(dataTest);
+  }
+
+  public patchFormValues(): void {
     if (!this.data) return;
 
     const values: any = {
+      code: this.data.code,
       name: this.data.name,
+      description: this.data.description,
+      logo_url: this.data.logo_url,
+      chips: this.data.chips,
+      img_chips: this.data.img_chips,
+      color_primary: this.data.color_primary,
+      url_production: this.data.url_production,
+      url_sandbox: this.data.url_sandbox,
+      url_test: this.data.url_test,
+      url_front_production: this.data.url_front_production,
+      url_front_sandbox: this.data.url_front_sandbox,
+      url_front_test: this.data.url_front_test,
+      recursive_payment: this.data.recursive_payment,
+      plans: this.data.plans || [],
     };
 
     this.form.patchValue(values);
@@ -124,7 +169,25 @@ export class SudoApplicationFormComponent implements OnInit {
     const changes: Partial<ApplicationEntity> = {};
 
     // Campos de texto
-    const textFields = ['name', "logo_url", "description", "code", "price"];
+    const textFields: string[] = [
+      'name',
+      'code',
+      "logo_url",
+      "description",
+      "chips",
+      "img_chips",
+      "color_primary",
+      "price",
+      "url_production",
+      "url_sandbox",
+      "url_test",
+      "url_front_production",
+      "url_front_sandbox",
+      "url_front_test",
+      "recursive_payment",
+      "plans",
+      "color_primary"
+    ];
     textFields.forEach(field => {
       if (this.data![field as keyof ApplicationEntity] !== formValue[field] && formValue[field]) {
         changes[field as keyof ApplicationEntity] = formValue[field];
@@ -150,6 +213,7 @@ export class SudoApplicationFormComponent implements OnInit {
       chips: formValue.chips,
       img_chips: formValue.img_chips,
       plans: formValue.plans,
+      color_primary: formValue.color_primary,
     };
   }
 

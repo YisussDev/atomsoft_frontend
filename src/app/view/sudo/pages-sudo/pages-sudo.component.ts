@@ -46,7 +46,7 @@ export class PagesSudoComponent implements OnInit {
         label: 'Aplicaciones',
         icon: 'apps',
         children: [
-          {label: 'Todos las applicaiones', icon: "list", route: '/sudo/application/list'},
+          {label: 'Todos las Aplicaciones', icon: "list", route: '/sudo/application/list'},
           {label: 'Crear Aplicación', icon: 'add', route: '/sudo/application/create'},
         ]
       },

@@ -44,7 +44,7 @@ export class SudoApplicationListComponent implements OnInit {
   ];
 
   public page: number = 1;
-  public limit: number = 10;
+  public limit: number = 5;
   public totalFounded: number = 0;
 
   constructor(
@@ -60,6 +60,7 @@ export class SudoApplicationListComponent implements OnInit {
 
   private initApplications(query: { [key: string]: string | number }): void {
     const queryComplete: { [key: string]: string | number } = {
+      includes: "plans",
       limit: this.limit,
       page: this.page,
       ...query

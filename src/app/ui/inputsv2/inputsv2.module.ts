@@ -8,6 +8,8 @@ import {CurrencyMaskDirective} from "@core/directives/currency-mask/currency-mas
 import { InputChipsComponent } from './components/input-chips/input-chips.component';
 import { InputToggleComponent } from './components/input-toggle/input-toggle.component';
 import {TypographyModule} from "@core/directives/typography/typography.module";
+import { InputSelectComponent } from './components/input-select/input-select.component';
+import { InputColorComponent } from './components/input-color/input-color.component';
 
 
 
@@ -16,14 +18,18 @@ import {TypographyModule} from "@core/directives/typography/typography.module";
     InputTextComponent,
     InputNumberComponent,
     InputChipsComponent,
-    InputToggleComponent
+    InputToggleComponent,
+    InputSelectComponent,
+    InputColorComponent
   ],
-  exports: [
-    InputTextComponent,
-    InputNumberComponent,
-    InputChipsComponent,
-    InputToggleComponent
-  ],
+    exports: [
+        InputTextComponent,
+        InputNumberComponent,
+        InputChipsComponent,
+        InputToggleComponent,
+        InputSelectComponent,
+        InputColorComponent
+    ],
   imports: [
     CommonModule,
     ReactiveFormsModule,

@@ -1,39 +1,49 @@
-<div class="w-full p-2 sm:p-6 animation-opacity">
-  <div class="w-full max-w-4xl mx-auto bg-btw-secondary rounded-lg shadow-lg overflow-hidden">
-    <!-- Header -->
-    <div class="bg-primary bg-chill px-6 py-4">
-      <p appTypography="subtitle" class="text-white">{{ title }}</p>
+<div class="w-full h-fit">
+  <header class="sticky top-0 z-10 border-b border-btw bg-btw-secondary">
+    <div class="flex h-16 items-center justify-between px-8">
+      <div>
+        <h1 appTypography="subtitle" class="font-semibold">{{ title }}</h1>
+        <p appTypography="paragraph">{{ subTitle }}</p>
+      </div>
     </div>
-    <!-- Form -->
-    <div [formGroup]="form" class="p-6 space-y-6">
-      <ng-container *ngIf="step == 1">
-        <!-- Información Básica -->
-        <app-application-form-step-one
-          [formStep]="form"
-          [loading]="loading"
-          [mode]="mode"
-          (submitStep)="onSubmitStepOne()"
-          (cancelStep)="onCancelStepOne()">
-        </app-application-form-step-one>
-      </ng-container>
-      <ng-container *ngIf="step == 2">
-        <app-application-form-step-two
-          [formStep]="form"
-          [loading]="loading"
-          [mode]="mode"
-          (submitStep)="onSubmitStepTwo()"
-          (cancelStep)="onCancelStepTwo()">
-        </app-application-form-step-two>
-      </ng-container>
-      <ng-container *ngIf="step == 3">
-        <app-application-form-step-three
-          [formStep]="form"
-          [loading]="loading"
-          [mode]="mode"
-          (submitStep)="onSubmitStepThree()"
-          (cancelStep)="onCancelStepThree()">
-        </app-application-form-step-three>
-      </ng-container>
+  </header>
+  <div class="w-full p-2 sm:p-6 animation-opacity">
+    <div class="w-full max-w-4xl mx-auto bg-btw-secondary rounded-lg shadow-lg overflow-hidden">
+      <!-- Header -->
+      <div class="bg-primary bg-chill px-6 py-4">
+        <p appTypography="subtitle" class="text-white">{{ title }}</p>
+      </div>
+      <!-- Form -->
+      <div [formGroup]="form" class="p-6 space-y-6">
+        <ng-container *ngIf="step == 1">
+          <!-- Información Básica -->
+          <app-application-form-step-one
+            [formStep]="form"
+            [loading]="loading"
+            [mode]="mode"
+            (submitStep)="onSubmitStepOne()"
+            (cancelStep)="onCancelStepOne()">
+          </app-application-form-step-one>
+        </ng-container>
+        <ng-container *ngIf="step == 2">
+          <app-application-form-step-two
+            [formStep]="form"
+            [loading]="loading"
+            [mode]="mode"
+            (submitStep)="onSubmitStepTwo()"
+            (cancelStep)="onCancelStepTwo()">
+          </app-application-form-step-two>
+        </ng-container>
+        <ng-container *ngIf="step == 3">
+          <app-application-form-step-three
+            [formStep]="form"
+            [loading]="loading"
+            [mode]="mode"
+            (submitStep)="onSubmitStepThree()"
+            (cancelStep)="onCancelStepThree()">
+          </app-application-form-step-three>
+        </ng-container>
+      </div>
     </div>
   </div>
 </div>

@@ -11,7 +11,8 @@ export class SudoAccountsFormComponent implements OnInit {
   @Input() mode: 'create' | 'update' | 'login' = 'create';
   @Input() account?: AccountEntity;
   @Input() loading = false;
-  @Input() title = 'Formulario de Cuenta';
+  @Input() title = '';
+  @Input() subTitle = '';
 
   @Output() submitForm = new EventEmitter<Partial<AccountEntity>>();
   @Output() cancel = new EventEmitter<void>();

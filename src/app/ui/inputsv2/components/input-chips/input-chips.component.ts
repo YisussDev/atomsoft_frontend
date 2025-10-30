@@ -1,4 +1,4 @@
-import {Component, forwardRef, Input} from '@angular/core';
+import {Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 @Component({
@@ -13,7 +13,7 @@ import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from "@angular/for
     }
   ]
 })
-export class InputChipsComponent implements ControlValueAccessor {
+export class InputChipsComponent implements ControlValueAccessor, OnInit, OnChanges {
   @Input() label: string = '';
   @Input() id: string = `chips-input-${Math.random().toString(36).substr(2, 9)}`;
   @Input() placeholder: string = 'Agregar item...';
@@ -26,6 +26,16 @@ export class InputChipsComponent implements ControlValueAccessor {
   chips: string[] = [];
   inputValue: string = '';
   touched: boolean = false;
+
+  ngOnInit() {
+    if (this.control && this.control.value) {
+      this.chips = this.control.value;
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+
+  }
 
   private onChange: (value: string[]) => void = () => {
   };
