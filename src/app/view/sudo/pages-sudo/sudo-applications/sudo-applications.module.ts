@@ -20,6 +20,7 @@ import {TypographyModule} from "@core/directives/typography/typography.module";
 import {DocumentViewerModule} from "@ui/document-viewer/document-viewer.module";
 import { ApplicationFormStepOneComponent } from './sudo-application-form/application-form-step-one/application-form-step-one.component';
 import { ApplicationFormStepTwoComponent } from './sudo-application-form/application-form-step-two/application-form-step-two.component';
+import { ApplicationFormStepThreeComponent } from './sudo-application-form/application-form-step-three/application-form-step-three.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { ApplicationFormStepTwoComponent } from './sudo-application-form/applica
     SudoApplicationFormComponent,
     SudoApplicationUpdateComponent,
     ApplicationFormStepOneComponent,
-    ApplicationFormStepTwoComponent
+    ApplicationFormStepTwoComponent,
+    ApplicationFormStepThreeComponent
   ],
   imports: [
     CommonModule,

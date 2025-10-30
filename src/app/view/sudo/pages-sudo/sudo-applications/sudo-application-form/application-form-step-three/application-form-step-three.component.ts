@@ -1,12 +1,12 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
-  selector: 'app-application-form-step-two',
-  templateUrl: './application-form-step-two.component.html',
-  styleUrls: ['./application-form-step-two.component.css']
+  selector: 'app-application-form-step-three',
+  templateUrl: './application-form-step-three.component.html',
+  styleUrls: ['./application-form-step-three.component.css']
 })
-export class ApplicationFormStepTwoComponent {
+export class ApplicationFormStepThreeComponent {
 
   @Input() public formStep!: FormGroup;
   @Input() mode: 'create' | 'update' = 'create';
@@ -15,7 +15,15 @@ export class ApplicationFormStepTwoComponent {
   @Output() submitStep: EventEmitter<any> = new EventEmitter();
   @Output() cancelStep: EventEmitter<any> = new EventEmitter();
 
-  constructor() {
+  public formPlans!: FormGroup;
+
+  constructor(
+    private _formBuilder: FormBuilder,
+  ) {
+  }
+
+  private initForm(): void {
+    this.formPlans = this._formBuilder.group({});
   }
 
   get submitButtonText(): string {

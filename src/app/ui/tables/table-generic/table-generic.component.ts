@@ -34,10 +34,11 @@ export interface SortConfig {
 export class TableGenericComponent implements AfterContentInit {
   @Input() data: any[] = [];
   @Input() columns: TableColumn[] = [];
-  @Input() tableTitle = 'Tabla de Datos';
-  @Input() showSearch = true;
-  @Input() showExport = true;
-  @Input() showPagination = true;
+  @Input() tableTitle: string = 'Tabla de Datos';
+  @Input() tableSubTitle!: string;
+  @Input() showSearch:boolean  = true;
+  @Input() showExport:boolean  = true;
+  @Input() showPagination:boolean  = true;
   @Input() itemsPerPage = 10;
 
   // Paginación externa (backend)

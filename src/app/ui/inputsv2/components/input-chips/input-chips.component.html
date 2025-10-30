@@ -1,0 +1,83 @@
+<div class="w-full">
+  <!-- Label -->
+  <label *ngIf="label" [for]="id" class="block text-sm font-medium text-btw mb-2">
+    {{ label }}
+    <span *ngIf="control?.hasError('required')" class="text-red-500">*</span>
+  </label>
+
+  <!-- Chips Container -->
+  <div class="relative">
+    <!-- Icon -->
+    <div *ngIf="icon" class="absolute top-2.5 left-0 pl-3 flex items-center pointer-events-none z-10">
+      <span class="transition-colors duration-200 flex justify-center items-center"
+            [ngClass]="showError ? 'text-red-500' : 'text-btw'">
+        <app-icon-material sizeIcon="large" class="m-0 p-0" [nameIcon]="icon"></app-icon-material>
+      </span>
+    </div>
+
+    <!-- Input with Chips -->
+    <div [class]="inputClasses"
+         [ngClass]="{'min-h-[42px]': chips.length === 0}"
+         class="flex flex-wrap items-center gap-2 cursor-text"
+         (click)="chipInput.focus()">
+
+      <!-- Chips Display -->
+      <div *ngFor="let chip of chips; let i = index"
+           class="inline-flex items-center gap-1 bg-primary text-white px-3 py-1 rounded-full text-sm transition-all duration-200 hover:bg-opacity-90">
+        <span>{{ chip }}</span>
+        <button *ngIf="!disabled"
+                type="button"
+                (click)="removeChip(i); $event.stopPropagation()"
+                class="hover:bg-white hover:bg-opacity-20 rounded-full p-0.5 transition-colors duration-200">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Input Field -->
+      <input
+        #chipInput
+        [id]="id"
+        type="text"
+        [(ngModel)]="inputValue"
+        [placeholder]="chips.length === 0 ? placeholder : ''"
+        [disabled]="disabled"
+        (keydown)="onInputKeydown($event)"
+        (blur)="onInputBlur()"
+        class="flex-1 min-w-[120px] outline-none bg-transparent border-none p-0 text-btw placeholder-gray-400"
+      />
+    </div>
+
+    <!-- Error Icon -->
+    <div *ngIf="showError" class="absolute top-2.5 right-0 pr-3 flex items-center pointer-events-none">
+      <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd"
+              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+              clip-rule="evenodd"/>
+      </svg>
+    </div>
+
+    <!-- Success Icon -->
+    <div *ngIf="control?.valid && control?.dirty && !disabled"
+         class="absolute top-2.5 right-0 pr-3 flex items-center pointer-events-none">
+      <svg class="h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+              clip-rule="evenodd"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="showError" class="mt-2 flex items-start">
+    <p class="text-sm text-red-600 animate-shake">
+      {{ errorMessage }}
+    </p>
+  </div>
+
+  <!-- Hint -->
+  <p *ngIf="hint && !showError" class="mt-2 text-sm text-gray-500">
+    {{ hint }}
+  </p>
+</div>

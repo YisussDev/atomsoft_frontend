@@ -1,51 +1,57 @@
-<div class="space-y-3 w-full flex justify-center gap-2">
-  <app-document-viewer width="200px" height="200px"
-                       [source]="formStep.controls['logo_url'].value"></app-document-viewer>
-  <div class="flex justify-center gap-2 flex-col items-center">
-    <div class="h-12 w-12 rounded-md bg-red-500 text-white flex justify-center items-center p-2 cursor-pointer"
-         (click)="onRemove()">
-      <app-icon-material nameIcon="delete" class="p-0 m-0" sizeIcon="maximum"></app-icon-material>
+<div class="space-y-3 w-full border-b border-btw">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mb-6">
+    <div class="flex justify-center gap-2 w-full">
+      <app-document-viewer width="200px" height="200px"
+                           [source]="formStep.controls['logo_url'].value"></app-document-viewer>
+      <div class="flex flex-col gap-2 justify-center">
+        <div class="h-12 w-12 rounded-md bg-red-500 text-white flex justify-center items-center p-2 cursor-pointer"
+             (click)="onRemove()">
+          <app-icon-material nameIcon="delete" class="p-0 m-0" sizeIcon="maximum"></app-icon-material>
+        </div>
+        <div class="h-12 w-12 rounded-md bg-green-500 text-white flex justify-center items-center p-2 cursor-pointer"
+             (click)="$event.stopPropagation(); fileInput.click()">
+          <app-icon-material nameIcon="upload" class="p-0 m-0" sizeIcon="maximum"></app-icon-material>
+        </div>
+        <input class="hidden"
+               name="file"
+               type="file"
+               accept=".png, .jpg"
+               #fileInput
+               (change)="onUpload($event)">
+      </div>
     </div>
-    <div class="h-12 w-12 rounded-md bg-green-500 text-white flex justify-center items-center p-2 cursor-pointer"
-         (click)="$event.stopPropagation(); fileInput.click()">
-      <app-icon-material nameIcon="upload" class="p-0 m-0" sizeIcon="maximum"></app-icon-material>
+    <div class="w-full grid">
+      <!-- Code -->
+      <div class="form-group">
+        <app-input-text
+          [control]="$any(formStep.controls['code'])"
+          label="Código de app"
+          placeholder="Ingresa un código identificador"
+          type="text"
+          id="code"
+          hint="Sin espacios"
+          icon="person"
+        >
+        </app-input-text>
+      </div>
+      <!-- Name -->
+      <div class="form-group">
+        <app-input-text
+          [control]="$any(formStep.controls['name'])"
+          label="Nombre"
+          placeholder="Ingresa el nombre de la app"
+          type="text"
+          id="name"
+          icon="person"
+        >
+        </app-input-text>
+      </div>
     </div>
-    <input class="hidden"
-           name="file"
-           type="file"
-           accept=".png, .jpg"
-           #fileInput
-           (change)="onUpload($event)">
   </div>
 </div>
-<div class="space-y-4">
-  <h3 appTypography="semi_medium" class="border-b pb-2">Información Básica</h3>
+<div class="space-y-4 pt-2">
+  <h3 appTypography="semi_medium" class="border-b pb-2 border-btw">Información Básica</h3>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <!-- Code -->
-    <div class="form-group">
-      <app-input-text
-        [control]="$any(formStep.controls['code'])"
-        label="Código de app"
-        placeholder="Ingresa un código identificador"
-        type="text"
-        id="code"
-        hint="Sin espacios"
-        icon="person"
-      >
-      </app-input-text>
-    </div>
-    <!-- Name -->
-    <div class="form-group">
-      <app-input-text
-        [control]="$any(formStep.controls['name'])"
-        label="Nombre"
-        placeholder="Ingresa el nombre de la app"
-        type="text"
-        id="name"
-        icon="person"
-      >
-      </app-input-text>
-    </div>
     <!-- Description -->
     <div class="form-group">
       <app-input-text
@@ -59,19 +65,6 @@
       >
       </app-input-text>
     </div>
-    <!-- Price -->
-    <div class="form-group">
-      <app-input-number
-        [control]="$any(formStep.controls['price'])"
-        label="Precio de Prueba"
-        placeholder="Ingrese un valor"
-        [useCurrencyMask]="true"
-        currencySymbol="$"
-        [decimalPlaces]="2"
-        thousandsSeparator=","
-        decimalSeparator="."
-      ></app-input-number>
-    </div>
   </div>
 </div>
 <!-- Actions -->
@@ -80,7 +73,7 @@
     type="button"
     (click)="onCancel()"
     [disabled]="loading"
-    class="flex-1 px-6 py-3 border-2 border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition disabled:opacity-50 disabled:cursor-not-allowed"
+    class="flex-1 px-6 py-3 border-2 border-gray-300 text-btw font-medium rounded-lg hover:bg-gray-50 transition disabled:opacity-50 disabled:cursor-not-allowed"
   >
     Cancelar
   </button>
@@ -88,7 +81,7 @@
     type="submit"
     (click)="onSubmit()"
     [disabled]="!validationStep || loading"
-    class="flex-1 px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+    class="flex-1 px-6 py-3 bg-primary text-white font-medium rounded-lg hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
   >
     <svg *ngIf="loading" class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
       <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>

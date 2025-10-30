@@ -1,0 +1,28 @@
+<div class="flex items-center justify-between p-4 border border-btw rounded-xl">
+  <div>
+    <h3 appTypography="medium">{{ title }}</h3>
+    <p appTypography="paragraph">{{ description }}</p>
+  </div>
+  <div class="flex items-center space-x-3">
+        <span
+          class="text-sm"
+          [class]="internalValue === 1 ? 'text-emerald-600' : 'text-btw'"
+        >
+          {{ internalValue === 1 ? activeText : inactiveText }}
+        </span>
+    <button
+      type="button"
+      (click)="onToggle()"
+      [disabled]="isDisabled"
+      class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200"
+      [class]="internalValue === 1 ? 'bg-emerald-600' : 'bg-slate-300'"
+      [class.opacity-50]="isDisabled"
+      [class.cursor-not-allowed]="isDisabled"
+    >
+          <span
+            class="inline-block h-4 w-4 transform rounded-full bg-btw-secondary transition-transform duration-200"
+            [class]="internalValue === 1 ? 'translate-x-6' : 'translate-x-1'"
+          ></span>
+    </button>
+  </div>
+</div>

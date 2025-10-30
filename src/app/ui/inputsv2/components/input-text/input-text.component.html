@@ -1,6 +1,6 @@
 <div class="w-full">
   <!-- Label -->
-  <label *ngIf="label" [for]="id" class="block text-sm font-medium text-gray-700 mb-2">
+  <label *ngIf="label" [for]="id" class="block text-sm font-medium text-btw mb-2">
     {{ label }}
     <span *ngIf="control?.hasError('required')" class="text-red-500">*</span>
   </label>
@@ -9,7 +9,7 @@
     <!-- Icon -->
     <div *ngIf="icon" class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
       <span class="transition-colors duration-200 flex justify-center items-center"
-            [ngClass]="showError ? 'text-red-500' : 'text-gray-400'">
+            [ngClass]="showError ? 'text-red-500' : 'text-btw'">
         <app-icon-material sizeIcon="large" class="m-0 p-0" [nameIcon]="icon"></app-icon-material>
       </span>
     </div>

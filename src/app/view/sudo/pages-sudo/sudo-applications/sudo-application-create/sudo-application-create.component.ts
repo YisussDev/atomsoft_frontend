@@ -19,6 +19,7 @@ export class SudoApplicationCreateComponent {
   public onSubmit(event: Partial<ApplicationEntity>): void {
     this.createApplicationUseCase.execute(event as ApplicationEntity).subscribe({
       next: (response) => {
+        console.log(response);
         this.navigationService.navigateTo("/sudo/application/list");
       }
     });

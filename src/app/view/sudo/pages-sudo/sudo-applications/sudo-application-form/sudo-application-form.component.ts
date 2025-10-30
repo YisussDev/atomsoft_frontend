@@ -19,7 +19,7 @@ export class SudoApplicationFormComponent implements OnInit {
   @Output() submitForm = new EventEmitter<Partial<ApplicationEntity>>();
   @Output() cancel = new EventEmitter<void>();
 
-  public step: number = 1;
+  public step: 1 | 2 | 3 = 1;
 
   public form!: FormGroup;
 
@@ -37,21 +37,12 @@ export class SudoApplicationFormComponent implements OnInit {
     }
   }
 
-  get submitButtonText(): string {
-    const texts = {
-      create: 'Crear Aplicación',
-      update: 'Actualizar Aplicación'
-    };
-    return texts[this.mode];
-  }
-
   public initForm() {
     const baseControls = {
-      name: ['PraxiTask', [Validators.required, Validators.minLength(5)]],
-      code: ['praxi_task', [Validators.required, Validators.minLength(5)]],
+      name: ['PraxiInventory', [Validators.required, Validators.minLength(5)]],
+      code: ['praxi_inventory', [Validators.required, Validators.minLength(5)]],
       description: ['Descripción corta para aplicación.', [Validators.required, Validators.minLength(5)]],
-      logo_url: [null, [Validators.required]],
-      price: [0, [Validators.required]],
+      logo_url: ["https://pub-73f3f74bc61d42d3a64738ae825a6112.r2.dev/microservices/application/praxi_inventory.png", [Validators.required]],
       url_production: ["http://test.com/", [Validators.required]],
       url_sandbox: ["http://test.com/", [Validators.required]],
       url_test: ["http://test.com/", [Validators.required]],
@@ -59,6 +50,9 @@ export class SudoApplicationFormComponent implements OnInit {
       url_front_sandbox: ["http://test.com/", [Validators.required]],
       url_front_test: ["http://test.com/", [Validators.required]],
       recursive_payment: [0, [Validators.required]],
+      chips: [[], []],
+      img_chips: [[], []],
+      plans: [[], []],
     };
     // Agregar confirmPassword solo para modo create
     if (this.mode === 'create') {
@@ -82,7 +76,6 @@ export class SudoApplicationFormComponent implements OnInit {
   }
 
   public onSubmit() {
-    // event.preventDefault();
     if (this.form.invalid) {
       Object.keys(this.form.controls).forEach(key => {
         this.form.get(key)?.markAsTouched();
@@ -103,8 +96,6 @@ export class SudoApplicationFormComponent implements OnInit {
   }
 
   public onSubmitStepOne(): void {
-    console.log(this.form.value);
-    return;
     this.step = 2;
   }
 
@@ -113,11 +104,20 @@ export class SudoApplicationFormComponent implements OnInit {
   }
 
   public onSubmitStepTwo(): void {
-    this.onSubmit();
+    this.step = 3;
   }
 
   public onCancelStepTwo(): void {
     this.step = 1;
+  }
+
+  public onSubmitStepThree(): void {
+    // console.log(this.form.value);
+    this.onSubmit();
+  }
+
+  public onCancelStepThree(): void {
+    this.step = 2;
   }
 
   private getChangedValues(formValue: any): Partial<ApplicationEntity> {
@@ -140,7 +140,6 @@ export class SudoApplicationFormComponent implements OnInit {
       description: formValue.description,
       code: formValue.code,
       logo_url: formValue.logo_url,
-      price: formValue.price,
       url_production: formValue.url_production,
       url_sandbox: formValue.url_sandbox,
       url_test: formValue.url_test,
@@ -148,11 +147,10 @@ export class SudoApplicationFormComponent implements OnInit {
       url_front_sandbox: formValue.url_front_sandbox,
       url_front_test: formValue.url_front_test,
       recursive_payment: formValue.recursive_payment,
+      chips: formValue.chips,
+      img_chips: formValue.img_chips,
+      plans: formValue.plans,
     };
-  }
-
-  public onCancel() {
-    this.cancel.emit();
   }
 
 }

@@ -1,4 +1,4 @@
-import {ThrowException} from "../exceptions/throw.exception";
+import {ValidatorException} from "@shared/exceptions/validator.exception";
 
 /**
  * Valida si un valor es un número doble (decimal).
@@ -15,13 +15,13 @@ export function IsNumberValidator(
     // 1️⃣ Validar que no esté vacío
     if (value === undefined || value === null || value === '') {
         const message = `${fieldName} es obligatorio.`;
-        ThrowException(contextException, message);
+        throw new ValidatorException(message);
     }
 
     // 2️⃣ Validar que sea un número decimal válido
     const numberValue = Number(value);
     if (isNaN(numberValue)) {
         const message = `${fieldName} debe ser un número válido.`;
-        ThrowException(contextException, message);
+        throw new ValidatorException(message);
     }
 }

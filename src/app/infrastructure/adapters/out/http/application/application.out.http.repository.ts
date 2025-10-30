@@ -67,18 +67,30 @@ export class ApplicationOutHttpRepository implements ApplicationRepositoryPort {
     );
   }
 
-  public create(
-    dataToCreate: ApplicationEntity
-  ): Observable<ApplicationEntity> {
-    const headers: HttpHeaders = new HttpHeaders({
-      // "Content-Type": "multipart/form-data",
-    })
+  public create(dataToCreate: ApplicationEntity): Observable<ApplicationEntity> {
     const formData: FormData = new FormData();
-    for (let dataToCreateKey of Object.keys(dataToCreate)) {
-      // @ts-ignore
-      formData.append(dataToCreateKey, dataToCreate[dataToCreateKey]);
-    }
-    return this.httpService.post<ApplicationEntity, FormData>(`${this.apiUrl}application`, formData, {headers});
+
+    // Claves cuyos valores deben ser convertidos a JSON
+    const keysToStringify: (keyof ApplicationEntity)[] = ['chips', 'img_chips', 'plans'];
+
+    (Object.keys(dataToCreate) as (keyof ApplicationEntity)[]).forEach((key) => {
+      const value = dataToCreate[key];
+
+      if (value === undefined || value === null) return; // Evita campos vacíos
+
+      // Si la clave está en la lista, convertir el valor a JSON string
+      if (keysToStringify.includes(key)) {
+        formData.append(key as string, JSON.stringify(value));
+      } else if (value instanceof File || value instanceof Blob) {
+        // Soporte para archivos o blobs
+        formData.append(key as string, value);
+      } else {
+        // Asegura que siempre se agregue como string
+        formData.append(key as string, String(value));
+      }
+    });
+
+    return this.httpService.post<ApplicationEntity, FormData>(`${this.apiUrl}application`, formData);
   }
 
   public update(

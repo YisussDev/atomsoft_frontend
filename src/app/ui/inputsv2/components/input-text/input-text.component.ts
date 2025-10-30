@@ -89,7 +89,7 @@ export class InputTextComponent implements ControlValueAccessor {
   }
 
   get inputClasses(): string {
-    const baseClasses = 'w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 outline-none text-gray-900 placeholder-gray-400';
+    const baseClasses = 'w-full px-4 py-3 rounded-lg border-2 border-btw transition-all duration-200 outline-none placeholder-btw text-btw';
     const iconPadding = this.icon ? 'pl-11' : '';
 
     if (this.showError) {
@@ -100,6 +100,6 @@ export class InputTextComponent implements ControlValueAccessor {
       return `${baseClasses} ${iconPadding} border-gray-200 bg-gray-100 cursor-not-allowed`;
     }
 
-    return `${baseClasses} ${iconPadding} border-gray-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 bg-white hover:border-gray-400`;
+    return `${baseClasses} ${iconPadding} border-gray-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 bg-btw-secondary hover:border-gray-400`;
   }
 }

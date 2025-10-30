@@ -17,11 +17,14 @@ export class CurrencyMaskDirective implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Formatear valor inicial
+    // Formatear valor inicial con decimales completos
     const control = this.ngControl.control;
     if (control && control.value !== null && control.value !== undefined) {
-      const formatted = this.formatValue(control.value.toString());
-      this.el.nativeElement.value = formatted;
+      const value = parseFloat(control.value.toString());
+      if (!isNaN(value)) {
+        const formatted = this.formatValueComplete(value.toFixed(this.decimalPlaces));
+        this.el.nativeElement.value = formatted;
+      }
     }
   }
 
@@ -42,23 +45,23 @@ export class CurrencyMaskDirective implements OnInit {
     }
 
     // Limitar decimales
-    if (parts[1] && parts[1].length > this.decimalPlaces) {
+    if (parts.length === 2 && parts[1].length > this.decimalPlaces) {
       numbers = parts[0] + '.' + parts[1].substring(0, this.decimalPlaces);
     }
 
     // Si está vacío
-    if (!numbers) {
+    if (!numbers || numbers === '.') {
       input.value = '';
       this.ngControl.control?.setValue(null, { emitEvent: false });
       return;
     }
 
     // Actualizar control con valor numérico
-    const numericValue = numbers ? parseFloat(numbers) : null;
-    this.ngControl.control?.setValue(numericValue, { emitEvent: false });
+    const numericValue = parseFloat(numbers);
+    this.ngControl.control?.setValue(isNaN(numericValue) ? null : numericValue, { emitEvent: false });
 
-    // Formatear display
-    const formatted = this.formatValue(numbers);
+    // Formatear display sin agregar decimales si el usuario no los ha ingresado
+    const formatted = this.formatValue(numbers, numbers.includes('.'));
     input.value = formatted;
 
     // Calcular nueva posición del cursor
@@ -85,7 +88,7 @@ export class CurrencyMaskDirective implements OnInit {
       // Formatear con decimales completos al salir
       const value = parseFloat(control.value.toString());
       if (!isNaN(value)) {
-        const formatted = this.formatValue(value.toFixed(this.decimalPlaces));
+        const formatted = this.formatValueComplete(value.toFixed(this.decimalPlaces));
         this.el.nativeElement.value = formatted;
       }
     }
@@ -96,7 +99,7 @@ export class CurrencyMaskDirective implements OnInit {
     // No seleccionar todo, dejar que el usuario posicione el cursor
   }
 
-  private formatValue(value: string | number): string {
+  private formatValueComplete(value: string | number): string {
     if (value === null || value === undefined || value === '') {
       return '';
     }
@@ -112,9 +115,33 @@ export class CurrencyMaskDirective implements OnInit {
     // Construir valor formateado
     let formatted = `${this.currencySymbol} ${integerPart}`;
 
-    if (this.decimalPlaces > 0 && (decimalPart || strValue.includes('.'))) {
+    if (this.decimalPlaces > 0) {
       const decimals = decimalPart.padEnd(this.decimalPlaces, '0').substring(0, this.decimalPlaces);
       formatted += `${this.decimalSeparator}${decimals}`;
+    }
+
+    return formatted;
+  }
+
+  private formatValue(value: string | number, hasDecimalPoint: boolean = false): string {
+    if (value === null || value === undefined || value === '') {
+      return '';
+    }
+
+    const strValue = value.toString();
+    const parts = strValue.split('.');
+    let integerPart = parts[0] || '0';
+    const decimalPart = parts[1] || '';
+
+    // Formatear parte entera con separadores de miles
+    integerPart = this.addThousandsSeparator(integerPart);
+
+    // Construir valor formateado
+    let formatted = `${this.currencySymbol} ${integerPart}`;
+
+    // Solo agregar decimales si el usuario ha ingresado el punto o es blur
+    if (this.decimalPlaces > 0 && hasDecimalPoint) {
+      formatted += `${this.decimalSeparator}${decimalPart}`;
     }
 
     return formatted;

@@ -1,41 +1,115 @@
 <div class="space-y-4">
   <h3 appTypography="semi_medium" class="border-b pb-2">Información Básica</h3>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <!-- Code -->
+    <!-- Chips -->
+    <div class="form-group">
+      <app-input-chips
+        [control]="$any(formStep.controls['chips'])"
+        label="Carácterísticas"
+        placeholder="Agregar carácterística..."
+        hint="Presiona Enter o coma para agregar"
+        icon="label"
+      ></app-input-chips>
+    </div>
+    <!-- Img Chips -->
+    <div class="form-group">
+      <app-input-chips
+        [control]="$any(formStep.controls['img_chips'])"
+        label="Screenshots"
+        placeholder="Agregar Screenshots..."
+        hint="Presiona Enter o coma para agregar"
+        icon="label"
+      ></app-input-chips>
+    </div>
+    <!-- Recursive Payment -->
+    <div class="form-group" [formGroup]="formStep">
+      <app-input-toggle
+        title="Pago recurrente"
+        description="Pagos recurrentes o no"
+        formControlName="recursive_payment"
+      ></app-input-toggle>
+    </div>
+  </div>
+  <h3 appTypography="semi_medium" class="border-b pb-2">Información Ambientes</h3>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <!-- Url Prod -->
     <div class="form-group">
       <app-input-text
-        [control]="$any(formStep.controls['code'])"
-        label="Código de app"
-        placeholder="Ingresa un código identificador"
+        [control]="$any(formStep.controls['url_production'])"
+        label="URL Producción"
+        placeholder="Ingresa una url válida"
         type="text"
-        id="code"
+        id="url_production"
         hint="Sin espacios"
-        icon="person"
+        icon="link"
       >
       </app-input-text>
     </div>
-    <!-- Name -->
+    <!-- Url Sandbox -->
     <div class="form-group">
       <app-input-text
-        [control]="$any(formStep.controls['name'])"
-        label="Nombre"
-        placeholder="Ingresa el nombre de la app"
+        [control]="$any(formStep.controls['url_sandbox'])"
+        label="URL Sandbox"
+        placeholder="Ingresa una url válida"
         type="text"
-        id="name"
-        icon="person"
+        id="url_sandbox"
+        hint="Sin espacios"
+        icon="link"
       >
       </app-input-text>
     </div>
-    <!-- Description -->
+    <!-- Url Test -->
     <div class="form-group">
       <app-input-text
-        [control]="$any(formStep.controls['description'])"
-        label="Descripción"
-        placeholder="Ingresa una descripción"
+        [control]="$any(formStep.controls['url_test'])"
+        label="URL Testing"
+        placeholder="Ingresa una url válida"
         type="text"
-        id="description"
+        id="url_test"
         hint="Sin espacios"
-        icon="person"
+        icon="link"
+      >
+      </app-input-text>
+    </div>
+  </div>
+  <h3 appTypography="semi_medium" class="border-b pb-2">Información Ambientes Front</h3>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <!-- Url Prod -->
+    <div class="form-group">
+      <app-input-text
+        [control]="$any(formStep.controls['url_front_production'])"
+        label="URL Front Producción"
+        placeholder="Ingresa una url válida"
+        type="text"
+        id="url__frontproduction"
+        hint="Sin espacios"
+        icon="link"
+      >
+      </app-input-text>
+    </div>
+    <!-- Url Sandbox -->
+    <div class="form-group">
+      <app-input-text
+        [control]="$any(formStep.controls['url_front_sandbox'])"
+        label="URL Front Sandbox"
+        placeholder="Ingresa una url válida"
+        type="text"
+        id="url_front_sandbox"
+        hint="Sin espacios"
+        icon="link"
+      >
+      </app-input-text>
+    </div>
+    <!-- Url Test -->
+    <div class="form-group">
+      <app-input-text
+        [control]="$any(formStep.controls['url_front_test'])"
+        label="URL Front Testing"
+        placeholder="Ingresa una url válida"
+        type="text"
+        id="url_front_test"
+        hint="Sin espacios"
+        icon="link"
       >
       </app-input-text>
     </div>
@@ -47,15 +121,15 @@
     type="button"
     (click)="onCancel()"
     [disabled]="loading"
-    class="flex-1 px-6 py-3 border-2 border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition disabled:opacity-50 disabled:cursor-not-allowed"
+    class="flex-1 px-6 py-3 border-2 border-t-btw text-btw font-medium rounded-lg hover:bg-gray-50 transition disabled:opacity-50 disabled:cursor-not-allowed"
   >
-    Cancelar
+    Volver
   </button>
   <button
     type="submit"
     (click)="onSubmit()"
     [disabled]="!validationStep || loading"
-    class="flex-1 px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+    class="flex-1 px-6 py-3 bg-primary text-white font-medium rounded-lg hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
   >
     <svg *ngIf="loading" class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
       <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>

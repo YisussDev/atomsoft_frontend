@@ -1,52 +1,62 @@
-<div class="w-full h-full overflow-auto p-3 sm:p-6 animation-opacity">
-  <app-table-generic
-    [data]="tableData"
-    [columns]="tableColumns"
-    [tableTitle]="'Lista de cuentas'"
-    [showSearch]="true"
-    [showPagination]="true"
-    [showExport]="true"
-    [currentPage]="page"
-    [totalItems]="totalFounded"
-    [limit]="limit"
-    (pageChange)="onPageChange($event)"
-  >
-    <ng-template appColumnTemplate="active" let-value>
+<div class="w-full h-fit animation-opacity">
+  <header class="sticky top-0 z-10 border-b border-btw bg-btw-secondary">
+    <div class="flex h-16 items-center justify-between px-8">
+      <div>
+        <h1 appTypography="subtitle" class="font-semibold">Cuentas</h1>
+        <p appTypography="paragraph">Lista de cuentas</p>
+      </div>
+    </div>
+  </header>
+  <div class="overflow-auto p-3 sm:p-6">
+    <app-table-generic
+      [data]="tableData"
+      [columns]="tableColumns"
+      [tableTitle]="'Lista de cuentas'"
+      [showSearch]="true"
+      [showPagination]="true"
+      [showExport]="true"
+      [currentPage]="page"
+      [totalItems]="totalFounded"
+      [limit]="limit"
+      (pageChange)="onPageChange($event)"
+    >
+      <ng-template appColumnTemplate="active" let-value>
           <span [class]="(value == 1 )? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'"
                 class="px-3 py-1 rounded-full text-xs font-semibold">
            {{ (value == 1) ? 'Activo' : 'Inactivo' }}
           </span>
-    </ng-template>
-    <ng-template appColumnTemplate="two_factor_auth" let-value>
+      </ng-template>
+      <ng-template appColumnTemplate="two_factor_auth" let-value>
           <span [class]="(value == 1 )? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'"
                 class="px-3 py-1 rounded-full text-xs font-semibold">
            {{ (value == 1) ? 'Sí' : 'No' }}
           </span>
-    </ng-template>
-    <ng-template appColumnTemplate="acciones" let-row="row">
-      <div class="flex gap-2">
-        <div class="relative">
-          <app-button-dropdown
-            variant="outline"
-            position="right"
-            (itemSelected)="onSelect($event, row)"
-          >
-            <ng-template appDropdownItem [value]="'edit'">
-              <div class="flex items-center gap-3 px-4 py-3">
-                <app-icon-material nameIcon="edit" sizeIcon="medium" class="text-btw p-0 m-0"></app-icon-material>
-                <span>Editar</span>
-              </div>
-            </ng-template>
-            <ng-template appDropdownItem [divider]="true"></ng-template>
-            <ng-template appDropdownItem [value]="'delete'" color="danger">
-              <div class="flex items-center gap-3 px-4 py-3">
-                <app-icon-material nameIcon="cancel" sizeIcon="medium" class="p-0 m-0"></app-icon-material>
-                <span>Eliminar</span>
-              </div>
-            </ng-template>
-          </app-button-dropdown>
+      </ng-template>
+      <ng-template appColumnTemplate="acciones" let-row="row">
+        <div class="flex gap-2">
+          <div class="relative">
+            <app-button-dropdown
+              variant="outline"
+              position="right"
+              (itemSelected)="onSelect($event, row)"
+            >
+              <ng-template appDropdownItem [value]="'edit'">
+                <div class="flex items-center gap-3 px-4 py-3">
+                  <app-icon-material nameIcon="edit" sizeIcon="medium" class="text-btw p-0 m-0"></app-icon-material>
+                  <span>Editar</span>
+                </div>
+              </ng-template>
+              <ng-template appDropdownItem [divider]="true"></ng-template>
+              <ng-template appDropdownItem [value]="'delete'" color="danger">
+                <div class="flex items-center gap-3 px-4 py-3">
+                  <app-icon-material nameIcon="cancel" sizeIcon="medium" class="p-0 m-0"></app-icon-material>
+                  <span>Eliminar</span>
+                </div>
+              </ng-template>
+            </app-button-dropdown>
+          </div>
         </div>
-      </div>
-    </ng-template>
-  </app-table-generic>
+      </ng-template>
+    </app-table-generic>
+  </div>
 </div>

@@ -29,7 +29,9 @@ export class CreateApplicationUseCase {
       }),
       catchError((error: any) => {
         if (error instanceof ValidatorException) {
-          this.notificationUi.showError("Domain error...");
+          this.notificationUi.showError(`Domain error: ${error.message}`);
+        } else {
+          this.notificationUi.showError(`Http error: ${error.error.message}`);
         }
         return throwError(() => error);
       })

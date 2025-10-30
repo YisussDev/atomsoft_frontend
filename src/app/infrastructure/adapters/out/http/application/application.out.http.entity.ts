@@ -7,7 +7,7 @@ export interface ApplicationOutHttpEntity {
   logo_url: string;
   description: string;
   chips: string[];
-  price: string;
+  img_chips: string[];
   color_primary: string;
 
   url_production: string;
@@ -19,6 +19,7 @@ export interface ApplicationOutHttpEntity {
   url_front_test: string;
 
   recursive_payment: number;
+  plans: any[];
 
   created_at: Date;
   updated_at: Date;

@@ -50,26 +50,26 @@ export class PagesSudoComponent implements OnInit {
           {label: 'Crear Aplicación', icon: 'add', route: '/sudo/application/create'},
         ]
       },
-      {
-        label: 'Empresas',
-        icon: 'apartment',
-        children: [
-          {label: 'Todos los productos', icon: '📦', route: '/productos/todos'},
-          {label: 'Categorías', icon: '🏷️', route: '/productos/categorias'},
-          {label: 'Inventario', icon: '📋', route: '/productos/inventario', badge: '3'},
-          {label: 'Ofertas', icon: '🎁', route: '/productos/ofertas'}
-        ]
-      },
-      {
-        label: 'Ordenes',
-        icon: 'receipt',
-        children: [
-          {label: 'Todos los productos', icon: '📦', route: '/productos/todos'},
-          {label: 'Categorías', icon: '🏷️', route: '/productos/categorias'},
-          {label: 'Inventario', icon: '📋', route: '/productos/inventario', badge: '3'},
-          {label: 'Ofertas', icon: '🎁', route: '/productos/ofertas'}
-        ]
-      },
+      // {
+      //   label: 'Empresas',
+      //   icon: 'apartment',
+      //   children: [
+      //     {label: 'Todos los productos', icon: '📦', route: '/productos/todos'},
+      //     {label: 'Categorías', icon: '🏷️', route: '/productos/categorias'},
+      //     {label: 'Inventario', icon: '📋', route: '/productos/inventario', badge: '3'},
+      //     {label: 'Ofertas', icon: '🎁', route: '/productos/ofertas'}
+      //   ]
+      // },
+      // {
+      //   label: 'Ordenes',
+      //   icon: 'receipt',
+      //   children: [
+      //     {label: 'Todos los productos', icon: '📦', route: '/productos/todos'},
+      //     {label: 'Categorías', icon: '🏷️', route: '/productos/categorias'},
+      //     {label: 'Inventario', icon: '📋', route: '/productos/inventario', badge: '3'},
+      //     {label: 'Ofertas', icon: '🎁', route: '/productos/ofertas'}
+      //   ]
+      // },
       {label: "", divider: true},
     ];
   }

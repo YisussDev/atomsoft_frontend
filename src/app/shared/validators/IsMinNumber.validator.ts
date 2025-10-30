@@ -1,4 +1,4 @@
-import {ThrowException} from "../exceptions/throw.exception";
+import {ValidatorException} from "@shared/exceptions/validator.exception";
 
 /**
  * Valida si un valor es un número doble (decimal).
@@ -8,27 +8,27 @@ import {ThrowException} from "../exceptions/throw.exception";
  * @param contextException - Define el tipo de excepción a lanzar ('http' o 'microservice').
  */
 export function IsMinNumberValidator(
-    value: any,
-    fieldName: string,
-    valueCondition: number,
-    contextException: 'http' | 'microservice' = 'http',
+  value: any,
+  fieldName: string,
+  valueCondition: number,
+  contextException: 'http' | 'microservice' = 'http',
 ): void {
-    // 1️⃣ Validar que no esté vacío
-    if (value === undefined || value === null || value === '') {
-        const message = `${fieldName} es obligatorio.`;
-        ThrowException(contextException, message);
-    }
+  // 1️⃣ Validar que no esté vacío
+  if (value === undefined || value === null || value === '') {
+    const message = `${fieldName} es obligatorio.`;
+    throw new ValidatorException(message);
+  }
 
-    // 2️⃣ Validar que sea un número decimal válido
-    const numberValue = Number(value);
-    if (isNaN(numberValue)) {
-        const message = `${fieldName} debe ser un número válido.`;
-        ThrowException(contextException, message, 404);
-    }
+  // 2️⃣ Validar que sea un número decimal válido
+  const numberValue = Number(value);
+  if (isNaN(numberValue)) {
+    const message = `${fieldName} debe ser un número válido.`;
+    throw new ValidatorException(message);
+  }
 
-    if (value < valueCondition) {
-        const message = `${fieldName} debe ser mayor a ${valueCondition}.`;
-        ThrowException(contextException, message, 404);
-    }
+  if (value < valueCondition) {
+    const message = `${fieldName} debe ser mayor a ${valueCondition}.`;
+    throw new ValidatorException(message);
+  }
 
 }

@@ -17,6 +17,7 @@ import {DropdownItemDirective} from "@core/directives/dropdown/dropdown-item.dir
 import {IconsModule} from "@ui/icons/icons.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {Inputsv2Module} from "@ui/inputsv2/inputsv2.module";
+import {TypographyModule} from "@core/directives/typography/typography.module";
 
 
 @NgModule({
@@ -27,18 +28,19 @@ import {Inputsv2Module} from "@ui/inputsv2/inputsv2.module";
     SudoAccountsUpdateComponent,
     SudoAccountsListComponent
   ],
-  imports: [
-    CommonModule,
-    SudoAccountsRoutingModule,
-    AccountCompositionModule,
-    TablesModule,
-    ColumnTemplateDirective,
-    ButtonsModule,
-    DropdownItemDirective,
-    IconsModule,
-    ReactiveFormsModule,
-    Inputsv2Module,
-  ]
+    imports: [
+        CommonModule,
+        SudoAccountsRoutingModule,
+        AccountCompositionModule,
+        TablesModule,
+        ColumnTemplateDirective,
+        ButtonsModule,
+        DropdownItemDirective,
+        IconsModule,
+        ReactiveFormsModule,
+        Inputsv2Module,
+        TypographyModule,
+    ]
 })
 export class SudoAccountsModule {
 }

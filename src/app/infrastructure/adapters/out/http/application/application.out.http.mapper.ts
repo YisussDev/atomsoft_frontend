@@ -12,7 +12,7 @@ export class ApplicationOutHttpMapper {
     entityDomain.logo_url = dataInfrastructure.logo_url;
     entityDomain.description = dataInfrastructure.description;
     entityDomain.chips = dataInfrastructure.chips;
-    entityDomain.price = dataInfrastructure.price;
+    entityDomain.img_chips = dataInfrastructure.img_chips;
     entityDomain.url_production = dataInfrastructure.url_production;
     entityDomain.url_sandbox = dataInfrastructure.url_sandbox;
     entityDomain.url_test = dataInfrastructure.url_test;
@@ -21,6 +21,7 @@ export class ApplicationOutHttpMapper {
     entityDomain.url_front_test = dataInfrastructure.url_front_test;
     entityDomain.recursive_payment = dataInfrastructure.recursive_payment;
     entityDomain.color_primary = dataInfrastructure.color_primary;
+    entityDomain.plans = dataInfrastructure.plans;
     // Base...
     entityDomain.created_at = dataInfrastructure.created_at;
     entityDomain.updated_at = dataInfrastructure.updated_at;
@@ -37,7 +38,7 @@ export class ApplicationOutHttpMapper {
       logo_url: dataDomain.logo_url,
       description: dataDomain.description,
       chips: dataDomain.chips,
-      price: dataDomain.price,
+      img_chips: dataDomain.img_chips,
       url_production: dataDomain.url_production,
       url_sandbox: dataDomain.url_sandbox,
       url_test: dataDomain.url_test,
@@ -46,6 +47,7 @@ export class ApplicationOutHttpMapper {
       url_front_test: dataDomain.url_front_test,
       recursive_payment: dataDomain.recursive_payment,
       color_primary: dataDomain.color_primary,
+      plans: dataDomain.plans,
       // Base...
       created_at: dataDomain.created_at,
       updated_at: dataDomain.updated_at,

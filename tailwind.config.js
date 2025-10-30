@@ -2,7 +2,11 @@
 module.exports = {
   content: ["./src/**/*.{html,js,ts}"],
   theme: {
-    extend: {},
+    extend: {
+      placeholderColor: {
+        btw: "var(--color-text-btw)"
+      }
+    },
     screens: {
       sm: '640px',
       md: '768px',

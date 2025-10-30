@@ -32,19 +32,14 @@ export class SudoApplicationListComponent implements OnInit {
       sortable: true
     },
     {
-      key: 'price',
-      header: 'Precio',
-      sortable: true
-    },
-    {
       key: 'recursive_payment',
       header: 'Recurrente',
       sortable: true
     },
     {
       key: 'acciones',
-      header: 'Precio',
-      sortable: true
+      header: 'Acciones',
+      sortable: false
     },
   ];
 
