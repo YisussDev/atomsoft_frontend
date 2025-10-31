@@ -11,12 +11,16 @@
   </div>
   <ng-container *ngIf="appList.length > 0">
     <app-carousel [showNavButtons]="true" [showIndicators]="true">
-      <div carouselSlide class="min-w-full">
-        <ng-template [ngTemplateOutlet]="firstPraxiTop"></ng-template>
-      </div>
-      <div carouselSlide class="min-w-full">
-        <ng-template [ngTemplateOutlet]="secondPraxiTop"></ng-template>
-      </div>
+      <ng-container *ngIf="appList[0]">
+        <div carouselSlide class="min-w-full">
+          <ng-template [ngTemplateOutlet]="firstPraxiTop"></ng-template>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="appList[1]">
+        <div carouselSlide class="min-w-full">
+          <ng-template [ngTemplateOutlet]="secondPraxiTop"></ng-template>
+        </div>
+      </ng-container>
     </app-carousel>
   </ng-container>
 </div>
