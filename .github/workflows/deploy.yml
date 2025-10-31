@@ -25,6 +25,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no jesuspaguay30@34.31.75.5 "
             cd /home/jesuspaguay30/PraxiSoft/Frontend/atomsoft_frontend &&
             git pull &&
+            docker-compose down &&
             docker-compose build &&
             docker-compose up -d
           "
