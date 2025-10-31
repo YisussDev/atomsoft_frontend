@@ -43,7 +43,7 @@ export class RecoverSendCodeComponent implements OnInit, OnDestroy, AfterViewIni
 
   private initForm(): void {
     this.formLogin = this._formBuilder.group({
-      email: ["paguayjesus@gmail.com", [Validators.required, validatorEmail]],
+      email: ["", [Validators.required, validatorEmail]],
     })
   }
 

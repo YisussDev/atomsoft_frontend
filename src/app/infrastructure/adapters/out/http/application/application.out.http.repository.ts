@@ -61,7 +61,6 @@ export class ApplicationOutHttpRepository implements ApplicationRepositoryPort {
       data: ApplicationEntity | null;
     }>(`${this.apiUrl}application/one${queryTransform}`).pipe(
       map((response) => {
-        console.log(response)
         return {
           data: response.data ? (this.mapper.toDomain(response.data)) : null,
         }

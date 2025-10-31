@@ -1,6 +1,6 @@
 <div
-  class="min-h-screen flex items-center justify-center bg-gradient-to-br bg-btw-primary p-4 bg-auth transition-colors duration-300 ease-out">
-  <div class="w-full max-w-md shadow-xl border-0 bg-btw-secondary backdrop-blur-sm rounded-lg animation-scale">
+  class="min-h-screen flex sm:items-center justify-center sm:p-4 sm:bg-chill bg-center bg-fixed bg-cover transition-colors duration-300 ease-out">
+  <div class="w-full max-w-md sm:shadow-xl border-0 bg-btw-secondary backdrop-blur-sm rounded-lg animation-opacity">
     <!-- Header -->
     <div class="space-y-6 pb-8 pt-8 px-6">
       <div class="flex justify-center">
@@ -27,14 +27,14 @@
         </combo-input-text>
         <!-- Login Button -->
         <div class="space-y-2 grid">
-        <app-button-container (clickEvent)="onSubmit()" variant="primary" [disabled]="formLogin.invalid"
-                              className="text-white w-full">
-          Restaurar contraseña
-        </app-button-container>
-        <app-button-container (clickEvent)="onCancel()" type="button" variant="outline"
-                              className="text-primary w-full">
-          Cancelar
-        </app-button-container>
+          <app-button-container (clickEvent)="onSubmit()" variant="primary" [disabled]="formLogin.invalid"
+                                className="text-white w-full">
+            Restaurar contraseña
+          </app-button-container>
+          <app-button-container (clickEvent)="onCancel()" type="button" variant="outline"
+                                className="text-primary w-full">
+            Cancelar
+          </app-button-container>
         </div>
       </form>
     </div>

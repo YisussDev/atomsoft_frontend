@@ -80,7 +80,6 @@ export class PagesSudoComponent implements OnInit {
   }
 
   public handleCollapseChange(isCollapsed: boolean): void {
-    console.log('Estado colapsado:', isCollapsed);
   }
 
   private initDataAccount(): void {

@@ -27,7 +27,6 @@ export class RecoverOutHttpRepository implements RecoverRepositoryPort {
   }
 
   public validateTokenToRecover(token: string, email: string): Observable<{ message: "ok" }> {
-    console.log("Peticion...")
     return this.httpService.post<{
       message: "ok"
     }, {

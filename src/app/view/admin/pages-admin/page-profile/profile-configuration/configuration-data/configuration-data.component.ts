@@ -46,7 +46,6 @@ export class ConfigurationDataComponent implements OnInit, OnChanges {
     if (this.formAccount.valid) {
       this.updateAccountUseCase.execute(this.account.id.toString(), this.formAccount.value).subscribe({
         next: (response) => {
-          console.log(response);
         }
       });
     }

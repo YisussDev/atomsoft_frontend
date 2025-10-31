@@ -46,7 +46,6 @@ export class ConfigurationSessionsComponent implements OnInit {
       reverseButtons: true
     }).then(result => {
       if (result.isConfirmed) {
-        console.log("Enviando...")
         this.closeSessionAccountUseCase.execute(this.account.username, idSession).subscribe({
           next: (response) => {
             this.sessions = this.sessions.filter(session => session.id !== idSession);

@@ -47,7 +47,6 @@ export class SudoApplicationUpdateComponent implements OnInit {
           this.notificationService.info("Application not found!");
         }
         if (response.data) {
-          console.log(response.data)
           this.dataToUpdate = response.data;
         }
       }

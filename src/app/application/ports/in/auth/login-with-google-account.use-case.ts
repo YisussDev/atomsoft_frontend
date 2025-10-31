@@ -19,7 +19,6 @@ export class LoginWithGoogleAccountUseCase {
   public execute(tokenGoogle: string): Observable<{ token: string }> {
     return of(tokenGoogle).pipe(
       mergeMap((tokenGoogle) => {
-        console.log(tokenGoogle);
         return this.repository.loginGoogle(tokenGoogle).pipe(
           tap((response) => {
             localStorage.setItem('x-token', response.token);

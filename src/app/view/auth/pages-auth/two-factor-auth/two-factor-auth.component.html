@@ -21,22 +21,7 @@
       </div>
     </div>
   </div>
-  <!-- OTP Input State -->
   <div *ngIf="!success" class="w-full max-w-md bg-btw-secondary rounded-lg shadow-md">
-    <!-- Header -->
-<!--    <div class="text-center space-y-2 pt-6 px-6">-->
-<!--      <div class="mx-auto w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">-->
-<!--        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">-->
-<!--          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"-->
-<!--                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>-->
-<!--        </svg>-->
-<!--      </div>-->
-<!--      <h1 class="text-2xl font-bold text-primary">Verificación en dos pasos</h1>-->
-<!--      <p class="text-btw">-->
-<!--        Ingresa el código de 6 dígitos que enviamos a tu aplicación autenticadora-->
-<!--      </p>-->
-<!--    </div>-->
-    <!-- Content -->
     <ng-container *ngIf="true">
       <app-otp
         [length]="4"
@@ -72,18 +57,18 @@
             <p class="text-sm text-red-600">{{ error }}</p>
           </div>
           <!-- Verify Button -->
-<!--          <button-->
-<!--            type="button"-->
-<!--            (click)="onVerify()"-->
-<!--            [disabled]="formOtp.invalid"-->
-<!--            class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium py-2 px-4 rounded-md transition-colors duration-200 flex items-center justify-center">-->
-<!--            <svg *ngIf="isLoading" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">-->
-<!--              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>-->
-<!--              <path class="opacity-75" fill="currentColor"-->
-<!--                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>-->
-<!--            </svg>-->
-<!--            {{ isLoading ? 'Verificando...' : 'Verificar código' }}-->
-<!--          </button>-->
+          <!--          <button-->
+          <!--            type="button"-->
+          <!--            (click)="onVerify()"-->
+          <!--            [disabled]="formOtp.invalid"-->
+          <!--            class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium py-2 px-4 rounded-md transition-colors duration-200 flex items-center justify-center">-->
+          <!--            <svg *ngIf="isLoading" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">-->
+          <!--              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>-->
+          <!--              <path class="opacity-75" fill="currentColor"-->
+          <!--                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>-->
+          <!--            </svg>-->
+          <!--            {{ isLoading ? 'Verificando...' : 'Verificar código' }}-->
+          <!--          </button>-->
         </form>
         <!-- Resend Section -->
         <div class="text-center space-y-4">
@@ -116,7 +101,6 @@
         </div>
       </div>
     </ng-container>
-    <!-- Back to Login -->
     <div class="py-6">
       <div class="pt-4 border-t border-gray-200">
         <button
