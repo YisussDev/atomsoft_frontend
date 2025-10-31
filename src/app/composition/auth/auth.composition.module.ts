@@ -11,6 +11,7 @@ import {AuthGuard} from "@application/guards/auth/auth.guard";
 import {AdminGuard} from "@application/guards/auth/admin.guard";
 import {TwoFactorGuard} from "@application/guards/auth/two-factor.guard";
 import {ConsultTwoFactorAccountUseCase} from "@application/ports/in/auth/consult-two-factor-account.use-case";
+import {SudoGuard} from "@application/guards/auth/sudo.guard";
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import {ConsultTwoFactorAccountUseCase} from "@application/ports/in/auth/consult
     LogoutAccountUseCase,
     AuthGuard,
     AdminGuard,
+    SudoGuard,
     TwoFactorGuard
   ]
 })

@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from "@application/guards/auth/auth.guard";
 import {AdminGuard} from "@application/guards/auth/admin.guard";
 import {ViewComponent} from "@view/view.component";
+import {SudoGuard} from "@application/guards/auth/sudo.guard";
 
 const routes: Routes = [
   {
@@ -21,7 +22,7 @@ const routes: Routes = [
       {
         path: 'sudo',
         loadChildren: () => import('./sudo/sudo.module').then(m => m.SudoModule),
-        canActivate: [AdminGuard]
+        canActivate: [SudoGuard]
       },
       {
         path: "**", redirectTo: "auth"

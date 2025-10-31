@@ -35,8 +35,7 @@ export class LoginAccountUseCase {
             if (response.is_two_factor == 1) {
               this.navigationService.navigateTo("/auth/two-factor-auth").then();
             } else {
-              this.navigationService.navigateTo("/sudo").then();
-              // this.navigationService.navigateTo("/admin").then();
+              this.navigationService.navigateTo("/admin").then();
             }
           })
         )
