@@ -1,7 +1,20 @@
 <div class="flex flex-col h-screen overflow-hidden">
-  <app-sudo-header class="flex-shrink-0"></app-sudo-header>
-  <div class="flex flex-1 overflow-hidden">
+  <!-- Header fijo en la parte superior -->
+  <app-sudo-header class="flex-shrink-0 z-30 relative"></app-sudo-header>
+
+  <!-- Botón hamburguesa flotante para móvil -->
+  <button
+    (click)="toggleMobileMenu()"
+    class="lg:hidden fixed top-1 left-1 z-40 p-3 bg-btw-secondary border border-btw text-btw hover:text-white rounded-md hover:bg-gray-100 transition-all active:scale-95 h-10 w-10 flex justify-center items-center"
+  >
+    <app-icon-material nameIcon="apps" class="p-0 m-0" sizeIcon="extra_large"></app-icon-material>
+  </button>
+
+  <!-- Contenedor principal con navbar y contenido -->
+  <div class="flex flex-1 overflow-hidden relative">
+    <!-- Navbar lateral -->
     <app-sudo-navbar
+      #navbar
       appName="PraxiSoft©"
       appInitial="PS"
       userRole="PraxiSoft"
@@ -11,8 +24,10 @@
       (onNavigate)="handleNavigation($event)"
       (onCollapseChange)="handleCollapseChange($event)"
     ></app-sudo-navbar>
-    <main class="flex-1 overflow-y-auto bg-shinny transition-colors ease-out duration-300 animation-opacity">
-      <div class="w-full h-screen pt-12 overflow-auto">
+
+    <!-- Área de contenido principal -->
+    <main class="flex-1 overflow-y-auto bg-shinny transition-all duration-300 ease-out relative">
+      <div class="w-full min-h-full p-4 md:p-6 lg:p-8">
         <router-outlet></router-outlet>
       </div>
     </main>

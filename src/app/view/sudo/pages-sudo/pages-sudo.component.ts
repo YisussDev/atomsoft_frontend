@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {NavigationService} from "@core/services/navigation/navigation.service";
 import {AccountEntity} from "@domain/entities/account/account.entity";
 import {CacheStorage} from "@infrastructure/adapters/out/storage/cache/cache.storage";
+import {SudoNavbarComponent} from "@view/sudo/sudo-ui/components/sudo-navbar/sudo-navbar.component";
 
 @Component({
   selector: 'app-pages-sudo',
@@ -9,6 +10,8 @@ import {CacheStorage} from "@infrastructure/adapters/out/storage/cache/cache.sto
   styleUrls: ['./pages-sudo.component.css']
 })
 export class PagesSudoComponent implements OnInit {
+
+  @ViewChild('navbar') navbar!: SudoNavbarComponent;
 
   public currentRoute: string = '';
 
@@ -85,6 +88,13 @@ export class PagesSudoComponent implements OnInit {
   private initDataAccount(): void {
     this.accountData = this._cacheStorage.getByKey("_account_data");
   }
+
+  toggleMobileMenu() {
+    if (this.navbar) {
+      this.navbar.openMobile();
+    }
+  }
+
 
 }
 

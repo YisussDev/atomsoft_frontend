@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, OnDestroy} from '@angular/core';
 import {animate, state, style, transition, trigger} from "@angular/animations";
 
 @Component({
@@ -15,10 +15,19 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
       state('collapsed', style({transform: 'rotate(0deg)'})),
       state('expanded', style({transform: 'rotate(180deg)'})),
       transition('collapsed <=> expanded', animate('200ms ease-in-out'))
+    ]),
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('200ms', style({ opacity: 1 }))
+      ]),
+      transition(':leave', [
+        animate('200ms', style({ opacity: 0 }))
+      ])
     ])
   ],
 })
-export class SudoNavbarComponent implements OnInit {
+export class SudoNavbarComponent implements OnInit, OnDestroy {
   @Input() navItems: NavItem[] = [];
   @Input() appName: string = 'PraxiSoft©';
   @Input() appInitial: string = 'A';
@@ -37,46 +46,94 @@ export class SudoNavbarComponent implements OnInit {
   public expandedItems: { [key: number]: boolean } = {};
   public activeParentIndex: number | null = null;
   public activeChildIndex: number | null = null;
+  public isMobile: boolean = false;
+
+  // Para el submenu flotante cuando está colapsado
+  public hoveredParentIndex: number | null = null;
+  public submenuPosition = { top: 0, left: 0 };
+
+  private resizeListener: any;
 
   ngOnInit() {
-    this.isCollapsed = this.defaultCollapsed;
     this.checkMobile();
-    window.addEventListener('resize', () => this.checkMobile());
+    this.isCollapsed = this.isMobile ? true : this.defaultCollapsed;
+
+    this.resizeListener = () => this.checkMobile();
+    window.addEventListener('resize', this.resizeListener);
+  }
+
+  ngOnDestroy() {
+    if (this.resizeListener) {
+      window.removeEventListener('resize', this.resizeListener);
+    }
   }
 
   public checkMobile() {
-    if (window.innerWidth < 1024) {
+    const wasMobile = this.isMobile;
+    this.isMobile = window.innerWidth < 1024;
+
+    // Si cambiamos de móvil a desktop, restaurar estado
+    if (wasMobile && !this.isMobile) {
+      this.isCollapsed = this.defaultCollapsed;
+      this.isMobileOpen = false;
+    }
+
+    // En móvil siempre colapsado cuando no está abierto
+    if (this.isMobile && !this.isMobileOpen) {
       this.isCollapsed = true;
     }
   }
 
   public getAsideClasses(): string {
+    const mobileClasses = this.isMobile
+      ? 'fixed w-64 h-screen shadow-2xl'
+      : 'relative';
+
+    const visibilityClasses = this.isMobile
+      ? (this.isMobileOpen ? 'translate-x-0' : '-translate-x-full')
+      : 'translate-x-0';
+
     return `
-      flex flex-col h-screen border-r border-btw bg-btw-secondary w-fit h-screen
-      fixed lg:sticky top-0 left-0 z-50 scrollbar-thin
-      ${this.isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-      transition-transform duration-300
-    `;
+      flex flex-col border-r border-btw bg-white
+      ${mobileClasses} top-0 left-0 z-50 scrollbar-thin
+      transition-all duration-300 ease-in-out
+      ${visibilityClasses}
+    `.trim();
   }
 
   public toggleCollapse() {
-    this.isCollapsed = !this.isCollapsed;
-    if (this.isCollapsed) {
-      this.expandedItems = {};
+    // En móvil, abrir el menú completo
+    if (this.isMobile) {
+      this.isMobileOpen = !this.isMobileOpen;
+      this.isCollapsed = false;
+    } else {
+      // En desktop, colapsar/expandir
+      this.isCollapsed = !this.isCollapsed;
+      if (this.isCollapsed) {
+        this.expandedItems = {};
+      }
     }
     this.onCollapseChange.emit(this.isCollapsed);
   }
 
-  public handleItemClick(item: NavItem, index: number) {
+  public handleItemClick(item: NavItem, index: number, event?: MouseEvent) {
     if (item.disabled) return;
 
-    if (item.children && item.children.length > 0 && !this.isCollapsed) {
-      this.expandedItems[index] = !this.expandedItems[index];
+    // Si tiene hijos y no está en mobile
+    if (item.children && item.children.length > 0) {
+      if (this.isCollapsed && !this.isMobile) {
+        // Mostrar submenu flotante
+        this.showFloatingSubmenu(index, event);
+      } else {
+        // Toggle expandir/contraer
+        this.expandedItems[index] = !this.expandedItems[index];
+      }
     } else if (item.route) {
+      // Navegar
       this.activeParentIndex = index;
       this.activeChildIndex = null;
       this.onNavigate.emit(item);
-      if (window.innerWidth < 1024) {
+      if (this.isMobile) {
         this.closeMobile();
       }
     }
@@ -87,14 +144,34 @@ export class SudoNavbarComponent implements OnInit {
     this.activeParentIndex = parentIndex;
     this.activeChildIndex = childIndex;
     this.onNavigate.emit(child);
-    if (window.innerWidth < 1024) {
+    this.hoveredParentIndex = null; // Cerrar submenu flotante
+    if (this.isMobile) {
       this.closeMobile();
     }
   }
 
+  public showFloatingSubmenu(index: number, event?: MouseEvent) {
+    if (!this.isCollapsed || this.isMobile) return;
+
+    this.hoveredParentIndex = index;
+
+    if (event) {
+      const target = event.currentTarget as HTMLElement;
+      const rect = target.getBoundingClientRect();
+      this.submenuPosition = {
+        top: rect.top,
+        left: rect.right
+      };
+    }
+  }
+
+  public hideFloatingSubmenu() {
+    this.hoveredParentIndex = null;
+  }
+
   public getItemClasses(item: NavItem, index: number): string {
     const isActive = this.activeParentIndex === index && this.activeChildIndex === null;
-    const baseClasses = 'flex items-center px-3 py-2.5 rounded-lg transition-all duration-200 cursor-pointer mb-1';
+    const baseClasses = 'flex items-center px-3 py-2.5 rounded-lg transition-all duration-200 cursor-pointer mb-1 relative';
 
     if (item.disabled) {
       return `${baseClasses} opacity-50 cursor-not-allowed`;
@@ -124,13 +201,18 @@ export class SudoNavbarComponent implements OnInit {
 
   public openMobile() {
     this.isMobileOpen = true;
+    this.isCollapsed = false; // Mostrar expandido en móvil
   }
 
   public closeMobile() {
     this.isMobileOpen = false;
+    this.expandedItems = {};
+  }
+
+  public hasActiveChild(item: NavItem, index: number): boolean {
+    return this.activeParentIndex === index && this.activeChildIndex !== null;
   }
 }
-
 
 export interface NavItem {
   label: string;
