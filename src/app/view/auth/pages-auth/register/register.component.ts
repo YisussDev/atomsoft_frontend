@@ -5,6 +5,7 @@ import {ThemeService} from "@core/services/theme/theme.service";
 import {NavigationService} from "@core/services/navigation/navigation.service";
 import {CreateAccountUseCase} from "@application/ports/in/account/create-account.use-case";
 import {NotificationService} from "@core/services/notification/notification.service";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-register',
@@ -49,8 +50,17 @@ export class RegisterComponent implements OnInit, OnDestroy {
     })
   }
 
+  get validatePassword(): boolean {
+    const {password, password_confirmation} = this.formRegister.controls;
+    return (password.value == password_confirmation.value);
+  }
+
   public onSubmit(): void {
     if (this.formRegister.valid) {
+      if (!this.validatePassword) {
+        this.notificationService.info("Passwords don't match");
+        return;
+      }
       this.createAccountUseCase.execute(this.formRegister.value).subscribe({
         next: (response) => {
           localStorage.setItem('x-token', response.token);

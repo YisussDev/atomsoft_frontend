@@ -1,8 +1,0 @@
-.bg-auth {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-  background-color: var(--color-bg-second);
-  background-image: url("/assets/img/backgrounds/bg2.svg");
-}

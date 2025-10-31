@@ -8,22 +8,24 @@ import {ButtonsModule} from "@ui/buttons/buttons.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {InputsModule} from "@ui/inputs/inputs.module";
 import {AccountCompositionModule} from "../../../../composition/account/account.composition.module";
+import {TypographyModule} from "@core/directives/typography/typography.module";
 
 
 @NgModule({
   declarations: [
     RegisterComponent
   ],
-  imports: [
-    CommonModule,
-    RegisterRoutingModule,
-    BoxModule,
-    ButtonsModule,
-    FormsModule,
-    InputsModule,
-    ReactiveFormsModule,
-    AccountCompositionModule
-  ]
+    imports: [
+        CommonModule,
+        RegisterRoutingModule,
+        BoxModule,
+        ButtonsModule,
+        FormsModule,
+        InputsModule,
+        ReactiveFormsModule,
+        AccountCompositionModule,
+        TypographyModule
+    ]
 })
 export class RegisterModule {
 }
