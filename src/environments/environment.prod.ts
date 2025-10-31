@@ -1,5 +1,5 @@
 export const environment = {
-  uri: "http://localhost:4200/api/",
+  uri: "http://api.praxisoft.lat/",
   useHttpRepository: true,
   useFormTest: false,
   socket: {

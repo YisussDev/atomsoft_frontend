@@ -11,8 +11,8 @@
       <div class="flex items-center gap-2 mb-3">
         <div class="flex items-center gap-1" #starContainer>
         </div>
-        <span appTypography="subtitle">{{ 5 }}</span>
-        <span appTypography="subtitle">({{ "12k" }})</span>
+        <span appTypography="paragraph" class="font-semibold">{{ 4.8 }}</span>
+        <span appTypography="paragraph">({{ "1.265" }})</span>
       </div>
       <div class="flex items-center justify-between">
         <!--      <span class="text-sm font-semibold text-blue-600">{{appPrincipal.price}</span>-->
@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="px-6 pb-6">
-      <button class="w-full text-white py-2 rounded-md font-medium transition-colors bg-opacity-25" #gradientBlock>
+      <button (click)="goToAppDetail()" class="w-full text-white py-2 rounded-md font-medium transition-colors bg-opacity-25" #gradientBlock>
         Obtener
       </button>
     </div>

@@ -12,7 +12,7 @@ const routes: Routes = [
         loadChildren: () => import("./page-store-home/page-store-home.module").then(m => m.PageStoreHomeModule),
       },
       {
-        path: "detail/:id",
+        path: "detail/:applicationId",
         loadChildren: () => import("./page-store-detail/page-store-detail.module").then(m => m.PageStoreDetailModule),
       }
     ]

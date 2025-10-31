@@ -1,6 +1,6 @@
 version: "2.0"
 services:
-  web:
+  praxisoft_app:
     build: .
     ports:
-      - "3001:80"
+      - "4000:80"

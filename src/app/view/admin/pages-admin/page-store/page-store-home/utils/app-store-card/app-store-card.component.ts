@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {ApplicationEntity} from "@domain/entities/application/application.entity";
 import {GenerateGradient} from "@shared/utils/gradient-generator";
+import {NavigationService} from "@core/services/navigation/navigation.service";
 
 @Component({
   selector: 'app-app-store-card',
@@ -13,6 +14,11 @@ export class AppStoreCardComponent implements AfterViewInit {
   @ViewChild("starContainer", {static: false}) starContainer!: ElementRef;
 
   @Input() public appPrincipal!: ApplicationEntity;
+
+  constructor(
+    private navigationService: NavigationService,
+  ) {
+  }
 
   ngAfterViewInit() {
     this.setGradientColor();
@@ -36,6 +42,10 @@ export class AppStoreCardComponent implements AfterViewInit {
       }
     }
     this.starContainer.nativeElement.innerHTML = stars;
+  }
+
+  public goToAppDetail(): void {
+    this.navigationService.navigateTo(`/admin/store/detail/${this.appPrincipal.id}`);
   }
 
 }
