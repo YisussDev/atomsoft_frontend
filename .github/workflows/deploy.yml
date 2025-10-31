@@ -17,7 +17,7 @@ jobs:
       - name: Start ssh-agent
         uses: webfactory/ssh-agent@v0.9.1
         with:
-          ssh-private-key: ${{ secrets.SSH_KEY }}
+          ssh-private-key: ${{ secrets.GCLOUDACTIONS }}
 
       # 3️⃣ Conectarse a la VM y reconstruir Docker
       - name: Connect via SSH and rebuild Docker
