@@ -15,14 +15,14 @@ jobs:
 
       # 2️⃣ Iniciar ssh-agent y cargar la clave privada
       - name: Start ssh-agent
-        uses: webfactory/ssh-agent@v0.8.1
+        uses: webfactory/ssh-agent@v0.9.1
         with:
           ssh-private-key: ${{ secrets.SSH_KEY }}
 
       # 3️⃣ Conectarse a la VM y reconstruir Docker
       - name: Connect via SSH and rebuild Docker
         run: |
-          ssh -o StrictHostKeyChecking=no jesuspaguay30@34.31.75.5"
+          ssh -o StrictHostKeyChecking=no jesuspaguay30@34.31.75.5 "
             cd /home/jesuspaguay30/PraxiSoft/Frontend/atomsoft_frontend &&
             git pull &&
             docker-compose build &&
