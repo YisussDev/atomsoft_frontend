@@ -41,11 +41,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   private initForm(): void {
     this.formRegister = this._formBuilder.group({
-      name: ["TestUser", Validators.required],
-      username: ["TestUser", Validators.required],
-      email: ["paguayjesus+test1@gmail.com", Validators.required],
-      password: ["123asd123@A", [Validators.required]],
-      password_confirmation: ["123asd123@A", [Validators.required]],
+      name: ["", Validators.required],
+      username: ["", Validators.required],
+      email: ["", Validators.required],
+      password: ["", [Validators.required]],
+      password_confirmation: ["", [Validators.required]],
     })
   }
 
