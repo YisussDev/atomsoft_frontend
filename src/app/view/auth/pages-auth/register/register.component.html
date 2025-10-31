@@ -1,5 +1,5 @@
 <div class="min-h-screen flex items-center justify-center bg-gradient-to-br bg-btw-primary p-4 bg-auth">
-  <div class="w-full max-w-md shadow-xl border-0 bg-btw-secondary backdrop-blur-sm rounded-lg animation-scale">
+  <div class="w-full max-w-md sm:shadow-xl border-0 bg-btw-secondary backdrop-blur-sm rounded-lg animation-scale">
     <!-- Header -->
     <div class="space-y-6 pb-8 pt-8 px-6">
       <div class="flex justify-center">
@@ -62,14 +62,19 @@
         </combo-input-password>
         <!-- Login Button -->
         <div class="grid gap-3">
-          <app-button-container type="button" variant="primary" [disabled]="formRegister.invalid"
-                                (clickEvent)="onSubmit()"
-                                className="text-white w-full">
+          <app-button-container
+            type="button"
+            variant="primary"
+            [disabled]="formRegister.invalid"
+            (clickEvent)="onSubmit()"
+            className="text-white w-full disabled:bg-gray-500">
             Registrarse
           </app-button-container>
-          <app-button-container type="button" variant="outline" [disabled]="formRegister.invalid"
-                                (clickEvent)="cancelSubmit()"
-                                className="text-btw w-full">
+          <app-button-container
+            type="button"
+            variant="outline"
+            (clickEvent)="cancelSubmit()"
+            className="text-btw w-full">
             Cancelar
           </app-button-container>
         </div>
