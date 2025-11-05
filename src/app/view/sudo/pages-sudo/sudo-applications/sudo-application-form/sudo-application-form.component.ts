@@ -69,7 +69,7 @@ export class SudoApplicationFormComponent implements OnInit, OnChanges {
       // baseControls.name = ['', [Validators.minLength(5)]];
     }
     this.form = this.fb.group(baseControls);
-    this.initDataFormTest();
+    // this.initDataFormTest();
   }
 
   public initDataFormTest(): void {

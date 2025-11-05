@@ -1,45 +1,60 @@
-<div class="bg-btw-secondary border border-btw rounded-xl shadow-lg p-6">
-  <h2 class="text-xl font-semibold text-btw mb-6 flex items-center">
-    <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<div class="bg-btw-secondary border border-btw rounded-xl shadow-lg p-4 sm:p-6">
+  <h2 class="text-lg sm:text-xl font-semibold text-btw mb-4 sm:mb-6 flex items-center">
+    <svg class="w-5 h-5 mr-2 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
     </svg>
     Seguridad
   </h2>
-  <div class="space-y-4">
-    <div class="flex items-center justify-between p-4 border border-btw rounded-xl">
-      <div>
-        <h3 appTypography="subtitle">Cambiar contraseña</h3>
-        <p appTypography="paragraph">Actualiza tu contraseña regularmente</p>
+  <div class="space-y-3 sm:space-y-4">
+    <!-- Cambiar contraseña -->
+    <div
+      class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 p-4 border border-btw rounded-xl">
+      <div class="flex-1 min-w-0">
+        <h3 class="text-sm sm:text-base font-semibold text-btw mb-1">
+          Cambiar contraseña
+        </h3>
+        <p class="text-xs sm:text-sm text-gray-600">
+          Actualiza tu contraseña regularmente
+        </p>
       </div>
       <button
         type="button"
         (click)="openChangePassword()"
-        class="px-4 py-2 text-btw font-medium transition-colors duration-200"
+        class="w-full sm:w-auto px-4 py-2 text-sm sm:text-base text-btw font-medium border border-btw rounded-lg hover:bg-gray-50 transition-colors duration-200 flex-shrink-0"
       >
         Cambiar
       </button>
     </div>
 
-    <div class="flex items-center justify-between p-4 border border-btw rounded-xl">
-      <div>
-        <h3 appTypography="subtitle">Autenticación de dos factores</h3>
-        <p appTypography="paragraph">Agrega una capa extra de seguridad</p>
+    <!-- Autenticación de dos factores -->
+    <div
+      class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 p-4 border border-btw rounded-xl">
+      <div class="flex-1 min-w-0">
+        <h3 class="text-sm sm:text-base font-semibold text-btw mb-1">
+          Autenticación de dos factores
+        </h3>
+        <p class="text-xs sm:text-sm text-gray-600">
+          Agrega una capa extra de seguridad
+        </p>
       </div>
-      <div class="flex items-center space-x-3">
-        <span class="text-sm" [class]="account.two_factor_auth ? 'text-emerald-600' : 'text-slate-500'">
+      <div class="flex items-center justify-between sm:justify-end gap-3 flex-shrink-0">
+        <span
+          class="text-xs sm:text-sm font-medium"
+          [class]="account.two_factor_auth ? 'text-emerald-600' : 'text-slate-500'">
           {{ account.two_factor_auth ? 'Activado' : 'Desactivado' }}
         </span>
         <button
           type="button"
           (click)="toggleTwoFactor()"
-          class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200"
+          [attr.aria-label]="account.two_factor_auth ? 'Desactivar autenticación de dos factores' : 'Activar autenticación de dos factores'"
+          class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
           [class]="account.two_factor_auth ? 'bg-emerald-600' : 'bg-slate-300'"
         >
-        <span
-          class="inline-block h-4 w-4 transform rounded-full bg-btw-secondary transition-transform duration-200"
-          [class]="account.two_factor_auth ? 'translate-x-6' : 'translate-x-1'"
-        ></span>
+          <span
+            class="inline-block h-4 w-4 transform rounded-full bg-white shadow-sm transition-transform duration-200"
+            [class]="account.two_factor_auth ? 'translate-x-6' : 'translate-x-1'"
+          ></span>
         </button>
       </div>
     </div>

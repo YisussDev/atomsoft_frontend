@@ -3,8 +3,8 @@
     <!-- Navigation Tabs -->
     <div class="flex gap-6 mb-8 border-b border-gray-200">
       <button class="px-1 py-3 text-blue-600 border-b-2 border-blue-600 font-medium">Todas las aplicaciones</button>
-      <button class="px-1 py-3 text-btw hover:text-btw">Comercio</button>
-      <button class="px-1 py-3 text-btw hover:text-btw">Educación</button>
+      <!--      <button class="px-1 py-3 text-btw hover:text-btw">Comercio</button>-->
+      <!--      <button class="px-1 py-3 text-btw hover:text-btw">Educación</button>-->
     </div>
     <!-- Featured Section -->
     <section class="mb-12">
@@ -32,14 +32,14 @@
 
 
 <ng-template #homeAllApps>
-  <div class="p-6 rounded-lg shadow-sm">
+  <div class="p-6 rounded-lg shadow-sm w-full">
     <section class="mb-12">
       <h2 appTypography="title" class="mb-6">Aplicaciones destacadas</h2>
       <app-app-store-principal [appPrincipal]="appPrincipal"></app-app-store-principal>
     </section>
     <section>
       <h2 class="text-2xl font-semibold text-btw mb-6">Aplicaciones populares</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="appsGrid">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2" id="appsGrid">
         <ng-container *ngFor="let app of appsPraxi">
           <app-app-store-card [appPrincipal]="app"></app-app-store-card>
         </ng-container>

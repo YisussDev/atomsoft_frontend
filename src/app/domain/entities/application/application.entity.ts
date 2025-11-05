@@ -16,6 +16,7 @@ export class ApplicationEntity {
   img_chips!: string[];
 
   color_primary!: string;
+  rate!: number;
 
   url_production!: string;
   url_sandbox!: string;

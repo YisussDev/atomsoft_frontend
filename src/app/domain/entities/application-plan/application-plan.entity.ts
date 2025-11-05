@@ -15,7 +15,7 @@ export class ApplicationPlanEntity {
   price!: number;
   limit_account!: number;
   currency!: string;
-  config?: Record<string, any>;
+  config?: Record<string, any> | string;
   chips?: string[];
 
   validateToCreate(): void {

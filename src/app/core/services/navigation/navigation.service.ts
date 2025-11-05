@@ -18,6 +18,10 @@ export class NavigationService {
     return this._router.navigate(commands, extras);
   }
 
+  public navigateToAdminStore() {
+    return this._router.navigateByUrl('/admin/store');
+  }
+
   public navigateToBackOffice() {
     return this._router.navigateByUrl('/back-office');
   }

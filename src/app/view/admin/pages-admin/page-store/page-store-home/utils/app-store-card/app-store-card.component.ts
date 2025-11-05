@@ -10,7 +10,6 @@ import {NavigationService} from "@core/services/navigation/navigation.service";
 })
 export class AppStoreCardComponent implements AfterViewInit {
 
-  @ViewChild("gradientBlock", {static: false}) gradientBlock!: ElementRef;
   @ViewChild("starContainer", {static: false}) starContainer!: ElementRef;
 
   @Input() public appPrincipal!: ApplicationEntity;
@@ -26,7 +25,7 @@ export class AppStoreCardComponent implements AfterViewInit {
   }
 
   private setGradientColor(): void {
-    this.gradientBlock.nativeElement.style.background = this.appPrincipal.color_primary;
+    // this.gradientBlock.nativeElement.style.background = this.appPrincipal.color_primary;
     // this.gradientBlock.nativeElement.style.background = GenerateGradient(this.appPrincipal.color_primary);
   }
 

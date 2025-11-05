@@ -1,0 +1,35 @@
+<div class="max-w-6xl mx-auto p-4 sm:p-6">
+  <h1 class="text-2xl sm:text-3xl font-bold text-btw mb-6 text-center">Selecciona tu plan</h1>
+
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+    <div *ngFor="let plan of plans"
+         class="border rounded-xl shadow-md p-6 flex flex-col justify-between hover:shadow-lg transition-shadow duration-200"
+         [class.border-primary]="plan.id === selectedPlanId">
+
+      <div>
+        <h2 class="text-lg sm:text-xl font-semibold mb-2">{{ plan.name }}</h2>
+        <p class="text-sm text-btw mb-4">{{ plan.description }}</p>
+
+        <div class="flex flex-wrap gap-2 mb-4">
+          <span *ngFor="let chip of plan.chips"
+                class="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">
+            {{ chip }}
+          </span>
+        </div>
+
+        <p class="text-lg font-bold mb-4">
+          {{ plan.price === 0 ? 'Gratis' : plan.price + ' ' + plan.currency }}
+        </p>
+      </div>
+
+      <button (click)="selectPlan(plan)"
+              class="w-full py-2 mt-2 rounded-lg text-white font-semibold transition-colors duration-200"
+              [ngClass]="{
+                'bg-primary hover:bg-primary-dark': plan.id !== selectedPlanId,
+                'bg-green-600 hover:bg-green-700': plan.id === selectedPlanId
+              }">
+        {{ plan.id === selectedPlanId ? 'Seleccionado' : 'Probar Gratis' }}
+      </button>
+    </div>
+  </div>
+</div>

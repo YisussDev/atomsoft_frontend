@@ -44,14 +44,6 @@ export class PageStoreHomeComponent implements OnInit, AfterViewInit {
         label: 'Todas las apps',
         content: this.homeAllApps
       },
-      {
-        label: 'Comercio',
-        content: this.homeCommerceApps
-      },
-      {
-        label: 'Finanzas',
-        content: this.homeFinancialApps
-      }
     ];
     this._cdr.detectChanges();
   }

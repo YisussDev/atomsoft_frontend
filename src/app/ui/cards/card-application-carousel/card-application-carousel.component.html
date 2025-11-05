@@ -1,39 +1,75 @@
 <div
-  class="min-w-full sm:min-h-96 h-fit flex flex-col-reverse sm:grid sm:grid-cols-2 bg-btw-secondary rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-  <div
-    class="sm:py-12 w-full flex flex-col justify-center items-center sm:items-start sm:px-24 space-y-4 min-h-full h-fit px-12 py-4 sm:rounded-l-md">
-    <app-chip
-      className="text-gray-900 text-xxs bg-gray-200 font-medium px-3 py-1">{{ application.chips[0] || 'Default' }}
-    </app-chip>
-    <h2 class="w-full text-2xl font-bold text-foreground text-btw text-center sm:text-left">
-      {{ application.name || 'Default' }}
-    </h2>
-    <p class="w-full text-xs font-light text-gray-500 text-center sm:text-left">
-      {{ application.description || 'Default' }}
-    </p>
-    <ul class="w-full">
-      <ng-container *ngFor="let chip of application.chips; let i = index">
-        <ng-container *ngIf="i != 0">
-          <li class="text-btw font-semibold text-xs text-center sm:text-left">{{ chip }}</li>
+  class="group min-w-full bg-transparent rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden">
+  <div class="min-h-96 h-fit flex flex-col-reverse sm:grid sm:grid-cols-2">
+
+    <!-- Content Section -->
+    <div class="flex flex-col justify-center px-6 py-8 sm:px-12 sm:py-12 space-y-5">
+
+      <!-- Category Chip -->
+      <app-chip
+        className="self-start text-xs font-medium px-3 py-1.5 bg-blue-50 text-blue-700 rounded-full">
+        {{ application.chips[0] || 'Default' }}
+      </app-chip>
+
+      <!-- Title -->
+      <h2 class="text-3xl font-bold text-btw leading-tight">
+        {{ application.name || 'Default' }}
+      </h2>
+
+      <!-- Description -->
+      <p class="text-sm text-btw leading-relaxed">
+        {{ application.description || 'Default' }}
+      </p>
+
+      <!-- Features List -->
+      <ul class="space-y-2 pt-2" *ngIf="application.chips.length > 1">
+        <ng-container *ngFor="let chip of application.chips; let i = index">
+          <li *ngIf="i != 0" class="flex items-center text-sm text-btw">
+            <span class="w-1.5 h-1.5 rounded-full mr-3" [style]="{backgroundColor: application.color_primary}"></span>
+            <span class="font-medium">{{ chip }}</span>
+          </li>
         </ng-container>
-      </ng-container>
-    </ul>
-    <div class="flex gap-2 sm:justify-start justify-center w-full">
-      <app-button-container variant="primary" size="sm" className="text-white gap-2"
-                            (clickEvent)="goToApp(application.code)">
-        Ver más
-        <app-icon-material nameIcon="arrow_forward"></app-icon-material>
-      </app-button-container>
-      <app-button-container variant="outline" size="sm" className="gap-2" (clickEvent)="goToApp(application.code)">
-        Probar ahora
-      </app-button-container>
+      </ul>
+
+      <!-- Action Buttons -->
+      <div class="flex gap-3 pt-4">
+        <app-button-container
+          variant="primary"
+          size="sm"
+          className="text-white gap-2 px-6 py-2.5 bg-primary hover:bg-opacity-15 rounded-lg font-medium transition-colors"
+          (clickEvent)="goToApp(application.code)">
+          Ver más
+          <app-icon-material nameIcon="arrow_forward"></app-icon-material>
+        </app-button-container>
+
+        <app-button-container
+          variant="outline"
+          size="sm"
+          className="gap-2 px-6 py-2.5 border-2 border-gray-200 hover:border-blue-600 hover:text-white rounded-lg font-medium transition-all"
+          (clickEvent)="goToApp(application.code)">
+          Probar ahora
+        </app-button-container>
+      </div>
     </div>
-  </div>
-  <div
-    class="w-full h-full flex justify-center items-center rounded-md sm:rounded-none sm:rounded-r-md" #gradientBlock>
+
+    <!-- Image Section -->
     <div
-      class="h-36 w-36 flex justify-center items-center select-none rounded-md hover:scale-110 transition-transform duration-300 ease-linear my-6">
-      <img [src]="application.logo_url" [alt]="application.code" class="object-cover select-none">
+      class="relative w-full h-full min-h-[240px] sm:min-h-full flex justify-center items-center bg-gradient-to-br from-blue-50 to-indigo-50"
+      #gradientBlock>
+      <div class="relative">
+        <!-- Decorative Background Circle -->
+        <div class="absolute inset-0 bg-white/40 rounded-full blur-3xl scale-150"></div>
+
+        <!-- Logo Container -->
+        <div
+          class="relative h-40 w-40 flex justify-center items-center group-hover:scale-105 transition-transform duration-500 ease-out">
+          <img
+            [src]="application.logo_url"
+            [alt]="application.code"
+            class="object-contain w-full h-full select-none drop-shadow-lg">
+        </div>
+      </div>
     </div>
+
   </div>
 </div>

@@ -22,7 +22,7 @@ jobs:
       # 3️⃣ Conectarse a la VM y reconstruir Docker
       - name: Connect via SSH and rebuild Docker
         run: |
-          ssh -o StrictHostKeyChecking=no jesuspaguay30@34.31.75.5 "
+          ssh -o StrictHostKeyChecking=no jesuspaguay30@${{secrets.VM_HOST}} "
             cd /home/jesuspaguay30/PraxiSoft/Frontend/atomsoft_frontend &&
             git pull &&
             docker-compose down &&

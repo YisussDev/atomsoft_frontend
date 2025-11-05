@@ -23,6 +23,7 @@ export class ApplicationOutHttpMapper {
     entityDomain.recursive_payment = dataInfrastructure.recursive_payment;
     entityDomain.color_primary = dataInfrastructure.color_primary;
     entityDomain.plans = dataInfrastructure.plans;
+    entityDomain.rate = dataInfrastructure.rate;
     // Base...
     entityDomain.created_at = dataInfrastructure.created_at;
     entityDomain.updated_at = dataInfrastructure.updated_at;
@@ -49,6 +50,7 @@ export class ApplicationOutHttpMapper {
       recursive_payment: dataDomain.recursive_payment,
       color_primary: dataDomain.color_primary,
       plans: dataDomain.plans,
+      rate: dataDomain.rate,
       // Base...
       created_at: dataDomain.created_at,
       updated_at: dataDomain.updated_at,
